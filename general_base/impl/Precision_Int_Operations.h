@@ -27,6 +27,7 @@ namespace Precision{
              *  may be slow since the second digit string is copied.
              *  [TODO: Optimize algorithm to not make copies]
              *  [TODO: Optimize algorithm to avoid iterating when borrowing]
+             * 
              * \param diglist1 The digit string of the first number
              * \param diglist2 The digit string of the second number
              * \param sign1 The numeric sign of the first number
@@ -44,6 +45,8 @@ namespace Precision{
             /** A simple multiply function taking two digit strings
              *  and calculating the product. Algorithm does not need
              *  number base information.
+             *   [TODO: Optimize algorithm to make less copies]
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              */
@@ -53,6 +56,7 @@ namespace Precision{
             /** A simple divide function taking two digit strings
              *  and calculating the quotient and modulus. Algorithm
              * does not need number base information.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              * \param div_req Pointer to where quotient result is stored
@@ -70,6 +74,7 @@ namespace Precision{
 
             /** Complement function that calculates the binary,
              *  or bitwise, complement.
+             * 
              * \param bitstring The original number
              */
             template <typename IntType>
@@ -80,6 +85,7 @@ namespace Precision{
              *  digit strings. The numerical signs are treated
              *  separately. Note that this algorithm may be
              *  slower since the second integer is copied.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              * \param oper  A callback function that performs the
@@ -92,6 +98,7 @@ namespace Precision{
 
             /** Binary AND operation calculated by performing
              *  x & y on each digit.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              */
@@ -100,6 +107,7 @@ namespace Precision{
 
             /** Binary OR operation calculated by performing
              *  x | y on each digit.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              */
@@ -108,6 +116,7 @@ namespace Precision{
 
             /** Binary XOR operation calculated by performing
              *  x ^ y on each digit.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              */
@@ -116,6 +125,7 @@ namespace Precision{
 
             /** Binary left shift operation that is equivalent to
              *  performing x *= 2 by y times.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              */
@@ -124,6 +134,7 @@ namespace Precision{
 
             /** Binary right shift operation that is equivalent to
              *  performing x /= 2 by y times.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              */
@@ -139,6 +150,7 @@ namespace Precision{
              *  to two digit strings. The numerical signs are treated
              *  separately and go through the respective bitwise
              *  operation.
+             * 
              * \param diglist1 The digit string of the first number
              * \param diglist2 The digit string of the second number
              * \param sign1 The numeric sign of the first number
@@ -161,8 +173,12 @@ namespace Precision{
 
             /** Logical base AND operation calculated by performing
              *  x * y on each digit.
-             * \param lhs The first integer
-             * \param rhs The second integer
+             * 
+             * \param diglist1 The digit string of the first number
+             * \param diglist2 The digit string of the second number
+             * \param sign1 The numeric sign of the first number
+             * \param sign2 The numeric sign of the second number
+             * \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_and(   typename IntType::diglist_type& diglist1,
@@ -174,8 +190,12 @@ namespace Precision{
 
             /** Logical base OR operation that is equivalent to
              *  COMPL( AND( COMPL(x), COMPL(y) ) )
-             * \param lhs The first integer
-             * \param rhs The second integer
+             * 
+             * \param diglist1 The digit string of the first number
+             * \param diglist2 The digit string of the second number
+             * \param sign1 The numeric sign of the first number
+             * \param sign2 The numeric sign of the second number
+             * \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_or(    typename IntType::diglist_type& diglist1,
@@ -187,8 +207,12 @@ namespace Precision{
 
             /** Logical base XOR operation calculated by performing
              *  x + y on each digit.
-             * \param lhs The first integer
-             * \param rhs The second integer
+             * 
+             * \param diglist1 The digit string of the first number
+             * \param diglist2 The digit string of the second number
+             * \param sign1 The numeric sign of the first number
+             * \param sign2 The numeric sign of the second number
+             * \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_xor(   typename IntType::diglist_type& diglist1,
@@ -200,6 +224,7 @@ namespace Precision{
 
             /** Complement function that is relative to the
              *  number base of the IntType object.
+             * 
              * \param diglist The digit string of the integer
              * \param int_sign The numerical sign of the integer
              * \param base The number base of the integer
@@ -210,12 +235,27 @@ namespace Precision{
                                      typename IntType::digit_type base
                                      );
 
+            /** Integer exponentiation function that employs
+             *  the exponentiation by squaring algorithm. This
+             *  function does not support floating point
+             *  exponents.
+             * 
+             * \param base The number to exponentiate
+             * \param exp The exponent integer
+             * \return The result of POWER(base, exp)
+             */
+            template <typename Number_Type, typename Number_Type2>
+            Number_Type exponentiate( const Number_Type& base,
+                                      const Number_Type2& exp
+                                      );
+
 
 
             // Comparisons
 
             /** Comparison function that determines which integer is
              *  greater than the other.
+             * 
              * \param lhs The first integer
              * \param rhs The second integer
              * \return  Representation of which number is greater:
@@ -229,8 +269,13 @@ namespace Precision{
             /** More basic function that only compares two digit lists.
              *  Because there is no numerical sign information, this
              *  is a comparison of the numbers' magnitudes.
+             * 
              * \param diglist1 The digit string of the first number
              * \param diglist2 The digit string of the second number
+             * \return  Representation of which number is greater:
+             *          * -1 : lhs < rhs (less than)
+             *          *  0 : rhs == lhs (equivalent)
+             *          * +1 : lhs > rhs (greater than)
              */
             template <typename DigListType>
             short compare_lists( const DigListType& diglist1,
@@ -238,6 +283,7 @@ namespace Precision{
                                  );
 
             /** Helper function to tell if a number is basically 0.
+             * 
              * \param diglist The digit string of the number
              * \return  Whether or not the list contains only {0}.
              *          Note that an empty list or a list with more

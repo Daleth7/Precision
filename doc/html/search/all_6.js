@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['multiply',['multiply',['../_precision___int___operations_8h.html#ad4b05f9d2e26bcd2a8d23991e998444e',1,'Precision::Volatile::Int_Operations']]]
+  ['halve',['halve',['../_precision___shared___helpers_8h.html#ace932dee355b0e77dfd62b4acb428769',1,'Precision::Helper']]]
 ];

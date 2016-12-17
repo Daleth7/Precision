@@ -1,10 +1,4 @@
-#include "Math_Shared_Functions.h"
-#include "Math_Shared_Helpers.h"
-#include "Exception.h"
-
-#include <utility>
-#include <algorithm>
-#include <iterator>
+#include <iterator> // For std::advance()
 
 namespace Precision{
     namespace Volatile{
