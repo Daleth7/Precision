@@ -1,4 +1,4 @@
-/** \file Precision_Shared_Helper.h
+/** \file Precision_Shared_Helpers.h
  *  This file centralizes trivial and common utility functions for
  *  use among all number types. These functions can also serve to
  *  decouple algorithms for possible future improvement.

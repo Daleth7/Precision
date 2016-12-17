@@ -41,10 +41,11 @@ namespace Precision{
                  * \return The converted string of glyphs, or the "image." 
                  */
                 template <typename IntType, typename CharTIterator>
-                typename IntType::str_type sci_note(
-                    const IntType&, typename IntType::size_type,
-                    CharTIterator dig_glyphs, CharTIterator sym_glyphs
-                );
+                typename IntType::str_type
+                    sci_note( const IntType& ref,
+                              typename IntType::size_type prec,
+                              CharTIterator dig_glyphs, CharTIterator sym_glyphs
+                              );
 
                 /** Convert an integer to a string of glyphs/symbols
                  *  in scientific notation, e.g. "+ 1.23 e 16."
@@ -58,10 +59,12 @@ namespace Precision{
                  * \return The converted string of glyphs, or the "image." 
                  */
                 template <typename IntType, typename CharTIterator>
-                typename IntType::str_type sci_note_w_spaces(
-                    const IntType&, typename IntType::size_type,
-                    CharTIterator dig_glyphs, CharTIterator sym_glyphs
-                );
+                typename IntType::str_type
+                    sci_note_w_spaces( const IntType& ref,
+                                       typename IntType::size_type prec,
+                                       CharTIterator dig_glyphs,
+                                       CharTIterator sym_glyphs
+                                       );
 
                 /** Convert a string of glyphs to an integer.
                  *
@@ -74,13 +77,12 @@ namespace Precision{
                  * \param dig_glyphs Iterator to a set of digit glyphs. 
                  */
                 template <typename IntType, typename CharTIterator>
-                void parse(
-                    const typename IntType::str_type& src,
-                    typename IntType::diglist_type& dest,
-                    typename IntType::sign_type& new_sign,
-                    typename IntType::digit_type base,
-                    const CharTIterator digs
-                );
+                void parse( const typename IntType::str_type& src,
+                            typename IntType::diglist_type& dest,
+                            typename IntType::sign_type& new_sign,
+                            typename IntType::digit_type base,
+                            const CharTIterator dig_glyphs
+                            );
             }
         }
     }

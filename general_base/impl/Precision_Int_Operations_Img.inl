@@ -5,9 +5,9 @@ namespace Precision{
         namespace Int_Operations {
             namespace Img{
                 template <typename IntType, typename CharTIterator>
-                typename IntType::str_type str(
-                    const IntType& num,
-                    CharTIterator digs, CharTIterator syms
+                typename IntType::str_type
+                    str( const IntType& num,
+                         CharTIterator digs, CharTIterator syms
                 ){
                     typedef typename IntType::str_type str_type;
                     typedef typename IntType::size_type size_type;
@@ -31,9 +31,10 @@ namespace Precision{
 
                 //Set the precision through parameter
                 template <typename IntType, typename CharTIterator>
-                typename IntType::str_type sci_note(
-                    const IntType& num, typename IntType::size_type prec,
-                    CharTIterator digs, CharTIterator syms
+                typename IntType::str_type
+                    sci_note( const IntType& num,
+                              typename IntType::size_type prec,
+                              CharTIterator digs, CharTIterator syms
                 ){
                     typedef typename IntType::str_type str_type;
                     if(num.is_zero())
@@ -62,9 +63,10 @@ namespace Precision{
                 }
 
                 template <typename IntType, typename CharTIterator>
-                typename IntType::str_type sci_note_w_spaces(
-                    const IntType& num, typename IntType::size_type prec,
-                    CharTIterator digs, CharTIterator syms
+                typename IntType::str_type
+                    sci_note_w_spaces( const IntType& num,
+                                       typename IntType::size_type prec,
+                                       CharTIterator digs, CharTIterator syms
                 ){
                     typedef typename IntType::str_type str_type;
                     str_type toreturn(sci_note(num, prec, digs, syms));
@@ -79,12 +81,11 @@ namespace Precision{
                 }
 
                 template <typename IntType, typename CharTIterator>
-                void parse(
-                    const typename IntType::str_type& src,
-                    typename IntType::diglist_type& new_list,
-                    typename IntType::sign_type& new_sign,
-                    typename IntType::digit_type base,
-                    const CharTIterator digs
+                void parse( const typename IntType::str_type& src,
+                            typename IntType::diglist_type& new_list,
+                            typename IntType::sign_type& new_sign,
+                            typename IntType::digit_type base,
+                            const CharTIterator dig_glyphs
                 ){
                     typedef typename IntType::digit_type digit_type;
                     typedef typename IntType::size_type size_type;
@@ -93,7 +94,7 @@ namespace Precision{
                         auto iter(new_list.begin());
                         size_type i(src.size());
                         while(i-- > 0){
-                            CharTIterator ci = digs, ci2 = digs;
+                            CharTIterator ci = dig_glyphs, ci2 = dig_glyphs;
                             std::advance(ci2, base-1);
                             for(
                                 digit_type j(0), k(base-1);

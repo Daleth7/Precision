@@ -103,9 +103,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ace932dee355b0e77dfd62b4acb428769"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
 <tr class="memitem:ace932dee355b0e77dfd62b4acb428769"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#ace932dee355b0e77dfd62b4acb428769">Precision::Helper::halve</a> (Number_Type &amp;num)</td></tr>
 <tr class="separator:ace932dee355b0e77dfd62b4acb428769"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbdd4439ec31a12b98934228d0fac588"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
-<tr class="memitem:abbdd4439ec31a12b98934228d0fac588"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#abbdd4439ec31a12b98934228d0fac588">Precision::Helper::reciprocal</a> (Number_Type &amp;num)</td></tr>
-<tr class="separator:abbdd4439ec31a12b98934228d0fac588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4df51896de77d46bc0a7056962c46915"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
+<tr class="memitem:a4df51896de77d46bc0a7056962c46915"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#a4df51896de77d46bc0a7056962c46915">Precision::Helper::reciprocate</a> (Number_Type &amp;num)</td></tr>
+<tr class="separator:a4df51896de77d46bc0a7056962c46915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3c98a309788b71dfcf713203cac47f4"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
 <tr class="memitem:ad3c98a309788b71dfcf713203cac47f4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#ad3c98a309788b71dfcf713203cac47f4">Precision::Helper::negate</a> (Number_Type &amp;num)</td></tr>
 <tr class="separator:ad3c98a309788b71dfcf713203cac47f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,6 +130,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a43acfc0f39115afc25b6adedea7abb01"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
 <tr class="memitem:a43acfc0f39115afc25b6adedea7abb01"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#a43acfc0f39115afc25b6adedea7abb01">Precision::Helper::make_two</a> (Number_Type &amp;num)</td></tr>
 <tr class="separator:a43acfc0f39115afc25b6adedea7abb01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268c96b55b8cf2b5ce76cef0dee967ce"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
+<tr class="memitem:a268c96b55b8cf2b5ce76cef0dee967ce"><td class="memTemplItemLeft" align="right" valign="top">Number_Type &amp;&amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#a268c96b55b8cf2b5ce76cef0dee967ce">Precision::Helper::make_zero_temp</a> (const Number_Type &amp;ref)</td></tr>
+<tr class="separator:a268c96b55b8cf2b5ce76cef0dee967ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8862a88508e81c478e87df42b1f968e"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
+<tr class="memitem:af8862a88508e81c478e87df42b1f968e"><td class="memTemplItemLeft" align="right" valign="top">Number_Type &amp;&amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#af8862a88508e81c478e87df42b1f968e">Precision::Helper::make_one_temp</a> (const Number_Type &amp;ref)</td></tr>
+<tr class="separator:af8862a88508e81c478e87df42b1f968e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8714cdad9ae69774f428631858478c32"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type &gt; </td></tr>
+<tr class="memitem:a8714cdad9ae69774f428631858478c32"><td class="memTemplItemLeft" align="right" valign="top">Number_Type &amp;&amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___shared___helpers_8h.html#a8714cdad9ae69774f428631858478c32">Precision::Helper::make_two_temp</a> (const Number_Type &amp;ref)</td></tr>
+<tr class="separator:a8714cdad9ae69774f428631858478c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file centralizes trivial and common utility functions for use among all number types. These functions can also serve to decouple algorithms for possible future improvement. </p>
@@ -489,7 +498,7 @@ template&lt;typename Number_Type , typename Number_Type2 &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Decoupled modifier to assign 1 to a number. Also change the base of a Number_Type object to the base of a Number_Type2 object.</p>
+<p>Decoupled modifier to assign 1 to a number.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Number_Type</td><td>The type of the number being changed </td></tr>
@@ -540,6 +549,39 @@ template&lt;typename Number_Type &gt; </div>
 
 </div>
 </div>
+<a id="file_af8862a88508e81c478e87df42b1f968e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_af8862a88508e81c478e87df42b1f968e">&sect;&nbsp;</a></span>make_one_temp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Number_Type &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Number_Type &amp;&amp; Precision::Helper::make_one_temp </td>
+          <td>(</td>
+          <td class="paramtype">const Number_Type &amp;&#160;</td>
+          <td class="paramname"><em>ref</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decoupled modifier to make a temporary number with value 1.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Number_Type</td><td>The type of the reference number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ref</td><td>Number to extract base information from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="file_a1ef404aa3ac10a24f5d5d5e272257b0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#file_a1ef404aa3ac10a24f5d5d5e272257b0b">&sect;&nbsp;</a></span>make_two() <span class="overload">[1/2]</span></h2>
 
@@ -567,7 +609,7 @@ template&lt;typename Number_Type , typename Number_Type2 &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Decoupled modifier to assign 2 to a number. Also change the base of a Number_Type object to the base of a Number_Type2 object.</p>
+<p>Decoupled modifier to assign 2 to a number.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Number_Type</td><td>The type of the number being changed </td></tr>
@@ -618,6 +660,39 @@ template&lt;typename Number_Type &gt; </div>
 
 </div>
 </div>
+<a id="file_a8714cdad9ae69774f428631858478c32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a8714cdad9ae69774f428631858478c32">&sect;&nbsp;</a></span>make_two_temp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Number_Type &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Number_Type &amp;&amp; Precision::Helper::make_two_temp </td>
+          <td>(</td>
+          <td class="paramtype">const Number_Type &amp;&#160;</td>
+          <td class="paramname"><em>ref</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decoupled modifier to make a temporary number with value 2.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Number_Type</td><td>The type of the reference number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ref</td><td>Number to extract base information from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="file_aeb5d533c78128637e2a0ef4c180b2f69"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#file_aeb5d533c78128637e2a0ef4c180b2f69">&sect;&nbsp;</a></span>make_zero() <span class="overload">[1/2]</span></h2>
 
@@ -645,7 +720,7 @@ template&lt;typename Number_Type , typename Number_Type2 &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Decoupled modifier to assign 0 to a number. Also change the base of a Number_Type object to the base of a Number_Type2 object.</p>
+<p>Decoupled modifier to assign 0 to a number.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Number_Type</td><td>The type of the number being changed </td></tr>
@@ -690,6 +765,39 @@ template&lt;typename Number_Type &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">num</td><td>Number to change. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="file_a268c96b55b8cf2b5ce76cef0dee967ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a268c96b55b8cf2b5ce76cef0dee967ce">&sect;&nbsp;</a></span>make_zero_temp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Number_Type &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Number_Type &amp;&amp; Precision::Helper::make_zero_temp </td>
+          <td>(</td>
+          <td class="paramtype">const Number_Type &amp;&#160;</td>
+          <td class="paramname"><em>ref</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decoupled modifier to make a temporary number with value 0.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Number_Type</td><td>The type of the reference number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ref</td><td>Number to extract base information from. </td></tr>
   </table>
   </dd>
 </dl>
@@ -774,8 +882,8 @@ template&lt;typename Number_Type &gt; </div>
 
 </div>
 </div>
-<a id="file_abbdd4439ec31a12b98934228d0fac588"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_abbdd4439ec31a12b98934228d0fac588">&sect;&nbsp;</a></span>reciprocal()</h2>
+<a id="file_a4df51896de77d46bc0a7056962c46915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a4df51896de77d46bc0a7056962c46915">&sect;&nbsp;</a></span>reciprocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -783,7 +891,7 @@ template&lt;typename Number_Type &gt; </div>
 template&lt;typename Number_Type &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void Precision::Helper::reciprocal </td>
+          <td class="memname">void Precision::Helper::reciprocate </td>
           <td>(</td>
           <td class="paramtype">Number_Type &amp;&#160;</td>
           <td class="paramname"><em>num</em></td><td>)</td>

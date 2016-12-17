@@ -95,8 +95,7 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a28d7de52b6aabbd7e1a15ea47ff20b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb6d056a1221c78b271dfda41e9141de"><td class="memItemLeft" align="right" valign="top"><a id="adb6d056a1221c78b271dfda41e9141de"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>str_type</b> = std::string</td></tr>
+<tr class="memitem:adb6d056a1221c78b271dfda41e9141de"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1exception.html#adb6d056a1221c78b271dfda41e9141de">str_type</a> = std::string</td></tr>
 <tr class="separator:adb6d056a1221c78b271dfda41e9141de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -109,7 +108,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a191c2895f03a5d2ecbd82bb4b331b122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f19012a3adba74726e7ce589c43cac2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1exception.html#a4f19012a3adba74726e7ce589c43cac2">exception</a> (<a class="el" href="class_precision_1_1exception.html#a28d7de52b6aabbd7e1a15ea47ff20b1b">code</a> err, const char *src_name=&quot;Unknown <a class="el" href="class_precision_1_1exception.html#a191c2895f03a5d2ecbd82bb4b331b122">source</a>&quot;) noexcept</td></tr>
 <tr class="separator:a4f19012a3adba74726e7ce589c43cac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a352b34c4b98695cde7bed5cfc89d866c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1exception.html#a352b34c4b98695cde7bed5cfc89d866c">exception</a> (<a class="el" href="class_precision_1_1exception.html#a28d7de52b6aabbd7e1a15ea47ff20b1b">code</a> err, const str_type &amp;src_name) noexcept</td></tr>
+<tr class="memitem:a352b34c4b98695cde7bed5cfc89d866c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1exception.html#a352b34c4b98695cde7bed5cfc89d866c">exception</a> (<a class="el" href="class_precision_1_1exception.html#a28d7de52b6aabbd7e1a15ea47ff20b1b">code</a> err, const <a class="el" href="class_precision_1_1exception.html#adb6d056a1221c78b271dfda41e9141de">str_type</a> &amp;src_name) noexcept</td></tr>
 <tr class="separator:a352b34c4b98695cde7bed5cfc89d866c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bb3bf0fe599f12b3937fe94678f5ae1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1exception.html#a0bb3bf0fe599f12b3937fe94678f5ae1">exception</a> (const <a class="el" href="class_precision_1_1exception.html">exception</a> &amp;)=default</td></tr>
 <tr class="separator:a0bb3bf0fe599f12b3937fe94678f5ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,7 +117,23 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Exception type that inherits from the standard library std::exception class. For debugging, this exception class provide an error code and a message that includes the name of the function that threw the exception and a brief description of what the error was. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="adb6d056a1221c78b271dfda41e9141de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb6d056a1221c78b271dfda41e9141de">&sect;&nbsp;</a></span>str_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_precision_1_1exception.html#adb6d056a1221c78b271dfda41e9141de">Precision::exception::str_type</a> =  std::string</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type alias for the string type used by this class </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a28d7de52b6aabbd7e1a15ea47ff20b1b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28d7de52b6aabbd7e1a15ea47ff20b1b">&sect;&nbsp;</a></span>code</h2>
 
@@ -204,7 +219,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const str_type &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_precision_1_1exception.html#adb6d056a1221c78b271dfda41e9141de">str_type</a> &amp;&#160;</td>
           <td class="paramname"><em>src_name</em>&#160;</td>
         </tr>
         <tr>
@@ -334,8 +349,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Provides a short message composed of the name of the function that threw the exception and a brief description of what the error was.</p>
-<dl class="section return"><dt>Returns</dt><dd>A character string with the error message. </dd></dl>
+<p>Provide an error code whose value represents what kind of error occurred.</p>
+<dl class="section return"><dt>Returns</dt><dd>The error code </dd></dl>
 
 </div>
 </div>

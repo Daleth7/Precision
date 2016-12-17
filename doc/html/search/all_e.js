@@ -6,5 +6,6 @@ var searchData=
   ['signed',['Signed',['../struct_precision_1_1_tag_1_1_signed.html',1,'Precision::Tag']]],
   ['source',['source',['../class_precision_1_1exception.html#a191c2895f03a5d2ecbd82bb4b331b122',1,'Precision::exception']]],
   ['static',['Static',['../struct_precision_1_1_tag_1_1_static.html',1,'Precision::Tag']]],
-  ['str',['str',['../_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a',1,'Precision::Volatile::Int_Operations::Img']]]
+  ['str',['str',['../_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a',1,'Precision::Volatile::Int_Operations::Img']]],
+  ['str_5ftype',['str_type',['../class_precision_1_1exception.html#adb6d056a1221c78b271dfda41e9141de',1,'Precision::exception']]]
 ];
