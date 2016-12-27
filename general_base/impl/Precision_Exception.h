@@ -1,7 +1,7 @@
-/** \file
- *  Exception type that inherits from the standard library
+/** \file Precision_Exception.h
+ *  An exception type that inherits from the standard library
  *  std::exception class. For debugging, this exception class
- *  provide an error code and a message that includes the name
+ *  provides an error code and a message that includes the name
  *  of the function that threw the exception and a brief description
  *  of what the error was. 
  */

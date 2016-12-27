@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reciprocate',['reciprocate',['../_precision___shared___helpers_8h.html#a4df51896de77d46bc0a7056962c46915',1,'Precision::Helper']]]
+  ['parse',['parse',['../_precision___int___operations___img_8h.html#a63d47521d2eae7dd3e17adb2e4c8609c',1,'Precision::Volatile::Int_Operations::Img']]]
 ];

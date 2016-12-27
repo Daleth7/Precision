@@ -23,7 +23,7 @@ namespace Precision{
                         ++i
                     ){
                         s2 = digs;
-                        std::advance(s2, num.digit_10(i-1));
+                        std::advance(s2, num.digit(i-1));
                         toreturn[toreturn.size()-i] = *s2;
                     }
                     return toreturn;
@@ -39,25 +39,46 @@ namespace Precision{
                     typedef typename IntType::str_type str_type;
                     if(num.is_zero())
                         return str_type(1, *syms) + str_type(1, *digs);
+
+                    // Move to the exponent symbol
                     CharTIterator s2(syms);
                     std::advance(s2, 3);
+
                     if(num.count_digits() < 2)
                         //Display +#E0
                         return  str(num, digs, syms)
                                 + str_type(1, *s2) + str_type(1, *digs);
 
-                    std::advance(s2, -1);
+                    // Start with the basic stringification of the number
                     str_type toreturn(str(num, digs, syms));
+
+                    // Calculate exponent number
                     typename IntType::size_type exp(toreturn.size() - 2);
+
+                    // Move to and insert the point symbol
+                    std::advance(s2, -1);
                     toreturn.insert(2, 1, *s2);
+
+                    // Remove glyphs according to specified precision
                     if(prec < exp)
                         toreturn.erase(3+prec);
                     if(toreturn.back() == *s2)
                         toreturn.pop_back();
+
+                    // Move back to the exponent symbol and append to base
                     std::advance(s2, 1);
-                    toreturn    += str_type(1, *s2)
-                                + str(Math::Helper::cast(num, exp), digs, syms)
-                                . substr(1);
+                    toreturn += str_type(1, *s2);
+
+                    // Convert the exponent number to a string and append
+                    str_type exp_str;
+                    do{
+                        s2 = digs;
+                        std::advance(s2, exp % num.base());
+                        exp_str.insert(exp_str.begin(), *s2);
+
+                        exp /= num.base();
+                    }while(exp > 0);
+                    toreturn += exp_str;
 
                     return toreturn;
                 }
@@ -83,7 +104,6 @@ namespace Precision{
                 template <typename IntType, typename CharTIterator>
                 void parse( const typename IntType::str_type& src,
                             typename IntType::diglist_type& new_list,
-                            typename IntType::sign_type& new_sign,
                             typename IntType::digit_type base,
                             const CharTIterator dig_glyphs
                 ){
@@ -115,9 +135,6 @@ namespace Precision{
 
                         while(new_list.size() > 1 && new_list.back() == 0)
                             new_list.pop_back();
-
-                        if(new_list.size() == 1 && new_list.front() == 0)
-                            new_sign.make_positive();
                     }
                 }
             }

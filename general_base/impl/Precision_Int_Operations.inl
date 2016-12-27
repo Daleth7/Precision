@@ -5,6 +5,7 @@
 
 #include <utility>  // For std::move and std::swap
 #include <iterator> // For std::advance
+#include <cmath>    // For std::fmod
 
 namespace Precision{
     namespace Volatile{
@@ -233,7 +234,7 @@ namespace Precision{
                 IntType& lhs, IntType rhs,
                 std::function<bool(bool, bool)>&& condition
             ){
-                IntType toreturn(Helper::make_zero_temp(orig));
+                IntType toreturn(Helper::make_zero_temp(lhs));
                 typedef typename IntType::size_type size_type;
                 typedef typename IntType::sign_type sign_type;
                 size_type i(0);
@@ -242,8 +243,8 @@ namespace Precision{
                                  : 1
                                  );
 
-                const IntType z_(Helper::make_zero_temp(orig)),
-                              two_(Helper::make_two_temp(orig))
+                const IntType z_(Helper::make_zero_temp(lhs)),
+                              two_(Helper::make_two_temp(lhs))
                               ;
 
                 while(lhs != z_ || rhs != z_){
@@ -312,7 +313,7 @@ namespace Precision{
                     {return std::fmod(base - 1 - l1);};
                 auto and_oper = [base](ld l1, ld l2)
                     {return std::fmod((l1 * l2), base);};
-                auto or_oper = [base](ld l1, ld l2)
+                auto or_oper = [base, compl_oper, and_oper](ld l1, ld l2)
                     {return compl_oper(and_oper(compl_oper(l1), compl_oper(l2)));};
                 auto xor_oper = [base](ld l1, ld l2)
                     {return std::fmod((l1 + l2), base);};
@@ -449,7 +450,7 @@ namespace Precision{
                     //Exponentiation by squaring
                     if(Helper::is_even(e))
                         return exponentiate( (operand * operand),
-                            (Helper::halve(e), std::true_type() );
+                            Helper::halve(e), std::true_type() );
                     else
                         return operand * exponentiate( operand,
                             (e - Helper::make_one_temp(e)), std::true_type() );
@@ -501,16 +502,18 @@ namespace Precision{
                 if(&lhs == &rhs)                            return 0;
                 else if(lhs.sign() < rhs.sign())            return -1;
                 else if(lhs.sign() > rhs.sign())            return 1;
-                const typename IntType::diglist_type diglist1(lhs.digit_list()),
-                                                     diglist2(rhs.digit_list())
-                                                     ;
-                if(diglist1 == diglist2)                    return 0;
-                else if( lhs.is_negative() &&
-                         diglist1.size() > diglist2.size()
-                         )                                  return -1;
+                using list_type = typename IntType::diglist_type;
+                const list_type& diglist1(lhs.digit_list()),
+                                 diglist2(rhs.digit_list())
+                                 ;
+                if( lhs.is_negative() &&
+                    diglist1.size() > diglist2.size()
+                    )                                       return -1;
                 else if( lhs.is_negative() &&
                          diglist1.size() < diglist2.size()
                          )                                  return 1;
+                return lhs.sign().value() * compare_lists(diglist1, diglist2);
+/*
                 else if(diglist1.size() < diglist2.size())  return -1;
                 else if(diglist1.size() > diglist2.size())  return 1;
                 for( auto titer(diglist1.crbegin()), siter(diglist2.crbegin());
@@ -521,6 +524,7 @@ namespace Precision{
                     else if(*titer > *siter)    return  lhs.sign().value();
                 }
                 return 0;
+*/
             }
 
             template <typename DigListType>

@@ -1,0 +1,41 @@
+Precision::execption [exception_test.cpp]:
+	test_type_return         	: Passed
+	test_src_return          	: Passed
+	test_what_return         	: Passed
+
+Precision::SignClass [signclass_test.cpp]:
+	test_value_positive      	: Passed ; Average execution time: 0 s
+	test_value_negative      	: Passed
+	test_is_positive         	: Passed
+	test_is_negative         	: Passed
+	test_cast                	: Passed
+	test_flip                	: Passed
+	test_assign              	: Passed
+	test_make_positive       	: Passed
+	test_make_negative       	: Passed
+
+Precision::Volatile::Int_Operations::Img [int_operations_img_test.cpp]:
+	test_str_zero            	: Passed
+	test_str                 	: Passed ; Average execution time: 1.68661e-007 s
+	test_sci_note_e0         	: Passed
+	test_sci_note_all        	: Passed ; Average execution time: 2.28219e-007 s
+	test_sci_note_lim        	: Passed ; Average execution time: 2.42232e-007 s
+	test_sci_note_w_spaces   	: Passed ; Average execution time: 3.47333e-007 s
+	test_parse_typos         	: Passed
+	test_parse               	: Passed ; Average execution time: 2.082e-007 s
+
+Precision::Volatile::Int_Operations [int_operations_test.cpp]:
+	test_complists_eq        	: Passed
+	test_complists_gr        	: Passed
+	test_complists_le        	: Passed
+	test_complists_dig_gr    	: Passed
+	test_complists_dig_le    	: Passed
+	test_complists_eq2       	: Passed
+	test_compare_eq          	: Passed
+	test_compare_sign_gr     	: Passed
+	test_compare_sign_le     	: Passed
+	test_compare_gr          	: Passed
+	test_compare_le          	: Passed
+	test_compare_eq2         	: Passed
+	test_compare_eq2         	: Passed ; Average execution time: 1.93185e-007 s
+

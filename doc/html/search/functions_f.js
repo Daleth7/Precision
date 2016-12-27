@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['what',['what',['../class_precision_1_1exception.html#a821e4d9d8cb78670968a5459b0cb2c4e',1,'Precision::exception']]]
+  ['type',['type',['../class_precision_1_1exception.html#a73e7b3a9bacce14ef9dc35bbbe0fc60e',1,'Precision::exception']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['halve',['halve',['../_precision___shared___helpers_8h.html#ace932dee355b0e77dfd62b4acb428769',1,'Precision::Helper']]]
+  ['flip',['flip',['../class_precision_1_1_sign_class.html#ac473620325414fc700da8f566eae80ef',1,'Precision::SignClass']]]
 ];

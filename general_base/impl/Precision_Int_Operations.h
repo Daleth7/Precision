@@ -28,11 +28,14 @@ namespace Precision{
              *  [TODO: Optimize algorithm to not make copies]
              *  [TODO: Optimize algorithm to avoid iterating when borrowing]
              * 
-             * \param diglist1 The digit string of the first number
-             * \param diglist2 The digit string of the second number
-             * \param sign1 The numeric sign of the first number
-             * \param sign2 The numeric sign of the second number
-             * \param base The number base of both numbers
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             *
+             *  \param diglist1 The digit string of the first number
+             *  \param diglist2 The digit string of the second number
+             *  \param sign1 The numeric sign of the first number
+             *  \param sign2 The numeric sign of the second number
+             *  \param base The number base of both numbers
              */
             template <typename IntType>
             void add( typename IntType::diglist_type& diglist1,
@@ -47,8 +50,11 @@ namespace Precision{
              *  number base information.
              *   [TODO: Optimize algorithm to make less copies]
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
              */
             template <typename IntType>
             void multiply(IntType& lhs, const IntType& rhs);
@@ -57,10 +63,13 @@ namespace Precision{
              *  and calculating the quotient and modulus. Algorithm
              * does not need number base information.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
-             * \param div_req Pointer to where quotient result is stored
-             * \param mod_req Pointer to where modulus result is stored
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
+             *  \param div_req Pointer to where quotient result is stored
+             *  \param mod_req Pointer to where modulus result is stored
              */
             template <typename IntType>
             void divide_mod( const IntType& lhs,
@@ -75,7 +84,10 @@ namespace Precision{
             /** Complement function that calculates the binary,
              *  or bitwise, complement.
              * 
-             * \param bitstring The original number
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param bitstring The original number
              */
             template <typename IntType>
             IntType bitwise_complement(const IntType& bitstring);
@@ -86,10 +98,13 @@ namespace Precision{
              *  separately. Note that this algorithm may be
              *  slower since the second integer is copied.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
-             * \param oper  A callback function that performs the
-             *              bitwise operation on each digit.
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
+             *  \param oper  A callback function that performs the
+             *               bitwise operation on each digit.
              */
             template <typename IntType>
             void bitwise_operation( IntType& lhs, IntType rhs,
@@ -99,8 +114,11 @@ namespace Precision{
             /** Binary AND operation calculated by performing
              *  x & y on each digit.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
              */
             template <typename IntType>
             void bitwise_and_eq(IntType& lhs, const IntType& rhs);
@@ -108,8 +126,11 @@ namespace Precision{
             /** Binary OR operation calculated by performing
              *  x | y on each digit.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
              */
             template <typename IntType>
             void bitwise_or_eq(IntType& lhs, const IntType& rhs);
@@ -117,8 +138,11 @@ namespace Precision{
             /** Binary XOR operation calculated by performing
              *  x ^ y on each digit.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
              */
             template <typename IntType>
             void bitwise_xor_eq(IntType& lhs, const IntType& rhs);
@@ -126,8 +150,11 @@ namespace Precision{
             /** Binary left shift operation that is equivalent to
              *  performing x *= 2 by y times.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
              */
             template <typename IntType>
             void bitwise_lshift_eq(IntType& lhs, const IntType& rhs);
@@ -135,8 +162,11 @@ namespace Precision{
             /** Binary right shift operation that is equivalent to
              *  performing x /= 2 by y times.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
              */
             template <typename IntType>
             void bitwise_rshift_eq(IntType& lhs, const IntType& rhs);
@@ -151,16 +181,19 @@ namespace Precision{
              *  separately and go through the respective bitwise
              *  operation.
              * 
-             * \param diglist1 The digit string of the first number
-             * \param diglist2 The digit string of the second number
-             * \param sign1 The numeric sign of the first number
-             * \param sign2 The numeric sign of the second number
-             * \param oper Determines which operation to perform
-             *          1. AND
-             *          2. OR
-             *          3. XOR
-             *          4. COMPLEMENT
-             * \param base The number base of both numbers
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param diglist1 The digit string of the first number
+             *  \param diglist2 The digit string of the second number
+             *  \param sign1 The numeric sign of the first number
+             *  \param sign2 The numeric sign of the second number
+             *  \param oper Determines which operation to perform
+             *           1. AND
+             *           2. OR
+             *           3. XOR
+             *           4. COMPLEMENT
+             *  \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_operation( typename IntType::diglist_type& diglist1,
@@ -174,11 +207,14 @@ namespace Precision{
             /** Logical base AND operation calculated by performing
              *  x * y on each digit.
              * 
-             * \param diglist1 The digit string of the first number
-             * \param diglist2 The digit string of the second number
-             * \param sign1 The numeric sign of the first number
-             * \param sign2 The numeric sign of the second number
-             * \param base The number base of both numbers
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param diglist1 The digit string of the first number
+             *  \param diglist2 The digit string of the second number
+             *  \param sign1 The numeric sign of the first number
+             *  \param sign2 The numeric sign of the second number
+             *  \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_and(   typename IntType::diglist_type& diglist1,
@@ -191,11 +227,14 @@ namespace Precision{
             /** Logical base OR operation that is equivalent to
              *  COMPL( AND( COMPL(x), COMPL(y) ) )
              * 
-             * \param diglist1 The digit string of the first number
-             * \param diglist2 The digit string of the second number
-             * \param sign1 The numeric sign of the first number
-             * \param sign2 The numeric sign of the second number
-             * \param base The number base of both numbers
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param diglist1 The digit string of the first number
+             *  \param diglist2 The digit string of the second number
+             *  \param sign1 The numeric sign of the first number
+             *  \param sign2 The numeric sign of the second number
+             *  \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_or(    typename IntType::diglist_type& diglist1,
@@ -208,11 +247,14 @@ namespace Precision{
             /** Logical base XOR operation calculated by performing
              *  x + y on each digit.
              * 
-             * \param diglist1 The digit string of the first number
-             * \param diglist2 The digit string of the second number
-             * \param sign1 The numeric sign of the first number
-             * \param sign2 The numeric sign of the second number
-             * \param base The number base of both numbers
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param diglist1 The digit string of the first number
+             *  \param diglist2 The digit string of the second number
+             *  \param sign1 The numeric sign of the first number
+             *  \param sign2 The numeric sign of the second number
+             *  \param base The number base of both numbers
              */
             template <typename IntType>
             void logical_xor(   typename IntType::diglist_type& diglist1,
@@ -225,9 +267,12 @@ namespace Precision{
             /** Complement function that is relative to the
              *  number base of the IntType object.
              * 
-             * \param diglist The digit string of the integer
-             * \param int_sign The numerical sign of the integer
-             * \param base The number base of the integer
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param diglist The digit string of the integer
+             *  \param int_sign The numerical sign of the integer
+             *  \param base The number base of the integer
              */
             template <typename IntType>
             void logical_complement( typename IntType::diglist_type& diglist,
@@ -240,9 +285,12 @@ namespace Precision{
              *  function does not support floating point
              *  exponents.
              * 
-             * \param base The number to exponentiate
-             * \param exp The exponent integer
-             * \return The result of POWER(base, exp)
+             *  \tparam Number_Type Type of the first number
+             *  \tparam Number_Type2 Type of the second number
+             * 
+             *  \param base The number to exponentiate
+             *  \param exp The exponent integer
+             *  \return The result of POWER(base, exp)
              */
             template <typename Number_Type, typename Number_Type2>
             Number_Type exponentiate( const Number_Type& base,
@@ -256,12 +304,24 @@ namespace Precision{
             /** Comparison function that determines which integer is
              *  greater than the other.
              * 
-             * \param lhs The first integer
-             * \param rhs The second integer
-             * \return  Representation of which number is greater:
-             *          * -1 : lhs < rhs (less than)
-             *          *  0 : rhs == lhs (equivalent)
-             *          * +1 : lhs > rhs (greater than)
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted. It is assumed
+             *                  that this type supports the following:
+             *                      * Type IntType::diglist_type
+             *                      * Method sign_type IntType::sign()
+             *                      * Method diglist_type IntType::digit_list()
+             *                      * Method size_type DigListType::size()
+             *                      * Method const_iterator diglist_type::crbegin()
+             *                      * Method const_iterator diglist_type::crend()
+             *                      * Method bool IntType::is_negative()
+             *                      * Method bool sign_type::value()
+             * 
+             *  \param lhs The first integer
+             *  \param rhs The second integer
+             *  \return  Representation of which number is greater:
+             *           * -1 : lhs < rhs (less than)
+             *           *  0 : rhs == lhs (equivalent)
+             *           * +1 : lhs > rhs (greater than)
              */
             template <typename IntType>
             short compare(const IntType& lhs, const IntType& rhs);
@@ -270,12 +330,20 @@ namespace Precision{
              *  Because there is no numerical sign information, this
              *  is a comparison of the numbers' magnitudes.
              * 
-             * \param diglist1 The digit string of the first number
-             * \param diglist2 The digit string of the second number
-             * \return  Representation of which number is greater:
-             *          * -1 : lhs < rhs (less than)
-             *          *  0 : rhs == lhs (equivalent)
-             *          * +1 : lhs > rhs (greater than)
+             *  \tparam DigListType Type of the STL compliant container
+             *                      holding the digits of a number. It
+             *                      is assumed that this type supports
+             *                      the following:
+             *                      * Method size_type DigListType::size()
+             *                      * Method const_iterator DigListType::crbegin()
+             *                      * Method const_iterator DigListType::crend()
+             * 
+             *  \param diglist1 The digit string of the first number
+             *  \param diglist2 The digit string of the second number
+             *  \return  Representation of which number is greater:
+             *           * -1 : lhs < rhs (less than)
+             *           *  0 : rhs == lhs (equivalent)
+             *           * +1 : lhs > rhs (greater than)
              */
             template <typename DigListType>
             short compare_lists( const DigListType& diglist1,
@@ -284,10 +352,17 @@ namespace Precision{
 
             /** Helper function to tell if a number is basically 0.
              * 
-             * \param diglist The digit string of the number
-             * \return  Whether or not the list contains only {0}.
-             *          Note that an empty list or a list with more
-             *          than one 0's do not count.
+             *  \tparam DigListType Type of the STL compliant container
+             *                      holding the digits of a number. It
+             *                      is assumed that this type supports
+             *                      the following:
+             *                          * Method size_type DigListType::size()
+             *                          * Method digit_type DigListType::front()
+             * 
+             *  \param diglist The digit string of the number
+             *  \return  Whether or not the list contains only {0}.
+             *           Note that an empty list or a list with more
+             *           than one 0's do not count.
              */
             template <typename DigListType>
             bool is_zero_list(const DigListType& diglist);
