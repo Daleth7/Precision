@@ -7,6 +7,8 @@
 #include <iterator> // For std::advance
 #include <cmath>    // For std::fmod
 
+#include <fstream>
+
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
@@ -14,7 +16,7 @@ namespace Precision{
             template <typename IntType>
             void add(
                 typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
+                const typename IntType::diglist_type& diglist2,
                 typename IntType::sign_type& sign1,
                 typename IntType::sign_type sign2,
                 typename IntType::digit_type base
@@ -27,55 +29,76 @@ namespace Precision{
                     return;
                 }
 
-                // Make sure the string to add against has the longest length
-                using std::swap;
-                if(compare_lists(diglist1, diglist2) == -1){
-                    swap(diglist1, diglist2);
-                    swap(sign1, sign2);
-                }
-                // Make sure both strings have the same length
-                while(diglist2.size() < diglist1.size()) diglist2.push_back(0);
+                // Determine which number is larger
+                short comp = compare_lists(diglist1, diglist2);
 
-                if(sign1.is_negative()) sign2.negate();
+                using ld_type = typename IntType::catalyst_type;
 
-                // Perform elementary addition with borrowing and carrying
-                typename IntType::digit_type carry(0);
-                auto biter(diglist1.begin()), siter(diglist2.begin());
-                for(; siter != diglist2.end(); ++biter, ++siter){
-                    typename IntType::ld catalyst(*biter+(*siter)*sign2+carry);
+                // Iterate through each digit and add, carry, and borrow as needed
+                bool fend = false, send = false;// Track when iterators reach the end
+                auto dend1 = diglist1.end(), dend2 = diglist2.end();
+                bool borrowed = false;
+                ld_type carry = 0;
+                for( auto fit(diglist1.begin()), sit(diglist2.begin())
+                     ; !(fend = (fit == dend1)) && sit != dend2
+                     ;
+                ){
+                    // Deal with "additions" after iterating past the end
+                    if(send) break;
 
-                    //Carry a number
-                    carry = (catalyst>=base);
-                    catalyst -= base*(catalyst>=base);
-
-                    //Borrow a number
-                    auto bcopy(biter);  ++bcopy;
-                    if(catalyst < 0 && bcopy != diglist1.end()){
-                        --(*bcopy), catalyst += base;
-                        auto bcopy2(bcopy), bcopy3(bcopy);
-                        while(*bcopy3 < 0 && (++bcopy2) != diglist1.end())
-                            *(bcopy3++) += base, --(*bcopy2);
-    /*
-            //Improper way to handle error: -1 for left-most digit_type
-            //  Code still here in case issue props up again
-            //  Still need to find out how this situation occurs
-                        if(*bcopy3 < 0){
-                            *bcopy3 += base;
-                            sign1.negate();
-                        }
-    */
+                    // Perform main addition
+                    ld_type operand1 = sign1 * (fend ? 0 : *fit),
+                            operand2 = sign2 * (send ? 0 : *sit)
+                            ;
+                    // Deal with borrowing
+                    if(comp < 0 && *fit != 0 && *sit == 0 && sign2.is_negative()){
+                        operand2 -= base;
+                        borrowed = true;
+                    }
+                    if(comp > 0 && *fit == 0 && *sit != 0 && sign1.is_negative()){
+                        operand1 -= base;
+                        borrowed = true;
                     }
 
-                    *biter = catalyst;
-
-                    // Deal with a leftover carry at the end of the summation
-                    if(carry > 0 && bcopy == diglist1.end()){
-                        diglist1.push_back(carry);
-                        break;
+                    // Perform the main addition between two digits
+                    ld_type catalyst = operand1
+                                     + operand2
+                                     + carry
+                                     ;
+                    if(borrowed){
+                        catalyst *= -1;
+                        carry = 1;
                     }
+
+                    // Deal with carrying and borrowing
+                    if(base <= catalyst){
+                        catalyst -= base;
+                        carry = 1;
+                    } else if(catalyst < 0){
+                        catalyst += base;
+                        carry = -1;
+                    } else if(!borrowed){
+                        carry = 0;
+                    }
+
+                    // Store calculated sum into first digit list
+                    if(fend) diglist1.push_back(catalyst);
+                    else     *fit = catalyst;
+
+                    // Update iterators as needed
+                    if(!fend) ++fit;
+                    if(!send) ++sit;
                 }
 
-                // Remove excess 0'rhs
+                // Deal with over and underflow
+                if(carry > 0 && !borrowed){
+                    diglist1.push_back(1);
+                }
+
+                // Store the final numerical sign
+                if(comp < 0) sign1 = sign2;
+
+                // Remove excess 0's
                 while(diglist1.size() > 1 && diglist1.back() == 0)
                     diglist1.pop_back();
             }
@@ -308,21 +331,21 @@ namespace Precision{
                                  diglist1.size() - diglist2.size(),
                                  0
                                  );
-                typedef typename IntType::ld ld;
-                auto compl_oper = [base](ld l1)
+                typedef typename IntType::catalyst_type catalyst_type;
+                auto compl_oper = [base](catalyst_type l1)
                     {return std::fmod(base - 1 - l1);};
-                auto and_oper = [base](ld l1, ld l2)
+                auto and_oper = [base](catalyst_type l1, catalyst_type l2)
                     {return std::fmod((l1 * l2), base);};
-                auto or_oper = [base, compl_oper, and_oper](ld l1, ld l2)
+                auto or_oper = [base, compl_oper, and_oper](catalyst_type l1, catalyst_type l2)
                     {return compl_oper(and_oper(compl_oper(l1), compl_oper(l2)));};
-                auto xor_oper = [base](ld l1, ld l2)
+                auto xor_oper = [base](catalyst_type l1, catalyst_type l2)
                     {return std::fmod((l1 + l2), base);};
 
                 for( auto biter(diglist1.begin()), siter(diglist2.begin());
                      siter != diglist2.end();
                      ++biter, ++siter
                 ){
-                    typename IntType::ld bld_temp(*biter), sld_temp(*siter);
+                    typename IntType::catalyst_type bld_temp(*biter), sld_temp(*siter);
                     switch(oper){
                         case 1:
                             *biter = and_oper(bld_temp, sld_temp);
@@ -513,18 +536,6 @@ namespace Precision{
                          diglist1.size() < diglist2.size()
                          )                                  return 1;
                 return lhs.sign().value() * compare_lists(diglist1, diglist2);
-/*
-                else if(diglist1.size() < diglist2.size())  return -1;
-                else if(diglist1.size() > diglist2.size())  return 1;
-                for( auto titer(diglist1.crbegin()), siter(diglist2.crbegin());
-                     titer != diglist1.crend();
-                     ++titer, ++siter
-                ){
-                    if(*titer < *siter)         return -lhs.sign().value();
-                    else if(*titer > *siter)    return  lhs.sign().value();
-                }
-                return 0;
-*/
             }
 
             template <typename DigListType>

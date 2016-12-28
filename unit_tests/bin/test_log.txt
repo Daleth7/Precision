@@ -1,4 +1,0 @@
-	Test #0 (File = exception_test.cpp | Line = 15): Passed
-	Test #1 (File = exception_test.cpp | Line = 16): Passed
-	Test #2 (File = exception_test.cpp | Line = 17): Passed
-	Test #0 (File = signclass_test.cpp | Line = 24): Passed

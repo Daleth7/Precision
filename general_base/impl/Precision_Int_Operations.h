@@ -25,11 +25,20 @@ namespace Precision{
             /** A simple add function taking two digit strings
              *  and calculating the sum. Note that the operation
              *  may be slow since the second digit string is copied.
-             *  [TODO: Optimize algorithm to not make copies]
-             *  [TODO: Optimize algorithm to avoid iterating when borrowing]
              * 
              *  \tparam IntType Number type from which type and base
-             *                  information is extracted.
+             *                  information is extracted. This function
+             *                  assumes IntType has the public members:
+             *                  * Type IntType::diglist_type
+             *                  * Type IntType::sign_type
+             *                  * Type IntType::digit_type
+             *                  * Type IntType::catalyst_type
+             *                  * Method iterator diglist_type::begin()
+             *                  * Method iterator diglist_type::end()
+             *                  * Method size_type diglist_type::size()
+             *                  * Method void diglist_type::push_back()
+             *                  * Method void diglist_type::pop_back()
+             *                  * Method digit_type diglist_type::back()
              *
              *  \param diglist1 The digit string of the first number
              *  \param diglist2 The digit string of the second number
@@ -39,7 +48,7 @@ namespace Precision{
              */
             template <typename IntType>
             void add( typename IntType::diglist_type& diglist1,
-                      typename IntType::diglist_type diglist2,
+                      const typename IntType::diglist_type& diglist2,
                       typename IntType::sign_type& sign1,
                       typename IntType::sign_type sign2,
                       typename IntType::digit_type base

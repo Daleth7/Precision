@@ -167,10 +167,7 @@ class test_and_log_util {
         str_type  m_file_src;
 };
 
-#include <list>
 #include <fstream>
-
-using test_list_collection = std::list<test_and_log_util>;
 
 extern std::ostream& test_console;
 extern std::ofstream test_log;

@@ -16,13 +16,13 @@ Precision::SignClass [signclass_test.cpp]:
 
 Precision::Volatile::Int_Operations::Img [int_operations_img_test.cpp]:
 	test_str_zero            	: Passed
-	test_str                 	: Passed ; Average execution time: 1.68661e-007 s
+	test_str                 	: Passed ; Average execution time: 1.40635e-007 s
 	test_sci_note_e0         	: Passed
-	test_sci_note_all        	: Passed ; Average execution time: 2.28219e-007 s
-	test_sci_note_lim        	: Passed ; Average execution time: 2.42232e-007 s
-	test_sci_note_w_spaces   	: Passed ; Average execution time: 3.47333e-007 s
+	test_sci_note_all        	: Passed ; Average execution time: 2.32223e-007 s
+	test_sci_note_lim        	: Passed ; Average execution time: 2.37227e-007 s
+	test_sci_note_w_spaces   	: Passed ; Average execution time: 3.4433e-007 s
 	test_parse_typos         	: Passed
-	test_parse               	: Passed ; Average execution time: 2.082e-007 s
+	test_parse               	: Passed ; Average execution time: 2.27718e-007 s
 
 Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_complists_eq        	: Passed
@@ -37,5 +37,12 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_compare_gr          	: Passed
 	test_compare_le          	: Passed
 	test_compare_eq2         	: Passed
-	test_compare_eq2         	: Passed ; Average execution time: 1.93185e-007 s
+	test_compare_eq2         	: Passed ; Average execution time: 1.4614e-007 s
+	test_add_list2_eq0       	: Passed
+	test_add_list1_eq0       	: Passed
+	test_add_le              	: Passed
+	test_add                 	: Passed ; Average execution time: 1.08054e-006 s
+	test_sub_gr              	: Passed
+	test_sub_neg             	: Passed
+	test_sub                 	: Passed ; Average execution time: 9.77937e-007 s
 
