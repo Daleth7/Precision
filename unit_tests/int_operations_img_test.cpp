@@ -56,7 +56,7 @@ void image_operations_test(){
     test_and_log_util test_list("Precision::Volatile::Int_Operations::Img", __FILE__);
         test_list.set_log_output(test_log);
         test_list.set_console_output(test_console);
-        test_list.set_assert(false);
+        test_list.set_assert(true);
 
     ADD_TEST(test_list, test_str_zero);
     ADD_TEST_BOTH( test_list,
@@ -190,6 +190,7 @@ void test_sci_note_w_spaces_speed(test_and_log_util::out_type&){
 test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&){
     Fake_Int::str_type image = "-1230a45b 607n890";
     Fake_Int storage;
+    storage.positivity = true;
     Precision::Volatile::Int_Operations::Img::parse<Fake_Int>
         (image, storage.number, Fake_Int::base(), digs);
 
@@ -203,6 +204,7 @@ test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&){
 test_and_log_util::result_type test_parse(test_and_log_util::out_type&){
     Fake_Int::str_type image = "123045607890";
     Fake_Int storage;
+    storage.positivity = true;
     Precision::Volatile::Int_Operations::Img::parse<Fake_Int>
         (image, storage.number, Fake_Int::base(), digs);
 

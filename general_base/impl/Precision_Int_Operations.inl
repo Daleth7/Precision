@@ -7,8 +7,6 @@
 #include <iterator> // For std::advance
 #include <cmath>    // For std::fmod
 
-#include <fstream>
-
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
@@ -30,34 +28,45 @@ namespace Precision{
                 }
 
                 // Determine which number is larger
+                //short comp = compare_lists(diglist1, diglist2);
                 short comp = compare_lists(diglist1, diglist2);
+                bool sign_neq = sign1.value() != sign2.value();
 
                 using ld_type = typename IntType::catalyst_type;
 
                 // Iterate through each digit and add, carry, and borrow as needed
-                bool fend = false, send = false;// Track when iterators reach the end
+                bool fend(false);// Track when iterator reach the end
                 auto dend1 = diglist1.end(), dend2 = diglist2.end();
                 bool borrowed = false;
                 ld_type carry = 0;
                 for( auto fit(diglist1.begin()), sit(diglist2.begin())
-                     ; !(fend = (fit == dend1)) && sit != dend2
+                     ; !( (fend = (fit == dend1)) && (sit == dend2) )
                      ;
                 ){
-                    // Deal with "additions" after iterating past the end
-                    if(send) break;
-
-                    // Perform main addition
+                    // Determine each digit to add based on if the end of
+                    //  the digit list is reached
                     ld_type operand1 = sign1 * (fend ? 0 : *fit),
-                            operand2 = sign2 * (send ? 0 : *sit)
+                            operand2 = sign2 * ((sit != dend2) ? *sit : 0)
                             ;
-                    // Deal with borrowing
-                    if(comp < 0 && *fit != 0 && *sit == 0 && sign2.is_negative()){
-                        operand2 -= base;
-                        borrowed = true;
-                    }
-                    if(comp > 0 && *fit == 0 && *sit != 0 && sign1.is_negative()){
-                        operand1 -= base;
-                        borrowed = true;
+
+                    // Deal with borrowing when there is a 0-x case
+                    if(sign_neq){
+                        // -operand1 + 0
+                        if( comp < 0
+                            && *fit != 0 && *sit == 0
+                            && sign2.is_negative()
+                            ){
+                            operand2 -= base;
+                            borrowed = true;
+                        }
+                        // 0 - operand2
+                        if( comp > 0
+                            && *fit == 0 && *sit != 0
+                            && sign1.is_negative()
+                            ){
+                            operand1 -= base;
+                            borrowed = true;
+                        }
                     }
 
                     // Perform the main addition between two digits
@@ -65,15 +74,21 @@ namespace Precision{
                                      + operand2
                                      + carry
                                      ;
+
                     if(borrowed){
                         catalyst *= -1;
                         carry = 1;
                     }
 
+                    if(!sign_neq){
+                        catalyst *= sign1;
+                    }
+
                     // Deal with carrying and borrowing
                     if(base <= catalyst){
+                        // Both signs must be equal for catalyst > base
                         catalyst -= base;
-                        carry = 1;
+                        carry = sign1.value();
                     } else if(catalyst < 0){
                         catalyst += base;
                         carry = -1;
@@ -87,11 +102,11 @@ namespace Precision{
 
                     // Update iterators as needed
                     if(!fend) ++fit;
-                    if(!send) ++sit;
-                }
+                    if(sit != dend2) ++sit;
+                } // End for loop
 
                 // Deal with over and underflow
-                if(carry > 0 && !borrowed){
+                if((carry > 0 || carry < 0) && !borrowed){
                     diglist1.push_back(1);
                 }
 
@@ -101,6 +116,51 @@ namespace Precision{
                 // Remove excess 0's
                 while(diglist1.size() > 1 && diglist1.back() == 0)
                     diglist1.pop_back();
+            }
+
+            template <typename IntType>
+            void multiply_diglist(IntType& num, typename IntType::digit_type fac){
+                // Deal with trivial multiplications if fac is 0 or 1
+                if(fac == 0){
+                    Helper::make_zero(num);
+                    return;
+                } else if(fac == 1){
+                    return;
+                }
+
+                const typename IntType::digit_type base = num.base();
+
+                fac %= base; // Make sure factor is limited
+
+                using ld_type = typename IntType::catalyst_type;
+                using size_type = typename IntType::size_type;
+
+                // Iterate through each digit and add and carry
+                ld_type carry = 0;
+                for( size_type i = 0; i < num.count_digits(); ++i){
+
+                    // Perform main addition
+                    ld_type dig = num.digit(i);
+                    ld_type catalyst = carry + fac * dig;
+
+                    // Deal with carrying
+                    if(base <= catalyst){
+                        carry = catalyst / base;
+                        catalyst = std::fmod(catalyst, base);
+                    } else {
+                        carry = 0;
+                    }
+
+                    // Store calculated product into number
+                    num.digit(i, catalyst);
+                }
+
+                // Deal with overflow
+                typename IntType::digit_type carry_int = carry;
+                while(carry_int > 0){
+                    num.append(carry_int % base);
+                    carry_int /= base;
+                }
             }
 
             template <typename IntType>
@@ -123,41 +183,34 @@ namespace Precision{
                     return;
                 }
 
-                // Determine final numeric sign first
                 typedef typename IntType::sign_type sign_type;
                 typedef typename IntType::size_type size_type;
-                typedef typename IntType::digit_type digit_type;
+
+                // Determine final numeric sign first
                 sign_type sign_hold(lhs.sign() * rhs.sign());
 
+                // Make a copy of the original number since original will
+                //  be cleared later on.
                 IntType big(lhs);
 
                 // To reduce number of additions, tally the number
                 //  of zeros to append later.
-                size_type z_count(0);
-                while(big.count_digits() > 0 && big.digit_10(0) == 0)
-                    big.shift_right(1), ++z_count;
-                size_type i(0);
-                for(; i < rhs.count_digits() && rhs.digit_10(i) == 0; ++i)
-                    ++z_count;
-                const size_type s_count = i;
-                if(Helper::is_zero(big)){
-                    Helper::make_zero(lhs);
-                    return;
-                }
+                size_type total_z_count(0), idx = 0;
 
                 // Perform elementary multiplication using additions
+                const size_type rhs_z_count = idx;
                 Helper::make_zero(lhs);
-                for(; i < rhs.count_digits(); ++i){
-                    IntType addend(Helper::make_zero_temp(lhs));
-                    digit_type operand(rhs.digit_10(i));
-                    while(operand-- > 0)
-                        addend += big;
-                    addend.shift_left(i-s_count);
+                for(; idx < rhs.count_digits(); ++idx){
+                    IntType addend(big);
+                    multiply_diglist(addend, rhs.digit(idx));
+
+                    addend.shift_left(idx-rhs_z_count);
+
                     lhs += addend;
                 }
 
                 // Append the zeros and use the new numeric sign now
-                lhs.shift_left(z_count);
+                lhs.shift_left(total_z_count);
                 lhs.sign(sign_hold);
             }
 
@@ -539,9 +592,7 @@ namespace Precision{
             }
 
             template <typename DigListType>
-            short compare_lists
-                (const DigListType& d1, const DigListType& d2)
-            {
+            short compare_lists (const DigListType& d1, const DigListType& d2){
                 //Because this is only the digit list, it is assumed
                 //  the magnitudes are being compared.
                 if(&d1 == &d2)                  return 0;
@@ -561,6 +612,14 @@ namespace Precision{
             template <typename DigListType>
             bool is_zero_list(const DigListType& d)
                 {return d.size() == 1u && d.front() == 0;}
+
+            template <typename DigListType, typename SignType>
+            bool is_one_list(const DigListType& d, const SignType& s)
+                {return d.size() == 1u && d.front() == 1 && s.is_positive();}
+
+            template <typename DigListType, typename SignType>
+            bool is_neg_one_list(const DigListType& d, const SignType& s)
+                {return d.size() == 1u && d.front() == 1 && s.is_negative();}
         }
     }
 }

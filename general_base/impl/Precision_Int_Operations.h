@@ -9,6 +9,8 @@
  * The algorithms are placed under the Volatile namespace since
  * they require the number base to be passed as a parameter to
  * correctly run the algorithm.
+ * Most of the algorithms in here will, instead of returning a
+ * copy of the result, will store the result in the first parameter.
  */
 
 
@@ -53,6 +55,26 @@ namespace Precision{
                       typename IntType::sign_type sign2,
                       typename IntType::digit_type base
                       );
+
+            /** A helper multiply function that acts as an accumulation
+             *  function.
+             * 
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted. IntType is
+             *                  is assumed to support the following:
+             *                  * Type IntType::digit_type
+             *                  * Type IntType::catalyst_type
+             *                  * Method digit_type base()
+             *                  * Method size_type digit_count()
+             *                  * Method digit_type& digit(size_type)
+             *                  * Method void append(digit_type)
+             * 
+             *  \param num The integer to multiply
+             *  \param fac The single digit multiplication factor that
+             *             belongs in the range [0, base-1]
+             */
+            template <typename IntType>
+            void multiply_diglist(IntType& num, typename IntType::digit_type fac);
 
             /** A simple multiply function taking two digit strings
              *  and calculating the product. Algorithm does not need
@@ -375,6 +397,43 @@ namespace Precision{
              */
             template <typename DigListType>
             bool is_zero_list(const DigListType& diglist);
+
+            /** Helper function to tell if a number is basically 1.
+             * 
+             *  \tparam DigListType Type of the STL compliant container
+             *                      holding the digits of a number. It
+             *                      is assumed that this type supports
+             *                      the following:
+             *                          * Method size_type DigListType::size()
+             *                          * Method digit_type DigListType::front()
+             *  \tparam SignType Type representing the numerical sign. It is
+             *                   assumed that this type supports:
+             *                      * bool SignType::is_positive()
+             * 
+             *  \param diglist The digit string of the number
+             *  \return  Whether or not the list contains only {1}.
+             */
+            template <typename DigListType, typename SignType>
+            bool is_one_list(const DigListType& diglist, const SignType& sign);
+
+            /** Helper function to tell if a number is basically -1.
+             * 
+             *  \tparam DigListType Type of the STL compliant container
+             *                      holding the digits of a number. It
+             *                      is assumed that this type supports
+             *                      the following:
+             *                          * Method size_type DigListType::size()
+             *                          * Method digit_type DigListType::front()
+             *  \tparam SignType Type representing the numerical sign. It is
+             *                   assumed that this type supports:
+             *                      * bool SignType::is_negative()
+             * 
+             *  \param diglist The digit string of the number
+             *  \return  Whether or not the list contains only {1}
+             *           and the sign is negative.
+             */
+            template <typename DigListType, typename SignType>
+            bool is_neg_one_list(const DigListType& diglist, const SignType& sign);
         }
     }
 }

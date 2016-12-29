@@ -1,9 +1,9 @@
 #define TEST_EXCEPTION
 #define TEST_SIGNCLASS
-#define TEST_IMG_OPERATIONS
+//#define TEST_IMG_OPERATIONS
 #define TEST_INT_OPERATIONS
 
-#define DEFAULT_TEST
+//#define DEFAULT_TEST
 //#define TEST_RANDOM
 //#define TEST_SPEED
 //#define TEST_TRIGO
