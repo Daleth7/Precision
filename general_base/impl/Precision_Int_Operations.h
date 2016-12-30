@@ -25,8 +25,9 @@ namespace Precision{
         namespace Int_Operations {
             // Arithmetic operators
             /** A simple add function taking two digit strings
-             *  and calculating the sum. Note that the operation
-             *  may be slow since the second digit string is copied.
+             *  and calculating the sum. This function is kept here
+             *  if another function needs to pass the digit lists and
+             *  signs directly. Otherwise, add() is preferred.
              * 
              *  \tparam IntType Number type from which type and base
              *                  information is extracted. This function
@@ -49,12 +50,40 @@ namespace Precision{
              *  \param base The number base of both numbers
              */
             template <typename IntType>
-            void add( typename IntType::diglist_type& diglist1,
+            void add_diglist( typename IntType::diglist_type& diglist1,
                       const typename IntType::diglist_type& diglist2,
                       typename IntType::sign_type& sign1,
                       typename IntType::sign_type sign2,
                       typename IntType::digit_type base
                       );
+
+            /** A simple add function taking two integers
+             *  and calculating the sum.
+             * 
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted. This function
+             *                  assumes IntType has the public members:
+             *                  * Type IntType::diglist_type
+             *                  * Type IntType::sign_type
+             *                  * Type IntType::size_type
+             *                  * Type IntType::digit_type
+             *                  * Type IntType::catalyst_type
+             *                  * Method bool IntType::is_zero()
+             *                  * Method digit_type IntType::digit(size_type)
+             *                  * Method diglist_type IntType::digit_list()
+             *                  * Method size_type IntType::count_digits()
+             *                  * Method sign_type IntType::sign()
+             *                  * Method digit_type IntType::base()
+             *                  * Method void IntType::append()
+             *                  * Method void IntType::detach(digit_type)
+             *                  * Method void IntType::digit(size_type, digit_type)
+             *                  * Method sign_type IntType::sign(sign_type)
+             *
+             *  \param lhs The first number to add and in which to store the sum
+             *  \param rhs The second number to add
+             */
+            template <typename IntType>
+            void add(IntType& lhs, const IntType& rhs);
 
             /** A helper multiply function that acts as an accumulation
              *  function.

@@ -6,13 +6,14 @@
 #include <utility>  // For std::move and std::swap
 #include <iterator> // For std::advance
 #include <cmath>    // For std::fmod
+#include <vector>
 
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
             //Arithmetic operators
             template <typename IntType>
-            void add(
+            void add_diglist(
                 typename IntType::diglist_type& diglist1,
                 const typename IntType::diglist_type& diglist2,
                 typename IntType::sign_type& sign1,
@@ -22,13 +23,12 @@ namespace Precision{
                 // Deal with cases where the number is equal to 0
                 if(is_zero_list(diglist2)) return;
                 if(is_zero_list(diglist1)){
-                    diglist1 = std::move(diglist2);
+                    diglist1 = diglist2;
                     sign1 = sign2;
                     return;
                 }
 
                 // Determine which number is larger
-                //short comp = compare_lists(diglist1, diglist2);
                 short comp = compare_lists(diglist1, diglist2);
                 bool sign_neq = sign1.value() != sign2.value();
 
@@ -118,6 +118,107 @@ namespace Precision{
                     diglist1.pop_back();
             }
 
+            //Arithmetic operators
+            template <typename IntType>
+            void add(IntType& lhs, const IntType& rhs){
+                // Deal with cases where the number is equal to 0
+                if(Helper::is_zero(rhs)) return;
+                if(Helper::is_zero(lhs)){
+                    lhs = rhs;
+                    return;
+                }
+
+                // Determine which number is larger
+                short comp = compare_lists(lhs.digit_list(), rhs.digit_list());
+                bool sign_neq = lhs.sign() != rhs.sign();
+
+                using ld = typename IntType::catalyst_type;
+                using size_type = typename IntType::size_type;
+
+                // Iterate through each digit and add, carry, and borrow as needed
+                bool fend(false);// Track when iterator reach the end
+                size_type dend1 = lhs.count_digits(), dend2 = rhs.count_digits();
+                bool borrowed = false;
+                ld carry = 0;
+                for( size_type fit(0), sit(0)
+                     ; !( (fend = (fit >= dend1)) && (sit >= dend2) )
+                     ;
+                ){
+                    // Determine each digit to add based on if the end of
+                    //  the digit list is reached
+                    ld operand1 = lhs.sign() * (fend ? 0 : lhs.digit(fit)),
+                       operand2 = rhs.sign() * ((sit < dend2) ? rhs.digit(sit) : 0)
+                       ;
+
+                    // Deal with borrowing when there is a 0-x case
+                    if(sign_neq){
+                        // -operand1 + 0
+                        if( comp < 0
+                            && lhs.digit(fit) != 0 && rhs.digit(sit) == 0
+                            && rhs.sign().is_negative()
+                            ){
+                            operand2 -= lhs.base();
+                            borrowed = true;
+                        }
+                        // 0 - operand2
+                        if( comp > 0
+                            && lhs.digit(fit) == 0 && rhs.digit(sit) != 0
+                            && lhs.sign().is_negative()
+                            ){
+                            operand1 -= lhs.base();
+                            borrowed = true;
+                        }
+                    }
+
+                    // Perform the main addition between two digits
+                    ld catalyst = operand1
+                                  + operand2
+                                  + carry
+                                  ;
+
+                    if(borrowed){
+                        catalyst *= -1;
+                        carry = 1;
+                    }
+
+                    if(!sign_neq){
+                        catalyst *= lhs.sign();
+                    }
+
+                    // Deal with carrying and borrowing
+                    if(lhs.base() <= catalyst){
+                        // Both signs must be equal for catalyst > base
+                        catalyst -= lhs.base();
+                        carry = lhs.sign().value();
+                    } else if(catalyst < 0){
+                        catalyst += lhs.base();
+                        carry = -1;
+                    } else if(!borrowed){
+                        carry = 0;
+                    }
+
+                    // Store calculated sum into first digit list
+                    if(fend) lhs.append(catalyst);
+                    else     lhs.digit(fit, catalyst);
+
+                    // Update iterators as needed
+                    if(!fend) ++fit;
+                    if(sit < dend2) ++sit;
+                } // End for loop
+
+                // Deal with over and underflow
+                if((carry > 0 || carry < 0) && !borrowed){
+                    lhs.append(1);
+                }
+
+                // Store the final numerical sign
+                if(comp < 0) lhs.sign(rhs.sign());
+
+                // Remove excess 0's
+                while(lhs.count_digits() > 1 && lhs.digit(lhs.count_digits()-1) == 0)
+                    lhs.detach();
+            }
+
             template <typename IntType>
             void multiply_diglist(IntType& num, typename IntType::digit_type fac){
                 // Deal with trivial multiplications if fac is 0 or 1
@@ -137,7 +238,7 @@ namespace Precision{
 
                 // Iterate through each digit and add and carry
                 ld_type carry = 0;
-                for( size_type i = 0; i < num.count_digits(); ++i){
+                for(size_type i = 0; i < num.count_digits(); ++i){
 
                     // Perform main addition
                     ld_type dig = num.digit(i);
@@ -160,6 +261,102 @@ namespace Precision{
                 while(carry_int > 0){
                     num.append(carry_int % base);
                     carry_int /= base;
+                }
+            }
+
+            namespace Arith_Helper{
+                // Specify the minimum number of digits before the
+                // multiplication function switches algorithms
+                static constexpr std::size_t acc_sw_min = 1000;
+                template <typename IntType>
+                using bucket_type = std::vector<IntType>;
+
+                template<typename IntType>
+                void accumulate(IntType& dest, const bucket_type<IntType>& bucket){
+                    using ld_type = typename IntType::catalyst_type;
+                    using size_type = typename IntType::size_type;
+
+                    // Find the length of the longest integer
+                    size_type max_len = bucket.back().count_digits();
+                    for(const auto& num : bucket){
+                        if(num.count_digits() > max_len)
+                            max_len = num.count_digits();
+                    }
+
+                    // Take the sum of each digit place
+                    ld_type carry = 0;
+                    Helper::make_zero(dest);
+                    for(size_type i = 0; i < max_len; ++i){
+
+                        // Perform main addition
+                        ld_type catalyst = carry;
+                        for(const auto& num : bucket){
+                            if(i < num.count_digits()) catalyst += num.digit(i);
+                        }
+
+                        // Deal with carrying
+                        if(dest.base() <= catalyst){
+                            carry = catalyst / dest.base();
+                            catalyst = std::fmod(catalyst, dest.base());
+                        } else {
+                            carry = 0;
+                        }
+
+                        // Store calculated sum into number
+                        if(i >= dest.count_digits()) dest.append(catalyst);
+                        else                         dest.digit(i, catalyst);
+                    }
+
+                    // Deal with overflow
+                    while(carry > 0){
+                        dest.append(std::fmod(carry, dest.base()));
+                        carry /= dest.base();
+                    }
+                }
+
+                template <typename IntType>
+                void multiply_accumulation( IntType& lhs,
+                                            const IntType& rhs,
+                                            const IntType& base_adder,
+                                            typename IntType::size_type idx
+                ){
+                    // Perform elementary multiplication using additions
+                    // Instead of adding whole integers two at a time,
+                    // store all addends in a bucket and sum all the
+                    // digits one by one at the end.
+                    const typename IntType::size_type zeros = idx;
+                    bucket_type<IntType> bucket;
+                    for(; idx < rhs.count_digits(); ++idx){
+                        IntType addend(base_adder);
+                        multiply_diglist(addend, rhs.digit(idx));
+
+                        addend.shift_left(idx-zeros);
+
+                        bucket.emplace_back(addend);
+                    }
+
+                    accumulate(lhs, bucket);
+                }
+
+                template <typename IntType>
+                void multiply_gathering( IntType& lhs,
+                                         const IntType& rhs,
+                                         const IntType& base_adder,
+                                         typename IntType::size_type idx
+                ){
+                    using size_type = typename IntType::size_type;
+
+                    // Perform elementary multiplication using additions
+                    const size_type zeros = idx;
+                    Helper::make_zero(lhs);
+                    for(; idx < rhs.count_digits(); ++idx){
+                        IntType addend(base_adder);
+                        multiply_diglist(addend, rhs.digit(idx));
+
+                        addend.shift_left(idx-zeros);
+
+                        add(lhs, addend);
+                    }
                 }
             }
 
@@ -194,24 +391,74 @@ namespace Precision{
                 IntType big(lhs);
 
                 // To reduce number of additions, tally the number
-                //  of zeros to append later.
+                //  of zeros to attach later.
                 size_type total_z_count(0), idx = 0;
-
-                // Perform elementary multiplication using additions
-                const size_type rhs_z_count = idx;
-                Helper::make_zero(lhs);
-                for(; idx < rhs.count_digits(); ++idx){
-                    IntType addend(big);
-                    multiply_diglist(addend, rhs.digit(idx));
-
-                    addend.shift_left(idx-rhs_z_count);
-
-                    lhs += addend;
+                // Tally the zeros from lhs
+                while(big.digit(total_z_count) == 0)  ++total_z_count;
+                big.shift_right(total_z_count);
+                // Tally the zeros from rhs
+                while(rhs.digit(idx) == 0){
+                    ++total_z_count;
+                    ++idx;
                 }
 
-                // Append the zeros and use the new numeric sign now
+                //  Choose which multiplication algorithm to use based on
+                // the number of digits.
+                //  multiply_accumulation() is faster, but it stores many
+                // integers, which can take up a lot of space.
+                //  multiply_gathering() does not store more than one extra
+                // number at a time but is slower.
+                if(rhs.count_digits() < Arith_Helper::acc_sw_min)
+                    Arith_Helper::multiply_accumulation(lhs, rhs, big, idx);
+                else
+                    Arith_Helper::multiply_gathering(lhs, rhs, big, idx);
+
+                // Attach the zeros and use the new numeric sign
                 lhs.shift_left(total_z_count);
                 lhs.sign(sign_hold);
+            }
+
+            namespace Arith_Helper{
+                template <typename IntType>
+                typename IntType::size_type div_core( IntType& mod,
+                                                      const IntType& rhs
+                ){
+                    // Use factor to perform a multiplication later on
+                    typename IntType::size_type factor = 0;
+                    while(!(mod < rhs)){
+                        ++factor;
+                        mod -= rhs;
+                    }
+                    return factor;
+                }
+
+                // Accumulate or gather
+                template <typename IntType>
+                void div_acc_gath( IntType& quotient, IntType& modulus,
+                                   IntType& shifter,
+                                   typename IntType::size_type counter,
+                                   bool acc
+                ){
+                    using size_type = typename IntType::size_type;
+
+                    bucket_type<IntType> bucket;
+                    while(counter-- > 0){
+                        IntType addend(Helper::make_one_temp(modulus));
+                        addend.shift_left(counter);
+
+                        // Use factor to perform a multiplication later on
+                        size_type factor = div_core(modulus, shifter);
+
+                        // Leverage multiply_diglist() to avoid
+                        // reduce number of additions.
+                        multiply_diglist(addend, factor);
+                        if(acc) bucket.push_back(addend);
+                        else           add(quotient, addend);
+
+                        shifter.shift_right(1);
+                    }
+                    if(acc) accumulate(quotient, bucket);
+                }
             }
 
             template <typename IntType>
@@ -263,29 +510,11 @@ namespace Precision{
                                 // account for subtraction at the one's place.
                                 // This, there are always (# of divisor digits) + 1
                                 // subtractons that happen.
-                while(t_counter-- > 0){
-                    IntType addend(Helper::make_one_temp(lhs));
-                    addend.shift_left(t_counter);
-
-                    // Use factor to perform a multiplication later on
-                    size_type factor = 0;
-                    while(!(modulus < rhs_shift)){
-                        ++factor;
-                        modulus -= rhs_shift;
-                    }
-
-                    // Convert size_type to IntType. factor assumed to be < base
-                    IntType factor_precision(Helper::make_zero_temp(lhs));
-                    factor_precision.sign(1);
-                    factor_precision.digit(0, factor);
-
-                    // Leverage multiply_diglist() to avoid doing
-                    // multiple additions.
-                    multiply(addend, factor_precision);
-                    quotient += addend;
-
-                    rhs_shift.shift_right(1);
-                }
+                Arith_Helper::div_acc_gath( quotient, modulus,
+                                            rhs_shift, t_counter,
+                                            modulus.count_digits()
+                                                < Arith_Helper::acc_sw_min
+                                            );
 
                 // Determine final numerical sign
                 typename IntType::sign_type new_sign(lhs.sign() * rhs.sign());

@@ -48,8 +48,10 @@ struct Core_Int{
     size_type count_digits()const
         {return m_number.size();}
 
-    digit_type digit(size_type index)const
-        {return m_number[index];}
+    digit_type digit(size_type index)const{
+        if(index >= this->count_digits()) return 0;
+        return m_number[index];
+    }
 
     static size_type base()
         {return 10;}
@@ -103,16 +105,17 @@ struct Core_Int{
     void append(digit_type new_digit)
         {m_number.push_back(new_digit % this->base());}
 
+    void detach()
+        {m_number.pop_back();}
+
     Core_Int& operator+=(const Core_Int& rhs){
-        Precision::Volatile::Int_Operations::add<Core_Int>( m_number, rhs.m_number,
-                                                            m_sign, rhs.m_sign,
-                                                            this->base()
-                                                            );
+        Precision::Volatile::Int_Operations::add(*this, rhs);
         return *this;
     }
 
     Core_Int& operator-=(const Core_Int& rhs){
-        Precision::Volatile::Int_Operations::add<Core_Int>( m_number, rhs.m_number,
+        // Use the original add_diglist function to avoid making a copy
+        Precision::Volatile::Int_Operations::add_diglist<Core_Int>( m_number, rhs.m_number,
                                                             m_sign, -rhs.m_sign,
                                                             this->base()
                                                             );
@@ -606,12 +609,7 @@ void test_compare_speed(test_and_log_util::out_type&){
 test_and_log_util::result_type test_add_list2_eq0(test_and_log_util::out_type&){
     Core_Int add_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        zero_list_int.m_number,
-                                                        add_copy.m_sign,
-                                                        zero_list_int.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, zero_list_int);
 
     test_and_log_util::result_type res;
     res.expected = "+9876543210";
@@ -623,12 +621,7 @@ test_and_log_util::result_type test_add_list2_eq0(test_and_log_util::out_type&){
 test_and_log_util::result_type test_add_list1_eq0(test_and_log_util::out_type&){
     Core_Int add_copy = zero_list_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        all_digs_int.m_number,
-                                                        add_copy.m_sign,
-                                                        all_digs_int.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, all_digs_int);
 
     test_and_log_util::result_type res;
     res.expected = "+9876543210";
@@ -640,12 +633,7 @@ test_and_log_util::result_type test_add_list1_eq0(test_and_log_util::out_type&){
 test_and_log_util::result_type test_add_le(test_and_log_util::out_type&){
     Core_Int add_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        less_digs_int.m_number,
-                                                        add_copy.m_sign,
-                                                        less_digs_int.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, less_digs_int);
 
     test_and_log_util::result_type res;
     res.expected = "+9876586420";
@@ -657,12 +645,7 @@ test_and_log_util::result_type test_add_le(test_and_log_util::out_type&){
 test_and_log_util::result_type test_add_le2(test_and_log_util::out_type&){
     Core_Int add_copy = mult_fac1;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        mult_fac2.m_number,
-                                                        add_copy.m_sign,
-                                                        mult_fac2.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, mult_fac2);
 
     test_and_log_util::result_type res;
     res.expected = "+967901234580";
@@ -674,12 +657,7 @@ test_and_log_util::result_type test_add_le2(test_and_log_util::out_type&){
 test_and_log_util::result_type test_add(test_and_log_util::out_type&){
     Core_Int add_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        add_copy.m_number,
-                                                        add_copy.m_sign,
-                                                        add_copy.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, add_copy);
 
     test_and_log_util::result_type res;
     res.expected = "+19753086420";
@@ -691,23 +669,13 @@ test_and_log_util::result_type test_add(test_and_log_util::out_type&){
 void test_add_speed(test_and_log_util::out_type&){
     Core_Int add1_copy = speed_add_var1;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add1_copy.m_number,
-                                                        speed_add_var2.m_number,
-                                                        add1_copy.m_sign,
-                                                        speed_add_var2.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add1_copy, speed_add_var2);
 }
 
 test_and_log_util::result_type test_sub_gr(test_and_log_util::out_type&){
     Core_Int add_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        sub_le_int.m_number,
-                                                        add_copy.m_sign,
-                                                        sub_int.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, sub_le_int);
 
     test_and_log_util::result_type res;
     res.expected = "+9876542210";
@@ -719,12 +687,7 @@ test_and_log_util::result_type test_sub_gr(test_and_log_util::out_type&){
 test_and_log_util::result_type test_sub_neg(test_and_log_util::out_type&){
     Core_Int add_copy = sub_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        sub_le_int.m_number,
-                                                        add_copy.m_sign,
-                                                        sub_le_int.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, sub_le_int);
 
     test_and_log_util::result_type res;
     res.expected = "-10000001000";
@@ -736,12 +699,7 @@ test_and_log_util::result_type test_sub_neg(test_and_log_util::out_type&){
 test_and_log_util::result_type test_sub_neg2(test_and_log_util::out_type&){
     Core_Int add_copy = sub_add_digs;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        sub_add_digs.m_number,
-                                                        add_copy.m_sign,
-                                                        sub_add_digs.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, sub_add_digs);
 
     test_and_log_util::result_type res;
     res.expected = "-19753086420";
@@ -753,12 +711,7 @@ test_and_log_util::result_type test_sub_neg2(test_and_log_util::out_type&){
 test_and_log_util::result_type test_sub(test_and_log_util::out_type&){
     Core_Int add_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add_copy.m_number,
-                                                        sub_int.m_number,
-                                                        add_copy.m_sign,
-                                                        sub_int.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add_copy, sub_int);
 
     test_and_log_util::result_type res;
     res.expected = "-123456790";
@@ -770,12 +723,7 @@ test_and_log_util::result_type test_sub(test_and_log_util::out_type&){
 void test_sub_speed(test_and_log_util::out_type&){
     Core_Int add1_copy = speed_add_var1;
 
-    Precision::Volatile::Int_Operations::add<Core_Int>( add1_copy.m_number,
-                                                        speed_sub_var.m_number,
-                                                        add1_copy.m_sign,
-                                                        speed_sub_var.m_sign,
-                                                        Core_Int::base()
-                                                        );
+    Precision::Volatile::Int_Operations::add(add1_copy, speed_sub_var);
 }
 
 test_and_log_util::result_type test_mult_list_1(test_and_log_util::out_type&){
