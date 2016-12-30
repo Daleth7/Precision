@@ -198,7 +198,7 @@ namespace Precision{
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
-        Number_Type&& make_zero_temp(const Number_Type& ref);
+        Number_Type make_zero_temp(const Number_Type& ref);
 
         /** Decoupled modifier to make a temporary number with value 1.
          *
@@ -206,7 +206,7 @@ namespace Precision{
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
-        Number_Type&& make_one_temp(const Number_Type& ref);
+        Number_Type make_one_temp(const Number_Type& ref);
 
         /** Decoupled modifier to make a temporary number with value 2.
          *
@@ -214,7 +214,7 @@ namespace Precision{
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
-        Number_Type&& make_two_temp(const Number_Type& ref);
+        Number_Type make_two_temp(const Number_Type& ref);
     }
 }
 

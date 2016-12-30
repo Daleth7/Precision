@@ -39,6 +39,12 @@ struct Core_Int{
     diglist_type digit_list()const
         {return m_number;}
 
+    Core_Int magnitude()const{
+        Core_Int toreturn(*this);
+        toreturn.m_sign.make_positive();
+        return toreturn;
+    }
+
     size_type count_digits()const
         {return m_number.size();}
 
@@ -69,10 +75,8 @@ struct Core_Int{
         {m_sign.negate();}
 
     void shift_left(size_type e){
-        if(m_number.size() == 1 && m_number.front() == 0)
-            return;
-        else
-            m_number.insert(m_number.begin(), e, 0);
+        if(this->is_zero()) return;
+        else                m_number.insert(m_number.begin(), e, 0);
     }
 
     void shift_right(size_type e){
@@ -107,6 +111,22 @@ struct Core_Int{
         return *this;
     }
 
+    Core_Int& operator-=(const Core_Int& rhs){
+        Precision::Volatile::Int_Operations::add<Core_Int>( m_number, rhs.m_number,
+                                                            m_sign, -rhs.m_sign,
+                                                            this->base()
+                                                            );
+        return *this;
+    }
+
+    bool operator<(const Core_Int& rhs)const{
+        return Precision::Volatile::Int_Operations::compare(*this, rhs) < 0;
+    }
+
+    bool operator==(const Core_Int& rhs)const{
+        return Precision::Volatile::Int_Operations::compare(*this, rhs) == 0;
+    }
+
 
 
     diglist_type m_number;
@@ -123,7 +143,8 @@ static Core_Int func_variable,
                 zero_list_int, one_list_int, neg_one_int,
                 all_digs_int, less_digs_int, sub_int,
                 sub_le_int, sub_add_digs,
-                mult_fac1, mult_fac2
+                mult_fac1, mult_fac2,
+                div_fac
                 ;
 
                 // Variables for testing comparisons
@@ -132,7 +153,8 @@ static Core_Int speed_variable, speed_eq_variable,
                 // Variables for testing arithmetic
                 speed_add_var1, speed_add_var2,
                 speed_sub_var,
-                speed_mult_var1, speed_mult_var2
+                speed_mult_var1, speed_mult_var2,
+                speed_div_var
                 ;
 
 template <typename IntType>
@@ -183,6 +205,18 @@ test_and_log_util::result_type test_mult_zeros(test_and_log_util::out_type&);
 test_and_log_util::result_type test_mult(test_and_log_util::out_type&);
 void test_mult_speed(test_and_log_util::out_type&);
 
+// Division and Modulus tests
+test_and_log_util::result_type test_div0(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_list2_eq1(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_eq(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_gr(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_list1_neg(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_list2_neg(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_ones(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_dig_gr(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div(test_and_log_util::out_type&);
+void test_div_speed(test_and_log_util::out_type&);
+
 // Cleanup function to free memory
 void cleanup();
 
@@ -208,7 +242,7 @@ void int_operations_test(){
     ADD_TEST(test_list, test_compare_eq2);
     ADD_TEST_BOTH( test_list,
                    test_compare_eq2, test_compare_speed,
-                   1000000
+                   10000
                    );
 
     // Addition tests
@@ -218,14 +252,14 @@ void int_operations_test(){
     ADD_TEST(test_list, test_add_le2);
     ADD_TEST_BOTH( test_list,
                    test_add, test_add_speed,
-                   1000000
+                   10000
                    );
     ADD_TEST(test_list, test_sub_gr);
     ADD_TEST(test_list, test_sub_neg);
     ADD_TEST(test_list, test_sub_neg2);
     ADD_TEST_BOTH( test_list,
                    test_sub, test_sub_speed,
-                   1000000
+                   10000
                    );
 
     // Multiplication tests
@@ -233,7 +267,7 @@ void int_operations_test(){
     ADD_TEST(test_list, test_mult_list_3);
     ADD_TEST_BOTH( test_list,
                    test_mult_list_7, test_mult_list_speed,
-                   1000000
+                   10000
                    );
     ADD_TEST(test_list, test_mult_list2_eq0);
     ADD_TEST(test_list, test_mult_list1_eq0);
@@ -245,6 +279,20 @@ void int_operations_test(){
     ADD_TEST_BOTH( test_list,
                    test_mult, test_mult_speed,
                    1000
+                   );
+
+    // Division and Modulus tests
+    ADD_TEST(test_list, test_div0);
+    ADD_TEST(test_list, test_div_list2_eq1);
+    ADD_TEST(test_list, test_div_eq);
+    ADD_TEST(test_list, test_div_gr);
+    ADD_TEST(test_list, test_div_list1_neg);
+    ADD_TEST(test_list, test_div_list2_neg);
+    ADD_TEST(test_list, test_div_ones);
+    ADD_TEST(test_list, test_div_dig_gr);
+    ADD_TEST_BOTH( test_list,
+                   test_div, test_div_speed,
+                   100
                    );
 
     setup_comparison_variables();
@@ -338,6 +386,9 @@ void setup_arithmetic_variables(){
     mult_fac2.m_number.push_back(8);
     mult_fac2.m_number.push_back(8);
 
+    div_fac.m_sign.make_positive();
+    div_fac.m_number = Core_Int::diglist_type(4, 3);
+
 
 
     speed_add_var1.m_sign.make_positive();
@@ -354,6 +405,11 @@ void setup_arithmetic_variables(){
     for(unsigned i = 0; i < 95; ++i){
         speed_mult_var1.m_number.push_back((i*4) % 10);
         speed_mult_var2.m_number.push_back((i*4) % 10);
+    }
+
+    speed_div_var.m_sign.make_positive();
+    for(unsigned i = 0; i < 50; ++i){
+        speed_div_var.m_number.push_back(10 - 1 - (i % 10));
     }
 }
 
@@ -380,8 +436,15 @@ void cleanup(){
     sub_add_digs.m_number.clear();
     mult_fac1.m_number.clear();
     mult_fac2.m_number.clear();
+    div_fac.m_number.clear();
     speed_variable.m_number.clear();
     speed_eq_variable.m_number.clear();
+    speed_add_var1.m_number.clear();
+    speed_add_var2.m_number.clear();
+    speed_sub_var.m_number.clear();
+    speed_mult_var1.m_number.clear();
+    speed_mult_var2.m_number.clear();
+    speed_div_var.m_number.clear();
 }
 
 template <typename IntType>
@@ -875,4 +938,178 @@ void test_mult_speed(test_and_log_util::out_type&){
     Precision::Volatile::Int_Operations::multiply<Core_Int>( mult1_copy,
                                                              speed_mult_var2
                                                              );
+}
+
+test_and_log_util::result_type test_div0(test_and_log_util::out_type&){
+
+    test_and_log_util::result_type res;
+    res.expected = "Precision::Volatile::Int_Operations::divide_mod"
+                   "(const IntType&, const IntType&, IntType&, IntType&)"
+                   " ~ Division by zero attempt."
+                   ;
+    res.actual = "No exception thrown.";
+
+    Core_Int div_copy = all_digs_int;
+    Core_Int div_result, mod_result;
+
+    try {
+        Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                                   zero_list_int,
+                                                                   div_result,
+                                                                   mod_result
+                                                                   );
+    }catch(const std::exception& err){
+        res.actual = err.what();
+    }
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_list2_eq1(test_and_log_util::out_type&){
+    Core_Int div_copy = all_digs_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               one_list_int,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = +9876543210 M = +0";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_eq(test_and_log_util::out_type&){
+    Core_Int div_copy = all_digs_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               all_digs_int,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = +1 M = +0";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_gr(test_and_log_util::out_type&){
+    Core_Int div_copy = less_digs_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               all_digs_int,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = +0 M = " + to_str(less_digs_int);
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_list1_neg(test_and_log_util::out_type& out){
+    Core_Int div_copy = all_digs_int, div2_copy = less_digs_int;
+    div_copy.m_sign.make_negative();
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               div2_copy,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = -228570 M = -33510";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_list2_neg(test_and_log_util::out_type&){
+    Core_Int div_copy = all_digs_int, div2_copy = less_digs_int;
+    div2_copy.m_sign.make_negative();
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               div2_copy,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = -228570 M = -33510";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_ones(test_and_log_util::out_type&){
+    Core_Int div_copy = all_digs_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               div_fac,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = +2963259 M = +963";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_dig_gr(test_and_log_util::out_type&){
+    Core_Int div_copy = sub_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               div_fac,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = -3000300 M = -100";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div(test_and_log_util::out_type&){
+    Core_Int div_copy = all_digs_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               less_digs_int,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = +228570 M = +33510";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+void test_div_speed(test_and_log_util::out_type&){
+    Core_Int div_copy = speed_add_var1;
+    Core_Int div_result, mod_result;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               speed_div_var,
+                                                               div_result,
+                                                               mod_result
+                                                               );
 }

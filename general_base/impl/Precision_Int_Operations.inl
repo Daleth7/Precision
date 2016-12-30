@@ -175,7 +175,7 @@ namespace Precision{
                     lhs = rhs;
                     return;
                 }else if(Helper::is_neg_one(rhs)){
-                    lhs.negate();
+                    Helper::negate(lhs);
                     return;
                 }else if(Helper::is_neg_one(lhs)){
                     lhs = rhs;
@@ -217,58 +217,80 @@ namespace Precision{
             template <typename IntType>
             void divide_mod(
                 const IntType& lhs, const IntType& rhs,
-                IntType* div_req, IntType* mod_req
+                IntType& quotient, IntType& modulus
             ){
-                // Deal with easy cases when one number is 0 or 1
+                // Deal with easy cases when one number is 0 or 1.
+                // Also deal with cases when the denominator > numerator
                 if(Helper::is_zero(rhs)){
-                    throw exception(
-                        exception::divide_by_zero,
-                        "Precision::Volatile::Int_Operations::divide"
-                            "(const IntType&, const IntType&, IntType*, IntType*)"
-                    );
+                    throw exception( exception::divide_by_zero,
+                                     "Precision::Volatile::Int_Operations"
+                                     "::divide_mod"
+                                     "(const IntType&, const IntType&,"
+                                     " IntType&, IntType&)"
+                                     );
                 }else if(Helper::is_one(rhs)){
-                    if(div_req != nullptr)  *div_req = lhs;
-                    if(mod_req != nullptr)  Helper::make_zero(*mod_req, lhs);
+                    quotient = lhs;
+                    Helper::make_zero(modulus, lhs);
                     return;
                 }else if(lhs == rhs){
-                    if(div_req != nullptr)  Helper::make_zero(*div_req, lhs);
-                    if(mod_req != nullptr)  Helper::make_zero(*mod_req, lhs);
+                    Helper::make_one(quotient, lhs);
+                    Helper::make_zero(modulus, lhs);
                     return;
                 }else if(compare_lists(lhs.digit_list(), rhs.digit_list()) < 0){
-                    if(mod_req != nullptr)  *mod_req = lhs;
-                    if(div_req != nullptr)  Helper::make_zero(*div_req, lhs);
+                    modulus = lhs;
+                    Helper::make_zero(quotient, lhs);
                     return;
                 }
 
-                IntType quotient(Helper::make_zero_temp(lhs)),
-                        remainder(lhs.magnitude()),
-                        tens(rhs.magnitude())
-                        ;
+                // Prepare variables used to store the results
+                Helper::make_zero(quotient, lhs);
+                modulus = lhs.magnitude();
+
                 typedef typename IntType::size_type size_type;
-                size_type t_counter(remainder.count_digits()-tens.count_digits());
 
-                tens.shift_left(t_counter);
+                // rhs_shift will be used to count the number of subtractions
+                // and will start as the largest possible such that lhs
+                // and rhs have the same number of digits.
+                IntType rhs_shift(rhs.magnitude());
+                size_type t_counter(modulus.count_digits()-rhs_shift.count_digits());
 
-                // Perform division by subtracting tens at a time and
-                //  counting how many subtractions for performed
-                while(tens >= rhs.magnitude()){
+                rhs_shift.shift_left(t_counter);
+
+                // Perform division by subtracting rhs_shift at a time and
+                //  counting how many subtractions were performed
+                t_counter += 1; // Increase counter by 1 after shifting rhs_shift,
+                                // because in elementary division, we need to
+                                // account for subtraction at the one's place.
+                                // This, there are always (# of divisor digits) + 1
+                                // subtractons that happen.
+                while(t_counter-- > 0){
                     IntType addend(Helper::make_one_temp(lhs));
                     addend.shift_left(t_counter);
-                    while(remainder >= tens){
-                        quotient += addend;
-                        remainder -= tens;
+
+                    // Use factor to perform a multiplication later on
+                    size_type factor = 0;
+                    while(!(modulus < rhs_shift)){
+                        ++factor;
+                        modulus -= rhs_shift;
                     }
-                    tens.shift_right(1);
-                    --t_counter;
+
+                    // Convert size_type to IntType. factor assumed to be < base
+                    IntType factor_precision(Helper::make_zero_temp(lhs));
+                    factor_precision.sign(1);
+                    factor_precision.digit(0, factor);
+
+                    // Leverage multiply_diglist() to avoid doing
+                    // multiple additions.
+                    multiply(addend, factor_precision);
+                    quotient += addend;
+
+                    rhs_shift.shift_right(1);
                 }
 
-                // Assign the results
-                if(div_req != nullptr){
-                    quotient.sign(lhs.sign() * rhs.sign());
-                    *div_req = std::move(quotient);
-                }
-                if(mod_req != nullptr)
-                    *mod_req = std::move(remainder);
+                // Determine final numerical sign
+                typename IntType::sign_type new_sign(lhs.sign() * rhs.sign());
+                quotient.sign(new_sign);
+                modulus.sign(new_sign);
             }
 
             //Bitwise operators

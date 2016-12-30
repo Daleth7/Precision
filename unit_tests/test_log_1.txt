@@ -27,19 +27,19 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_compare_gr          	: Passed
 	test_compare_le          	: Passed
 	test_compare_eq2         	: Passed
-	test_compare_eq2         	: Passed ; Average execution time: 3.9537e-006 s
+	test_compare_eq2         	: Passed ; Average execution time: 4.1039e-006 s
 	test_add_list2_eq0       	: Passed
 	test_add_list1_eq0       	: Passed
 	test_add_le              	: Passed
 	test_add_le2             	: Passed
-	test_add                 	: Passed ; Average execution time: 4.4494e-006 s
+	test_add                 	: Passed ; Average execution time: 4.5544e-006 s
 	test_sub_gr              	: Passed
 	test_sub_neg             	: Passed
 	test_sub_neg2            	: Passed
-	test_sub                 	: Passed ; Average execution time: 4.0039e-006 s
+	test_sub                 	: Passed ; Average execution time: 4.0539e-006 s
 	test_mult_list_1         	: Passed
 	test_mult_list_3         	: Passed
-	test_mult_list_7         	: Passed ; Average execution time: 5.7054e-006 s
+	test_mult_list_7         	: Passed ; Average execution time: 5.7555e-006 s
 	test_mult_list2_eq0      	: Passed
 	test_mult_list1_eq0      	: Passed
 	test_mult_list2_eq1      	: Passed
@@ -47,7 +47,7 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_mult_list2_eqN1     	: Passed
 	test_mult_list1_eqN1     	: Passed
 	test_mult_zeros          	: Passed
-	test_mult                	: Passed ; Average execution time: 0.000891376 s
+	test_mult                	: Passed ; Average execution time: 0.000919409 s
 	test_div0                	: Passed
 	test_div_list2_eq1       	: Passed
 	test_div_eq              	: Passed
@@ -56,5 +56,5 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_div_list2_neg       	: Passed
 	test_div_ones            	: Passed
 	test_div_dig_gr          	: Passed
-	test_div                 	: Passed ; Average execution time: 0.0115299 s
+	test_div                 	: Passed ; Average execution time: 0.0179578 s
 

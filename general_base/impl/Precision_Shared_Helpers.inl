@@ -4,8 +4,6 @@
 
 #include "Precision_Precedence_Pack.h"
 
-#include <utility> // For std::move()
-
 namespace Precision{
     namespace Helper{
         template <typename Number_Type>
@@ -135,24 +133,24 @@ namespace Precision{
             {num.make_two();}
 
         template <typename Number_Type>
-        Number_Type&& make_zero_temp(const Number_Type& ref){
+        Number_Type make_zero_temp(const Number_Type& ref){
             Number_Type toreturn;
             make_zero(toreturn, ref);
-            return std::move(toreturn);
+            return toreturn;
         }
 
         template <typename Number_Type>
-        Number_Type&& make_one_temp(const Number_Type& ref){
+        Number_Type make_one_temp(const Number_Type& ref){
             Number_Type toreturn;
             make_one(toreturn, ref);
-            return std::move(toreturn);
+            return toreturn;
         }
 
         template <typename Number_Type>
-        Number_Type&& make_two_temp(const Number_Type& ref){
+        Number_Type make_two_temp(const Number_Type& ref){
             Number_Type toreturn;
             make_two(toreturn, ref);
-            return std::move(toreturn);
+            return toreturn;
         }
     }
 }

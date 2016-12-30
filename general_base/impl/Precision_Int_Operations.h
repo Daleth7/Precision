@@ -64,10 +64,10 @@ namespace Precision{
              *                  is assumed to support the following:
              *                  * Type IntType::digit_type
              *                  * Type IntType::catalyst_type
-             *                  * Method digit_type base()
-             *                  * Method size_type digit_count()
-             *                  * Method digit_type& digit(size_type)
-             *                  * Method void append(digit_type)
+             *                  * Method digit_type IntType::base()
+             *                  * Method size_type IntType::count_digits()
+             *                  * Method digit_type& IntType::digit(size_type)
+             *                  * Method void IntType::append(digit_type)
              * 
              *  \param num The integer to multiply
              *  \param fac The single digit multiplication factor that
@@ -79,10 +79,21 @@ namespace Precision{
             /** A simple multiply function taking two digit strings
              *  and calculating the product. Algorithm does not need
              *  number base information.
-             *   [TODO: Optimize algorithm to make less copies]
              * 
              *  \tparam IntType Number type from which type and base
-             *                  information is extracted.
+             *                  information is extracted. In addition
+             *                  to the requirements as detailed by add()
+             *                  and multiply_diglist(), IntType is
+             *                  assumed to support:
+             *                  * Type IntType::size_type
+             *                  * Method bool IntType::is_zero()
+             *                  * Method bool IntType::is_one()
+             *                  * Method bool IntType::is_neg_one()
+             *                  * Method void IntType::negate()
+             *                  * Method void IntType::make_zero()
+             *                  * Method void IntType::sign(sign_type)
+             *                  * Method void IntType::shift_left(size_type)
+             *                  * Method IntType& IntType::operator+=(const IntType&)
              * 
              *  \param lhs The first integer
              *  \param rhs The second integer
@@ -92,20 +103,34 @@ namespace Precision{
 
             /** A simple divide function taking two digit strings
              *  and calculating the quotient and modulus. Algorithm
-             * does not need number base information.
+             *  does not need number base information.
+             *  The division and modulus are defined as follows:
+             *      Numerator / Denominator = Quotient + Modulus / Denominator
+             *  This is important because the sign of the modulus will
+             *  match the sign of the quotient.
              * 
              *  \tparam IntType Number type from which type and base
-             *                  information is extracted.
+             *                  information is extracted. In addition
+             *                  to the requirements as detailed by multiply(),
+             *                  IntType is assumed to support:
+             *                  * Method diglist_type IntType::digit_list()
+             *                  * Method IntType IntType::magnitude()
+             *                  * Method void IntType::make_one()
+             *                  * Method void IntType::shift_right(size_type)
+             *                  * Method IntType& IntType::operator-=(const IntType&)
+             *                  * Method bool IntType::operator<(const IntType&)
+             *                  * Method bool IntType::operator==(const IntType&)
+             *                  
              * 
              *  \param lhs The first integer
              *  \param rhs The second integer
-             *  \param div_req Pointer to where quotient result is stored
-             *  \param mod_req Pointer to where modulus result is stored
+             *  \param quotient Reference to where quotient result is stored
+             *  \param modulus Reference to where modulus result is stored
              */
             template <typename IntType>
             void divide_mod( const IntType& lhs,
                              const IntType& rhs,
-                             IntType* div_req, IntType* mod_req
+                             IntType& quotient, IntType& modulus
                              );
 
 
