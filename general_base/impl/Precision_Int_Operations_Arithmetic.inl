@@ -1,18 +1,13 @@
 #include "Precision_Shared_Helpers.h"
 #include "Precision_Exception.h"
 
-#include "Type_Traits_Extended/Type_Traits_Ext.h" // For Type_Trait::any_true
-
-#include <utility>  // For std::move and std::swap
-#include <iterator> // For std::advance
 #include <cmath>    // For std::fmod
-#include <vector>
+#include <vector>   // For custom bucket type
 
-// Undefine this to switch the algorithm used by divide_mod() to
-// a version that subtracts whole integers one at a time to calculate
-// quotient digits. This is twice as slow but will remove the
-// dependency on the precision of IntType::catalyst_type and will allow
-// for higher number bases.
+// Undefine this switch to have the divide_mod algorithm use IntType
+// for the subtractions in the faster algorithm. This will slow down
+// the algorithm but will remove dependency on the precision of
+// IntType::catalyst_type
 //#define USE_SLOW_DIV_CORE
 
 namespace Precision{
@@ -125,7 +120,6 @@ namespace Precision{
                     diglist1.pop_back();
             }
 
-            //Arithmetic operators
             template <typename IntType>
             void add(IntType& lhs, const IntType& rhs, short add_sign){
                 // Deal with cases where the number is equal to 0
@@ -437,6 +431,11 @@ namespace Precision{
                 typename IntType::size_type div_core( IntType& mod,
                                                       const IntType& rhs
                 ){
+                    // Look at the leading base or more digits to determine
+                    // how many subtractions are needed to make rhs >= mod.
+                    // It is assumed that rhs has the same or less digits
+                    // than mod.
+
                     // rhs is already larger --> no subtract needed
                     if(rhs.count_digits() > mod.count_digits()) return 0;
 
@@ -444,15 +443,6 @@ namespace Precision{
 
                     size_type subtraction_count = 0;
 
-                #ifndef USE_SLOW_DIV_CORE
-                    //Algorithm depending on the precision of IntType::catalyst_type
-                    using ld = typename IntType::catalyst_type;
-
-                    // Look at the leading base or more digits to determine
-                    // how many subtractions are needed to make rhs >= mod.
-                    // It is assumed that rhs has the same or less digits
-                    // than mod.
-                    ld rhs_lead = 0, mod_lead = 0;
                     // Max propogation refers to the maximum number of
                     // digits the act of carrying can propogate when one
                     // number is multiplied by a single digit number,
@@ -466,6 +456,12 @@ namespace Precision{
                                         ? (rhs.count_digits()-max_propogation-1)
                                         : 0
                                         ;
+
+                #ifndef USE_SLOW_DIV_CORE
+                    //Algorithm depending on the precision of IntType::catalyst_type
+                    using ld = typename IntType::catalyst_type;
+
+                    ld rhs_lead = 0, mod_lead = 0;
 
                     // Calculate leading digits for rhs and mod
                     ld ten_mult = 1;
@@ -484,21 +480,34 @@ namespace Precision{
                         ++subtraction_count;
                         rhs_lead += rhs_lead_copy;
                     }
+                #else
+                    IntType rhs_lead(Helper::make_zero_temp(mod)),
+                            mod_lead(Helper::make_zero_temp(mod))
+                            ;
+
+                    // Calculate leading digits for rhs and mod
+                    for(size_type i = min_index; i < mod.count_digits(); ++i){
+                        if(i < rhs.count_digits())
+                            rhs_lead.append(rhs.digit(i));
+                        mod_lead.append(mod.digit(i));
+                    }
+
+                    IntType rhs_lead_copy = rhs_lead;
+
+                    while( compare_lists( rhs_lead.digit_list(),
+                                          mod_lead.digit_list()
+                                          ) < 0
+                    ){
+                        ++subtraction_count;
+                        add(rhs_lead, rhs_lead_copy);
+                    }
+                #endif
 
                     // Update modulus
                     IntType rhs_mult(rhs);
                     multiply_diglist(rhs_mult, subtraction_count);
                     rhs_mult.sign(-1);
                     add(mod, rhs_mult);
-
-                #else
-
-                    // Slower algorithm
-                    while(compare_lists(rhs.digit_list(), mod.digit_list()) < 0){
-                        ++subtraction_count;
-                        add(mod, rhs, -1);
-                    }
-                #endif
 
                     return subtraction_count;
                 }
@@ -593,357 +602,6 @@ namespace Precision{
                 quotient.sign(new_sign);
                 modulus.sign(new_sign);
             }
-
-            //Bitwise operators
-            template <typename IntType>
-            IntType bitwise_complement(const IntType& orig){
-                if(Helper::is_zero(orig)){
-                    throw exception(
-                        exception::insufficient_memory,
-                        "Precision::Volatile::Int_Operations::operator~"
-                        "(const IntType&)"
-                    );
-                }
-                IntType toreturn(Helper::make_zero_temp(orig)),
-                        reducer(orig.magnitude())
-                        ;
-                typedef typename IntType::size_type size_type;
-                typedef typename IntType::sign_type sign_type;
-                size_type i(0);
-                sign_type new_s(orig.sign());
-                new_s.negate();
-
-                const IntType z_(Helper::make_zero_temp(orig)),
-                              two_(Helper::make_two_temp(orig))
-                              ;
-
-                while(reducer != z_){
-                    if(Helper::is_even(reducer))
-                        toreturn += exponentiate(two_, i);
-                    ++i;
-                    divide_mod( reducer, two_,
-                                &reducer, static_cast<IntType*>(nullptr)
-                                );
-                }
-                toreturn.sign(new_s);
-                return toreturn;
-            }
-
-            template <typename IntType>
-            void bitwise_operation(
-                IntType& lhs, IntType rhs,
-                std::function<bool(bool, bool)>&& condition
-            ){
-                IntType toreturn(Helper::make_zero_temp(lhs));
-                typedef typename IntType::size_type size_type;
-                typedef typename IntType::sign_type sign_type;
-                size_type i(0);
-                sign_type new_s( condition(lhs.is_negative(), rhs.is_negative())
-                                 ? -1
-                                 : 1
-                                 );
-
-                const IntType z_(Helper::make_zero_temp(lhs)),
-                              two_(Helper::make_two_temp(lhs))
-                              ;
-
-                while(lhs != z_ || rhs != z_){
-                    if(condition(lhs.is_odd(), rhs.is_odd()))
-                        toreturn += exponentiate(two_, i);
-                    ++i;
-                    lhs /= two_;
-                    rhs /= two_;
-                }
-                toreturn.sign(new_s);
-                lhs = std::move(toreturn);
-            }   
-
-            template <typename IntType>
-            void bitwise_and_eq(IntType& lhs, const IntType& rhs){
-                bitwise_operation(
-                    lhs, rhs,
-                    [](bool l, bool r){return (l == r && l == true);}
-                    );
-            }
-
-            template <typename IntType>
-            void bitwise_or_eq(IntType& lhs, const IntType& rhs){
-                bitwise_operation(
-                    lhs, rhs,
-                    [](bool l, bool r){return (l == true || r == true);}
-                    );
-            }
-
-            template <typename IntType>
-            void bitwise_xor_eq(IntType& lhs, const IntType& rhs){
-                bitwise_operation(
-                    lhs, rhs,
-                    [](bool l, bool r){return l != r;}
-                    );
-            }
-
-            template <typename IntType>
-            void bitwise_lshift_eq(IntType& lhs, const IntType& rhs)
-                {multiply(lhs, exponentiate(Helper::make_two_temp(rhs), rhs));}
-
-            template <typename IntType>
-            void bitwise_rshift_eq(IntType& lhs, const IntType& rhs){
-                divide_mod( lhs, exponentiate(Helper::make_two_temp(rhs), rhs),
-                            &lhs, static_cast<IntType*>(nullptr)
-                            );
-            }
-
-            //Logical Operators
-            template <typename IntType>
-            void logical_operation(
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                unsigned short oper, typename IntType::digit_type base
-            ){
-                using std::swap;
-                if(diglist1.size() < diglist2.size()) swap(diglist1, diglist2);
-                diglist2.insert( diglist2.end(),
-                                 diglist1.size() - diglist2.size(),
-                                 0
-                                 );
-                typedef typename IntType::catalyst_type catalyst_type;
-                auto compl_oper = [base](catalyst_type l1)
-                    {return std::fmod(base - 1 - l1);};
-                auto and_oper = [base](catalyst_type l1, catalyst_type l2)
-                    {return std::fmod((l1 * l2), base);};
-                auto or_oper = [base, compl_oper, and_oper](catalyst_type l1, catalyst_type l2)
-                    {return compl_oper(and_oper(compl_oper(l1), compl_oper(l2)));};
-                auto xor_oper = [base](catalyst_type l1, catalyst_type l2)
-                    {return std::fmod((l1 + l2), base);};
-
-                for( auto biter(diglist1.begin()), siter(diglist2.begin());
-                     siter != diglist2.end();
-                     ++biter, ++siter
-                ){
-                    typename IntType::catalyst_type bld_temp(*biter), sld_temp(*siter);
-                    switch(oper){
-                        case 1:
-                            *biter = and_oper(bld_temp, sld_temp);
-                            break;
-                        case 2:
-                            *biter = or_oper(bld_temp, sld_temp);
-                            break;
-                        case 3:
-                            *biter = xor_oper(bld_temp, sld_temp);
-                            break;
-                        case 4:
-                            *biter = compl_oper(*biter);
-                            break;
-                        default:
-                            throw oper; //Should never happen
-                    }
-                }
-                while(diglist1.size() > 1 && diglist1.back() == 0)
-                    diglist1.pop_back();
-                switch(oper){
-                    case 1:
-                        sign1 =
-                            1-(sign1.is_negative() & sign2.is_negative())*2;
-                        break;
-                    case 2:
-                        sign1 =
-                            1-(sign1.is_negative() | sign2.is_negative())*2;
-                        break;
-                    case 3:
-                        sign1 =
-                            1-(sign1.is_negative() ^ sign2.is_negative())*2;
-                        break;
-                    case 4:
-                        sign1.negate();
-                        break;
-                    default:
-                        throw oper; //Should never happen
-                }
-            }
-
-            template <typename IntType>
-            void logical_and(   //res = (a*b)%base
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist2,
-                                            sign1, sign2,
-                                            1,
-                                            base
-                                            );
-            }
-
-            template <typename IntType>
-            void logical_or(    //res = ~(~a & ~b)
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist2,
-                                            sign1, sign2,
-                                            2,
-                                            base
-                                            );
-            }
-
-            template <typename IntType>
-            void logical_xor(   //res = (~((a+b)%base))%base
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist2,
-                                            sign1, sign2,
-                                            3,
-                                            base
-                                            );
-            }
-
-            template <typename IntType>
-            void logical_inversion( //res = Base - 1 - a
-                typename IntType::diglist_type& diglist1,
-                typename IntType::sign_type& sign1,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist1,
-                                            sign1, sign1,
-                                            4,
-                                            base
-                                            );
-            }
-
-            template <typename Integer_Type>
-            bool is_negative(const Integer_Type& i)
-                {return i.is_negative();}
-
-            namespace Exp_Util_{
-                template <typename Number_Type, typename Integer_Type>
-                Number_Type exponentiate(
-                    const Number_Type& base,
-                    Integer_Type e,
-                    std::true_type
-                ){
-                    if(Helper::is_zero(e))
-                        return Helper::make_one_temp(base);
-                    else if(Helper::is_one(e))
-                        return base;
-                    else if(Helper::is_neg_one(e)){
-                        Number_Type toreturn(base);
-                        Helper::reciprocate(toreturn);
-                        return toreturn;
-                    }
-
-                    Number_Type operand(base);
-                    if(is_negative(e)){
-                        Helper::reciprocate(operand);
-                        Helper::negate(e);
-                    }
-                    //Exponentiation by squaring
-                    if(Helper::is_even(e))
-                        return exponentiate( (operand * operand),
-                            Helper::halve(e), std::true_type() );
-                    else
-                        return operand * exponentiate( operand,
-                            (e - Helper::make_one_temp(e)), std::true_type() );
-
-                }
-
-                template <typename Number_Type, typename Number_Type2>
-                Number_Type exponentiate(
-                    const Number_Type& base,
-                    const Number_Type2& e,
-                    std::false_type
-                ){
-                    throw exception( exception::unsupported,
-                                     "Precision::Volatile::Int_Operations::"
-                                     "Exp_Util_::exponentiate("
-                                        "const Number_Type&,"
-                                        "const Number_Type2&,"
-                                        "std::false_type"
-                                        ")"
-                                     );
-                }
-            }
-
-            template <typename Number_Type, typename Number_Type2>
-            Number_Type exponentiate( const Number_Type& base,
-                                      const Number_Type2& exp
-            ){
-                if(Helper::is_zero(exp) && Helper::is_zero(base)){
-                    throw exception( exception::indeterminate,
-                                     "Precision::Volatile::Int_Operations::"
-                                     "exponentiate(const Number_Type&,"
-                                                  "const Number_Type2&"
-                                                  ")"
-                                     );
-                }
-
-                // Decide which algorithm to use depending on if the exponent
-                //  is an integer or not.
-                return Exp_Util_::exponentiate( base, exp,
-                    typename Type_Trait::any_true<
-                        typename std::is_integral<Number_Type2>::type,
-                        typename std::is_base_of<Tag::Integral, Number_Type2>::type
-                    >::type());
-            }
-
-            //Comparisons
-            template <typename IntType>
-            short compare(const IntType& lhs, const IntType& rhs){
-                if(&lhs == &rhs)                            return 0;
-                else if(lhs.sign() < rhs.sign())            return -1;
-                else if(lhs.sign() > rhs.sign())            return 1;
-                using list_type = typename IntType::diglist_type;
-                const list_type& diglist1(lhs.digit_list()),
-                                 diglist2(rhs.digit_list())
-                                 ;
-                if( lhs.is_negative() &&
-                    diglist1.size() > diglist2.size()
-                    )                                       return -1;
-                else if( lhs.is_negative() &&
-                         diglist1.size() < diglist2.size()
-                         )                                  return 1;
-                return lhs.sign().value() * compare_lists(diglist1, diglist2);
-            }
-
-            template <typename DigListType>
-            short compare_lists (const DigListType& d1, const DigListType& d2){
-                //Because this is only the digit list, it is assumed
-                //  the magnitudes are being compared.
-                if(&d1 == &d2)                  return 0;
-                if(d1.size() > d2.size())       return 1;
-                if(d1.size() < d2.size())       return -1;
-                for(
-                    auto titer(d1.crbegin()), siter(d2.crbegin());
-                    titer != d1.crend();
-                    ++titer, ++siter
-                ){
-                    if(*titer < *siter)         return -1;
-                    else if(*titer > *siter)    return  1;
-                }
-                return 0;
-            }
-
-            template <typename DigListType>
-            bool is_zero_list(const DigListType& d)
-                {return d.size() == 1u && d.front() == 0;}
-
-            template <typename DigListType, typename SignType>
-            bool is_one_list(const DigListType& d, const SignType& s)
-                {return d.size() == 1u && d.front() == 1 && s.is_positive();}
-
-            template <typename DigListType, typename SignType>
-            bool is_neg_one_list(const DigListType& d, const SignType& s)
-                {return d.size() == 1u && d.front() == 1 && s.is_negative();}
         }
     }
 }

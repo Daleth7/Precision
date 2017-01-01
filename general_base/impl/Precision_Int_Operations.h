@@ -490,6 +490,10 @@ namespace Precision{
     }
 }
 
-#include "Precision_Int_Operations.inl"
+#include "Precision_Int_Operations_Arithmetic.inl"
+#include "Precision_Int_Operations_Bitwise.inl"
+#include "Precision_Int_Operations_Logical.inl"
+#include "Precision_Int_Operations_Exponential.inl"
+#include "Precision_Int_Operations_Comparisons.inl"
 
 #endif  //Include guard
