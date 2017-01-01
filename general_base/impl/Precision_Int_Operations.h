@@ -81,9 +81,11 @@ namespace Precision{
              *
              *  \param lhs The first number to add and in which to store the sum
              *  \param rhs The second number to add
+             *  \param add_sign An optional specification of whether to perform a
+             *                  subtraction (-1) or addition (1)
              */
             template <typename IntType>
-            void add(IntType& lhs, const IntType& rhs);
+            void add(IntType& lhs, const IntType& rhs, short add_sign = 1);
 
             /** A helper multiply function that acts as an accumulation
              *  function.
@@ -122,7 +124,6 @@ namespace Precision{
              *                  * Method void IntType::make_zero()
              *                  * Method void IntType::sign(sign_type)
              *                  * Method void IntType::shift_left(size_type)
-             *                  * Method IntType& IntType::operator+=(const IntType&)
              * 
              *  \param lhs The first integer
              *  \param rhs The second integer
@@ -146,9 +147,6 @@ namespace Precision{
              *                  * Method IntType IntType::magnitude()
              *                  * Method void IntType::make_one()
              *                  * Method void IntType::shift_right(size_type)
-             *                  * Method IntType& IntType::operator-=(const IntType&)
-             *                  * Method bool IntType::operator<(const IntType&)
-             *                  * Method bool IntType::operator==(const IntType&)
              *                  
              * 
              *  \param lhs The first integer

@@ -1,7 +1,7 @@
 #include "Test_Shared_Utilities.h"
 
 #include "general_base/impl/Precision_Int_Operations.h"
-#include "general_base/Precision_Sign_Class.h"
+#include "general_base/impl/Precision_Sign_Class.h"
 
 // For converting results to comparable strings
 #include "general_base/impl/Precision_Int_Operations_Img.h"
@@ -36,7 +36,7 @@ struct Core_Int{
     sign_type sign()const
         {return m_sign;}
 
-    diglist_type digit_list()const
+    const diglist_type& digit_list()const
         {return m_number;}
 
     Core_Int magnitude()const{
@@ -84,11 +84,8 @@ struct Core_Int{
     void shift_right(size_type e){
         if(m_number.size() <= e)
             m_number = diglist_type(1, 0);
-        else{
-            auto end(m_number.begin());
-            std::advance(end, e);
-            m_number.erase(m_number.begin(), end);
-        }   
+        else
+            m_number.erase(m_number.begin(), m_number.begin() + e);
     }
 
     void sign(sign_type new_sign)
@@ -97,9 +94,7 @@ struct Core_Int{
     void digit(size_type index, digit_type new_digit){
         if(index >= m_number.size()) return;
 
-        auto it = m_number.begin();
-        std::advance(it, index);
-        *it = new_digit % this->base();
+        m_number[index] = new_digit;
     }
 
     void append(digit_type new_digit)
@@ -107,29 +102,6 @@ struct Core_Int{
 
     void detach()
         {m_number.pop_back();}
-
-    Core_Int& operator+=(const Core_Int& rhs){
-        Precision::Volatile::Int_Operations::add(*this, rhs);
-        return *this;
-    }
-
-    Core_Int& operator-=(const Core_Int& rhs){
-        // Use the original add_diglist function to avoid making a copy
-        Precision::Volatile::Int_Operations::add_diglist<Core_Int>( m_number, rhs.m_number,
-                                                            m_sign, -rhs.m_sign,
-                                                            this->base()
-                                                            );
-        return *this;
-    }
-
-    bool operator<(const Core_Int& rhs)const{
-        return Precision::Volatile::Int_Operations::compare(*this, rhs) < 0;
-    }
-
-    bool operator==(const Core_Int& rhs)const{
-        return Precision::Volatile::Int_Operations::compare(*this, rhs) == 0;
-    }
-
 
 
     diglist_type m_number;
@@ -411,9 +383,7 @@ void setup_arithmetic_variables(){
     }
 
     speed_div_var.m_sign.make_positive();
-    for(unsigned i = 0; i < 50; ++i){
-        speed_div_var.m_number.push_back(10 - 1 - (i % 10));
-    }
+    speed_div_var.m_number.push_back(7);
 }
 
 

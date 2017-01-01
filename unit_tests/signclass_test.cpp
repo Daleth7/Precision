@@ -1,6 +1,6 @@
 #include "Test_Shared_Utilities.h"
 
-#include "general_base/Precision_Sign_Class.h"
+#include "general_base/impl/Precision_Sign_Class.h"
 
 #include <sstream>
 

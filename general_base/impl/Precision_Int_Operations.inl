@@ -8,6 +8,13 @@
 #include <cmath>    // For std::fmod
 #include <vector>
 
+// Undefine this to switch the algorithm used by divide_mod() to
+// a version that subtracts whole integers one at a time to calculate
+// quotient digits. This is twice as slow but will remove the
+// dependency on the precision of IntType::catalyst_type and will allow
+// for higher number bases.
+//#define USE_SLOW_DIV_CORE
+
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
@@ -120,13 +127,16 @@ namespace Precision{
 
             //Arithmetic operators
             template <typename IntType>
-            void add(IntType& lhs, const IntType& rhs){
+            void add(IntType& lhs, const IntType& rhs, short add_sign){
                 // Deal with cases where the number is equal to 0
                 if(Helper::is_zero(rhs)) return;
                 if(Helper::is_zero(lhs)){
                     lhs = rhs;
                     return;
                 }
+
+                // Determine sign of rhs based on addition or subtraction
+                typename IntType::sign_type rhs_sign(rhs.sign() * add_sign);
 
                 // Determine which number is larger
                 short comp = compare_lists(lhs.digit_list(), rhs.digit_list());
@@ -147,7 +157,7 @@ namespace Precision{
                     // Determine each digit to add based on if the end of
                     //  the digit list is reached
                     ld operand1 = lhs.sign() * (fend ? 0 : lhs.digit(fit)),
-                       operand2 = rhs.sign() * ((sit < dend2) ? rhs.digit(sit) : 0)
+                       operand2 = rhs_sign * ((sit < dend2) ? rhs.digit(sit) : 0)
                        ;
 
                     // Deal with borrowing when there is a 0-x case
@@ -155,7 +165,7 @@ namespace Precision{
                         // -operand1 + 0
                         if( comp < 0
                             && lhs.digit(fit) != 0 && rhs.digit(sit) == 0
-                            && rhs.sign().is_negative()
+                            && rhs_sign.is_negative()
                             ){
                             operand2 -= lhs.base();
                             borrowed = true;
@@ -262,6 +272,10 @@ namespace Precision{
                     num.append(carry_int % base);
                     carry_int /= base;
                 }
+
+                // Remove excess 0's
+                while(num.count_digits() > 1 && num.digit(num.count_digits()-1) == 0)
+                    num.detach();
             }
 
             namespace Arith_Helper{
@@ -423,37 +437,99 @@ namespace Precision{
                 typename IntType::size_type div_core( IntType& mod,
                                                       const IntType& rhs
                 ){
-                    // Use factor to perform a multiplication later on
-                    typename IntType::size_type factor = 0;
-                    while(!(mod < rhs)){
-                        ++factor;
-                        mod -= rhs;
+                    // rhs is already larger --> no subtract needed
+                    if(rhs.count_digits() > mod.count_digits()) return 0;
+
+                    using size_type = typename IntType::size_type;
+
+                    size_type subtraction_count = 0;
+
+                #ifndef USE_SLOW_DIV_CORE
+                    //Algorithm depending on the precision of IntType::catalyst_type
+                    using ld = typename IntType::catalyst_type;
+
+                    // Look at the leading base or more digits to determine
+                    // how many subtractions are needed to make rhs >= mod.
+                    // It is assumed that rhs has the same or less digits
+                    // than mod.
+                    ld rhs_lead = 0, mod_lead = 0;
+                    // Max propogation refers to the maximum number of
+                    // digits the act of carrying can propogate when one
+                    // number is multiplied by a single digit number,
+                    // as is the case with multiply_diglist(). Take the
+                    // worst case scenario: 1234567890123456789 * 9
+                    //                      [base 10]
+                    // Notice that carrying propogates until 0 is reached,
+                    // when it is impossible to have another carry.
+                    size_type max_propogation = mod.base();
+                    size_type min_index = (rhs.count_digits() > max_propogation)
+                                        ? (rhs.count_digits()-max_propogation-1)
+                                        : 0
+                                        ;
+
+                    // Calculate leading digits for rhs and mod
+                    ld ten_mult = 1;
+                    for( size_type i = min_index;
+                         i < mod.count_digits();
+                         ++i, ten_mult *= mod.base()
+                    ){
+                        if(i < rhs.count_digits())
+                            rhs_lead += ten_mult * rhs.digit(i);
+                        mod_lead += ten_mult * mod.digit(i);
                     }
-                    return factor;
+
+                    ld rhs_lead_copy = rhs_lead;
+
+                    while(rhs_lead < mod_lead){
+                        ++subtraction_count;
+                        rhs_lead += rhs_lead_copy;
+                    }
+
+                    // Update modulus
+                    IntType rhs_mult(rhs);
+                    multiply_diglist(rhs_mult, subtraction_count);
+                    rhs_mult.sign(-1);
+                    add(mod, rhs_mult);
+
+                #else
+
+                    // Slower algorithm
+                    while(compare_lists(rhs.digit_list(), mod.digit_list()) < 0){
+                        ++subtraction_count;
+                        add(mod, rhs, -1);
+                    }
+                #endif
+
+                    return subtraction_count;
                 }
 
                 // Accumulate or gather
                 template <typename IntType>
-                void div_acc_gath( IntType& quotient, IntType& modulus,
-                                   IntType& shifter,
+                void div_acc_gath( const IntType& rhs,
+                                   IntType& quotient, IntType& modulus,
                                    typename IntType::size_type counter,
                                    bool acc
                 ){
                     using size_type = typename IntType::size_type;
+
+                    // shifter will be used to count the number of subtractions
+                    // and will start as the largest possible such that lhs
+                    // and rhs have the same number of digits.
+                    IntType shifter(rhs.magnitude());
+                    shifter.shift_left(counter-1);
 
                     bucket_type<IntType> bucket;
                     while(counter-- > 0){
                         IntType addend(Helper::make_one_temp(modulus));
                         addend.shift_left(counter);
 
-                        // Use factor to perform a multiplication later on
-                        size_type factor = div_core(modulus, shifter);
+                        size_type subtraction_count = div_core(modulus, shifter);
 
                         // Leverage multiply_diglist() to avoid
                         // reduce number of additions.
-                        multiply_diglist(addend, factor);
+                        multiply_diglist(addend, subtraction_count);
                         if(acc) bucket.push_back(addend);
-                        else           add(quotient, addend);
+                        else    add(quotient, addend);
 
                         shifter.shift_right(1);
                     }
@@ -479,9 +555,11 @@ namespace Precision{
                     quotient = lhs;
                     Helper::make_zero(modulus, lhs);
                     return;
-                }else if(lhs == rhs){
+                }else if(compare_lists(lhs.digit_list(), rhs.digit_list()) == 0){
                     Helper::make_one(quotient, lhs);
                     Helper::make_zero(modulus, lhs);
+
+                    quotient.sign(lhs.sign() * rhs.sign());
                     return;
                 }else if(compare_lists(lhs.digit_list(), rhs.digit_list()) < 0){
                     modulus = lhs;
@@ -495,13 +573,7 @@ namespace Precision{
 
                 typedef typename IntType::size_type size_type;
 
-                // rhs_shift will be used to count the number of subtractions
-                // and will start as the largest possible such that lhs
-                // and rhs have the same number of digits.
-                IntType rhs_shift(rhs.magnitude());
-                size_type t_counter(modulus.count_digits()-rhs_shift.count_digits());
-
-                rhs_shift.shift_left(t_counter);
+                size_type t_counter(modulus.count_digits()-rhs.count_digits());
 
                 // Perform division by subtracting rhs_shift at a time and
                 //  counting how many subtractions were performed
@@ -510,8 +582,8 @@ namespace Precision{
                                 // account for subtraction at the one's place.
                                 // This, there are always (# of divisor digits) + 1
                                 // subtractons that happen.
-                Arith_Helper::div_acc_gath( quotient, modulus,
-                                            rhs_shift, t_counter,
+                Arith_Helper::div_acc_gath( rhs, quotient, modulus,
+                                            t_counter,
                                             modulus.count_digits()
                                                 < Arith_Helper::acc_sw_min
                                             );
@@ -528,7 +600,8 @@ namespace Precision{
                 if(Helper::is_zero(orig)){
                     throw exception(
                         exception::insufficient_memory,
-                        "Precision::Volatile_::operator~()"
+                        "Precision::Volatile::Int_Operations::operator~"
+                        "(const IntType&)"
                     );
                 }
                 IntType toreturn(Helper::make_zero_temp(orig)),
