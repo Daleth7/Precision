@@ -24,8 +24,10 @@ namespace Precision{
                 //Exponentiation by squaring
                 if(Helper::is_even(exp)){
                     multiply(base, base);
-                    IntType half_exp = exp;
-                    Helper::halve(half_exp);
+
+                    // Divide exponent by 2
+                    IntType half_exp, two_temp = Helper::make_two_temp(base), mod;
+                    divide_mod(exp, two_temp, half_exp, mod);
 
                     exponentiate(base, half_exp);
 

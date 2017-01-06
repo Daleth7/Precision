@@ -171,7 +171,7 @@ struct Core_Int {
     void halve(){
         Core_Int two, quo_res, mod_res;
         two.m_number.push_back(2);
-        this->make_positive();
+        two.make_positive();
         Precision::Volatile::Int_Operations::divide_mod(*this, two, quo_res, mod_res);
 
         *this = std::move(quo_res);

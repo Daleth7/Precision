@@ -118,13 +118,20 @@ void test_and_log_util::execute_tests(){
         if(cit->max_repeats > 0 && cit->speed_test){
             size_type test_repeat_counter = cit->max_repeats;
             double average_time = 0.0;
+            bool err_encountered = false;
 
             // Measure total time taken and then divide by number of runs
             clock_type::time_point ref = clock_type::now();
 
             // Repeat speed test
             while(test_repeat_counter-- > 0){
-                cit->speed_test(log);
+                try{
+                    cit->speed_test(log);
+                }catch(const std::exception& err){
+                    console << " ; Error!  " << err.what(); 
+                    err_encountered = true;
+                    break;
+                }
             }
 
             // Calculate average time taken
@@ -132,8 +139,10 @@ void test_and_log_util::execute_tests(){
             average_time = std::chrono::duration_cast<time_type>
                             (fin - ref).count() / cit->max_repeats;
 
-            console << " ; Average execution time: " << average_time << " s";
-            log << " ; Average execution time: " << average_time << " s";
+            if(!err_encountered){
+                console << " ; Average execution time: " << average_time << " s";
+                log << " ; Average execution time: " << average_time << " s";
+            }
         }
         console << std::endl;
         log << std::endl;
