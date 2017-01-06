@@ -2,7 +2,7 @@ CC = g++
 
 STD = c++11
 
-OPTIMIZE = -O0
+OPTIMIZE = -O3
 
 INCLUDE = -I../
 

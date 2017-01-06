@@ -1,4 +1,3 @@
-#include <utility>  // For std::swap
 #include <cmath>    // For std::fmod
 
 namespace Precision{
@@ -6,68 +5,85 @@ namespace Precision{
         namespace Int_Operations {
             //Logical Operators
             template <typename IntType>
-            void logical_operation(
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                unsigned short oper, typename IntType::digit_type base
+            void logical_operation( IntType& lhs, const IntType& rhs,
+                                    unsigned short oper
             ){
-                using std::swap;
-                if(diglist1.size() < diglist2.size()) swap(diglist1, diglist2);
-                diglist2.insert( diglist2.end(),
-                                 diglist1.size() - diglist2.size(),
-                                 0
-                                 );
-                typedef typename IntType::catalyst_type catalyst_type;
-                auto compl_oper = [base](catalyst_type l1)
-                    {return std::fmod(base - 1 - l1);};
-                auto and_oper = [base](catalyst_type l1, catalyst_type l2)
-                    {return std::fmod((l1 * l2), base);};
-                auto or_oper = [base, compl_oper, and_oper](catalyst_type l1, catalyst_type l2)
+                typedef typename IntType::catalyst_type ld;
+                typedef typename IntType::size_type size_type;
+                typedef typename IntType::digit_type digit_type;
+
+                const digit_type base = lhs.base();
+
+                auto compl_oper = [base](ld l1)
+                    {return base - 1 - l1;};
+                auto and_oper = [base](ld l1, ld l2)
+                    {return std::fmod(l1 * l2, base);};
+                // Use De Morgan's to find equivalent for OR operation
+                auto or_oper = [base, compl_oper, and_oper](ld l1, ld l2)
                     {return compl_oper(and_oper(compl_oper(l1), compl_oper(l2)));};
-                auto xor_oper = [base](catalyst_type l1, catalyst_type l2)
+                auto xor_oper = [base](ld l1, ld l2)
                     {return std::fmod((l1 + l2), base);};
 
-                for( auto biter(diglist1.begin()), siter(diglist2.begin());
-                     siter != diglist2.end();
-                     ++biter, ++siter
-                ){
-                    typename IntType::catalyst_type bld_temp(*biter), sld_temp(*siter);
+                size_type max_len = lhs.count_digits();
+                if(rhs.count_digits() > max_len) max_len = rhs.count_digits();
+
+                // Perform the logical operation on each digit
+                for(size_type i = 0; i < max_len; ++i){
+                    ld lhs_dig = (i < lhs.count_digits()) ? lhs.digit(i) : 0,
+                       rhs_dig = (i < rhs.count_digits()) ? rhs.digit(i) : 0,
+                       new_dig = 0
+                       ;
+
                     switch(oper){
                         case 1:
-                            *biter = and_oper(bld_temp, sld_temp);
+                            new_dig = and_oper(lhs_dig, rhs_dig);
                             break;
                         case 2:
-                            *biter = or_oper(bld_temp, sld_temp);
+                            new_dig = or_oper(lhs_dig, rhs_dig);
                             break;
                         case 3:
-                            *biter = xor_oper(bld_temp, sld_temp);
+                            new_dig = xor_oper(lhs_dig, rhs_dig);
                             break;
                         case 4:
-                            *biter = compl_oper(*biter);
+                            new_dig = compl_oper(lhs_dig);
+                            break;
+                        case 5:
+                            new_dig = xor_oper(lhs_dig, rhs_dig);
+                            for(digit_type i = 1; i < base-1; ++i)
+                                new_dig = xor_oper(new_dig, rhs_dig);
                             break;
                         default:
                             throw oper; //Should never happen
                     }
+
+                    // Replace the value or append
+                    lhs.force_digit(i, new_dig);
                 }
-                while(diglist1.size() > 1 && diglist1.back() == 0)
-                    diglist1.pop_back();
+
+                // Remove excess 0's, which is possible since digits were forced
+                while(lhs.count_digits() > 1 && lhs.digit(lhs.count_digits()-1) == 0)
+                    lhs.detach();
+
+                // Calculate the new sign
                 switch(oper){
                     case 1:
-                        sign1 =
-                            1-(sign1.is_negative() & sign2.is_negative())*2;
+                        lhs.sign( 1-(Helper::is_negative(lhs)
+                                  & Helper::is_negative(rhs))*2
+                                  );
                         break;
                     case 2:
-                        sign1 =
-                            1-(sign1.is_negative() | sign2.is_negative())*2;
+                        lhs.sign( 1-(Helper::is_negative(lhs)
+                                  | Helper::is_negative(rhs))*2
+                                  );
                         break;
                     case 3:
-                        sign1 =
-                            1-(sign1.is_negative() ^ sign2.is_negative())*2;
+                    case 5:
+                        lhs.sign( 1-(Helper::is_negative(lhs)
+                                  ^ Helper::is_negative(rhs))*2
+                                  );
                         break;
                     case 4:
-                        sign1.negate();
+                        Helper::negate(lhs);
                         break;
                     default:
                         throw oper; //Should never happen
@@ -75,62 +91,24 @@ namespace Precision{
             }
 
             template <typename IntType>
-            void logical_and(   //res = (a*b)%base
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist2,
-                                            sign1, sign2,
-                                            1,
-                                            base
-                                            );
-            }
+            void logical_and_eq(IntType& lhs, const IntType& rhs)
+                {logical_operation<IntType>(lhs, rhs, 1);}
 
             template <typename IntType>
-            void logical_or(    //res = ~(~a & ~b)
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist2,
-                                            sign1, sign2,
-                                            2,
-                                            base
-                                            );
-            }
+            void logical_or_eq(IntType& lhs, const IntType& rhs)
+                {logical_operation<IntType>(lhs, rhs, 2);}
 
             template <typename IntType>
-            void logical_xor(   //res = (~((a+b)%base))%base
-                typename IntType::diglist_type& diglist1,
-                typename IntType::diglist_type diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist2,
-                                            sign1, sign2,
-                                            3,
-                                            base
-                                            );
-            }
+            void logical_xor_eq(IntType& lhs, const IntType& rhs)
+                {logical_operation<IntType>(lhs, rhs, 3);}
 
             template <typename IntType>
-            void logical_inversion( //res = Base - 1 - a
-                typename IntType::diglist_type& diglist1,
-                typename IntType::sign_type& sign1,
-                typename IntType::digit_type base
-            ){
-                logical_operation<IntType>( diglist1, diglist1,
-                                            sign1, sign1,
-                                            4,
-                                            base
-                                            );
-            }
+            void logical_complement_eq(IntType& lhs)
+                {logical_operation<IntType>(lhs, lhs, 4);}
+
+            template <typename IntType>
+            void logical_xor_rev_eq(IntType& xor_res, const IntType& rhs)
+                {logical_operation<IntType>(xor_res, rhs, 5);}
         }
     }
 }

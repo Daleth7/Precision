@@ -78,7 +78,16 @@ void test_and_log_util::execute_tests(){
     for(auto cit = m_tests.cbegin(); cit != m_tests.cend(); ++cit){
 
         // Perform functionality test
-        result_type test_result = cit->func_test(console);
+        result_type test_result;
+        try{
+            test_result = cit->func_test(console);
+        }catch(const std::exception& err){
+            // Do not attempt running further tests that may depend on this
+            // failed test
+            console << "\nExperienced unexpected error: " << err.what() << '\n';
+            log << "\nExperienced unexpected error: " << err.what() << '\n';
+            break;
+        }
         bool result_matched = test_result.expected == test_result.actual;
         try{
             assert(!m_force_assert | result_matched);
@@ -126,8 +135,8 @@ void test_and_log_util::execute_tests(){
             console << " ; Average execution time: " << average_time << " s";
             log << " ; Average execution time: " << average_time << " s";
         }
-        console << '\n';
-        log << '\n';
+        console << std::endl;
+        log << std::endl;
     }
     console << '\n';
     log << '\n';

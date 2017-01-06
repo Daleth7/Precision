@@ -186,12 +186,16 @@ namespace Precision{
              * 
              *  \param lhs The first integer
              *  \param rhs The second integer
-             *  \param oper  A callback function that performs the
-             *               bitwise operation on each digit.
+             *  \param op  The bitwise operation to perform per bit
+             *           0. COMPLEMENT
+             *           1. AND
+             *           2. OR
+             *           3. XOR
+             *
              */
             template <typename IntType>
-            void bitwise_operation( IntType& lhs, IntType rhs,
-                                    std::function<bool(bool, bool)>&& oper
+            void bitwise_operation( IntType& lhs, const IntType& rhs,
+                                    unsigned short op
                                     );
 
             /** Binary AND operation calculated by performing
@@ -261,30 +265,23 @@ namespace Precision{
             /** Number base relative function that performs one of
              *  several logical operations (AND, OR, XOR, COMPL)
              *  to two digit strings. The numerical signs are treated
-             *  separately and go through the respective bitwise
+             *  separately and go through the respective logical
              *  operation.
              * 
              *  \tparam IntType Number type from which type and base
              *                  information is extracted.
              * 
-             *  \param diglist1 The digit string of the first number
-             *  \param diglist2 The digit string of the second number
-             *  \param sign1 The numeric sign of the first number
-             *  \param sign2 The numeric sign of the second number
-             *  \param oper Determines which operation to perform
+             *  \param lhs  The first integer
+             *  \param rhs  The second integer
+             *  \param oper The operation to perform per digit
              *           1. AND
              *           2. OR
              *           3. XOR
              *           4. COMPLEMENT
-             *  \param base The number base of both numbers
              */
             template <typename IntType>
-            void logical_operation( typename IntType::diglist_type& diglist1,
-                                    typename IntType::diglist_type diglist2,
-                                    typename IntType::sign_type& sign1,
-                                    typename IntType::sign_type sign2,
-                                    unsigned short oper,
-                                    typename IntType::digit_type base
+            void logical_operation( IntType& lhs, const IntType& rhs,
+                                    unsigned short oper
                                     );
 
             /** Logical base AND operation calculated by performing
@@ -293,19 +290,11 @@ namespace Precision{
              *  \tparam IntType Number type from which type and base
              *                  information is extracted.
              * 
-             *  \param diglist1 The digit string of the first number
-             *  \param diglist2 The digit string of the second number
-             *  \param sign1 The numeric sign of the first number
-             *  \param sign2 The numeric sign of the second number
-             *  \param base The number base of both numbers
+             *  \param lhs  The first integer
+             *  \param rhs  The second integer
              */
             template <typename IntType>
-            void logical_and(   typename IntType::diglist_type& diglist1,
-                                typename IntType::diglist_type diglist2,
-                                typename IntType::sign_type& sign1,
-                                typename IntType::sign_type sign2,
-                                typename IntType::digit_type base
-                                );
+            void logical_and_eq(IntType& lhs, const IntType& rhs);
 
             /** Logical base OR operation that is equivalent to
              *  COMPL( AND( COMPL(x), COMPL(y) ) )
@@ -313,19 +302,11 @@ namespace Precision{
              *  \tparam IntType Number type from which type and base
              *                  information is extracted.
              * 
-             *  \param diglist1 The digit string of the first number
-             *  \param diglist2 The digit string of the second number
-             *  \param sign1 The numeric sign of the first number
-             *  \param sign2 The numeric sign of the second number
-             *  \param base The number base of both numbers
+             *  \param lhs  The first integer
+             *  \param rhs  The second integer
              */
             template <typename IntType>
-            void logical_or(    typename IntType::diglist_type& diglist1,
-                                typename IntType::diglist_type diglist2,
-                                typename IntType::sign_type& sign1,
-                                typename IntType::sign_type sign2,
-                                typename IntType::digit_type base
-                                );
+            void logical_or_eq(IntType& lhs, const IntType& rhs);
 
             /** Logical base XOR operation calculated by performing
              *  x + y on each digit.
@@ -333,19 +314,11 @@ namespace Precision{
              *  \tparam IntType Number type from which type and base
              *                  information is extracted.
              * 
-             *  \param diglist1 The digit string of the first number
-             *  \param diglist2 The digit string of the second number
-             *  \param sign1 The numeric sign of the first number
-             *  \param sign2 The numeric sign of the second number
-             *  \param base The number base of both numbers
+             *  \param lhs  The first integer
+             *  \param rhs  The second integer
              */
             template <typename IntType>
-            void logical_xor(   typename IntType::diglist_type& diglist1,
-                                typename IntType::diglist_type diglist2,
-                                typename IntType::sign_type& sign1,
-                                typename IntType::sign_type sign2,
-                                typename IntType::digit_type base
-                                );
+            void logical_xor_eq(IntType& lhs, const IntType& rhs);
 
             /** Complement function that is relative to the
              *  number base of the IntType object.
@@ -353,15 +326,26 @@ namespace Precision{
              *  \tparam IntType Number type from which type and base
              *                  information is extracted.
              * 
-             *  \param diglist The digit string of the integer
-             *  \param int_sign The numerical sign of the integer
-             *  \param base The number base of the integer
+             *  \param orig The integer to find the complement of
              */
             template <typename IntType>
-            void logical_complement( typename IntType::diglist_type& diglist,
-                                     typename IntType::sign_type& int_sign,
-                                     typename IntType::digit_type base
-                                     );
+            void logical_complement_eq(IntType& orig);
+
+            /** A specical logical base reverse XOR operation that
+             *  can take the result of a logical XOR operation and
+             *  recalculate one of the original keys. This is akin
+             *  to the special case: binary XOR, where applying XOR
+             *  again returns the original key.
+             * 
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
+             * 
+             *  \param xor_res The first integer which was the result
+             *                 of a previous xor operation
+             *  \param rhs     The second integer
+             */
+            template <typename IntType>
+            void logical_xor_rev_eq(IntType& xor_res, const IntType& rhs);
 
             /** Integer exponentiation function that employs
              *  the exponentiation by squaring algorithm. This

@@ -7,7 +7,7 @@
 #include "Debug_Switches.h"
 
 std::ostream& test_console = std::clog;
-std::ofstream test_log("test_log.txt");
+std::ofstream test_log("log/test_log.txt");
 
 int main(){
     test_console << '\n';
