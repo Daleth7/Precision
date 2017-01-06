@@ -3,6 +3,7 @@
 #include "int_operations_test_fake_int.h" // For Core_Int
 
 static Core_Int zero_list_int, one_list_int,
+                twos_int, hundred_int,
                 all_digs_int, sub_int, less_digs_int,
                 div_fac
                 ;
@@ -20,38 +21,46 @@ test_and_log_util::result_type test_div_list1_neg(test_and_log_util::out_type&);
 test_and_log_util::result_type test_div_list2_neg(test_and_log_util::out_type&);
 test_and_log_util::result_type test_div_ones(test_and_log_util::out_type&);
 test_and_log_util::result_type test_div_dig_gr(test_and_log_util::out_type&);
+test_and_log_util::result_type test_div_2_by_100(test_and_log_util::out_type&);
 test_and_log_util::result_type test_div(test_and_log_util::out_type&);
 void test_div_speed(test_and_log_util::out_type&);
 
 
 
 void setup_division_variables(){
-    all_digs_int.m_sign.make_positive();
-    sub_int.m_sign.make_negative();
+    all_digs_int.make_positive();
+    sub_int.make_negative();
     for(unsigned i = 0; i < 10; ++i){
         all_digs_int.m_number.push_back(i % 10);
         sub_int.m_number.push_back(0);
     }
     sub_int.m_number.push_back(1);
 
-    less_digs_int.m_sign.make_positive();
+    less_digs_int.make_positive();
     for(unsigned i = 0; i < 5; ++i){
         less_digs_int.m_number.push_back(i % 10);
     }
 
     zero_list_int.m_number.push_back(0);
-    zero_list_int.m_sign.make_positive();
+    zero_list_int.make_positive();
     one_list_int.m_number.push_back(1);
-    one_list_int.m_sign.make_positive();
+    one_list_int.make_positive();
 
-    div_fac.m_sign.make_positive();
+    twos_int.make_two();
+
+    hundred_int.m_number.push_back(0);
+    hundred_int.m_number.push_back(0);
+    hundred_int.m_number.push_back(1);
+    hundred_int.make_positive();
+
+    div_fac.make_positive();
     div_fac.m_number = Core_Int::diglist_type(4, 3);
 
-    speed_add_var1.m_sign.make_positive();
+    speed_add_var1.make_positive();
     for(unsigned i = 0; i < 100; ++i)
         speed_add_var1.m_number.push_back(i % 10);
 
-    speed_div_var.m_sign.make_positive();
+    speed_div_var.make_positive();
     speed_div_var.m_number.push_back(7);
 }
 
@@ -64,6 +73,7 @@ void add_division_tests(test_and_log_util& dest){
     ADD_TEST(dest, test_div_list2_neg);
     ADD_TEST(dest, test_div_ones);
     ADD_TEST(dest, test_div_dig_gr);
+    ADD_TEST(dest, test_div_2_by_100);
     ADD_TEST_BOTH( dest,
                    test_div, test_div_speed,
                    1000
@@ -77,6 +87,8 @@ void division_test_cleanup(){
     less_digs_int.m_number.clear();
     one_list_int.m_number.clear();
     zero_list_int.m_number.clear();
+    twos_int.m_number.clear();
+    hundred_int.m_number.clear();
     div_fac.m_number.clear();
     speed_add_var1.m_number.clear();
     speed_div_var.m_number.clear();
@@ -162,7 +174,7 @@ test_and_log_util::result_type test_div_gr(test_and_log_util::out_type&){
 
 test_and_log_util::result_type test_div_list1_neg(test_and_log_util::out_type& out){
     Core_Int div_copy = all_digs_int, div2_copy = less_digs_int;
-    div_copy.m_sign.make_negative();
+    div_copy.make_negative();
     Core_Int div_res, mod_res;
 
     Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
@@ -180,7 +192,7 @@ test_and_log_util::result_type test_div_list1_neg(test_and_log_util::out_type& o
 
 test_and_log_util::result_type test_div_list2_neg(test_and_log_util::out_type&){
     Core_Int div_copy = all_digs_int, div2_copy = less_digs_int;
-    div2_copy.m_sign.make_negative();
+    div2_copy.make_negative();
     Core_Int div_res, mod_res;
 
     Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
@@ -225,6 +237,23 @@ test_and_log_util::result_type test_div_dig_gr(test_and_log_util::out_type&){
 
     test_and_log_util::result_type res;
     res.expected = "Q = -3000300 M = -100";
+    res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
+
+    return res;
+}
+
+test_and_log_util::result_type test_div_2_by_100(test_and_log_util::out_type&){
+    Core_Int div_copy = hundred_int;
+    Core_Int div_res, mod_res;
+
+    Precision::Volatile::Int_Operations::divide_mod<Core_Int>( div_copy,
+                                                               twos_int,
+                                                               div_res,
+                                                               mod_res
+                                                               );
+
+    test_and_log_util::result_type res;
+    res.expected = "Q = +50 M = +0";
     res.actual = "Q = " + to_str(div_res) + " M = " + to_str(mod_res);
 
     return res;

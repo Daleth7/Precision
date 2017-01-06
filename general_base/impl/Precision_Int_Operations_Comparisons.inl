@@ -17,7 +17,7 @@ namespace Precision{
                 else if( lhs.is_negative() &&
                          diglist1.size() < diglist2.size()
                          )                                  return 1;
-                return lhs.sign().value() * compare_lists(diglist1, diglist2);
+                return lhs.sign() * compare_lists(diglist1, diglist2);
             }
 
             template <typename DigListType>
@@ -42,13 +42,13 @@ namespace Precision{
             bool is_zero_list(const DigListType& d)
                 {return d.size() == 1u && d.front() == 0;}
 
-            template <typename DigListType, typename SignType>
-            bool is_one_list(const DigListType& d, const SignType& s)
-                {return d.size() == 1u && d.front() == 1 && s.is_positive();}
+            template <typename DigListType>
+            bool is_one_list(const DigListType& d, bool is_negative)
+                {return d.size() == 1u && d.front() == 1 && (!is_negative);}
 
-            template <typename DigListType, typename SignType>
-            bool is_neg_one_list(const DigListType& d, const SignType& s)
-                {return d.size() == 1u && d.front() == 1 && s.is_negative();}
+            template <typename DigListType>
+            bool is_neg_one_list(const DigListType& d, bool is_negative)
+                {return d.size() == 1u && d.front() == 1 && is_negative;}
         }
     }
 }

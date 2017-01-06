@@ -30,37 +30,37 @@ void test_sub_speed(test_and_log_util::out_type&);
 
 
 void setup_addition_variables(){
-    all_digs_int.m_sign.make_positive();
-    sub_int.m_sign.make_negative();
+    all_digs_int.make_positive();
+    sub_int.make_negative();
     for(unsigned i = 0; i < 10; ++i){
         all_digs_int.m_number.push_back(i % 10);
         sub_int.m_number.push_back(0);
     }
     sub_int.m_number.push_back(1);
 
-    less_digs_int.m_sign.make_positive();
+    less_digs_int.make_positive();
     for(unsigned i = 0; i < 5; ++i){
         less_digs_int.m_number.push_back(i % 10);
     }
 
-    sub_le_int.m_sign.make_negative();
+    sub_le_int.make_negative();
     sub_le_int.m_number.push_back(0);
     sub_le_int.m_number.push_back(0);
     sub_le_int.m_number.push_back(0);
     sub_le_int.m_number.push_back(1);
 
     sub_add_digs = all_digs_int;
-    sub_add_digs.m_sign.make_negative();
+    sub_add_digs.make_negative();
 
     zero_list_int.m_number.push_back(0);
-    zero_list_int.m_sign.make_positive();
+    zero_list_int.make_positive();
     one_list_int.m_number.push_back(1);
-    one_list_int.m_sign.make_positive();
+    one_list_int.make_positive();
     neg_one_int.m_number.push_back(1);
-    neg_one_int.m_sign.make_negative();
+    neg_one_int.make_negative();
 
 
-    mult_fac1.m_sign.make_positive();
+    mult_fac1.make_positive();
     mult_fac1.m_number.push_back(0);
     mult_fac1.m_number.push_back(8);
     mult_fac1.m_number.push_back(6);
@@ -72,7 +72,7 @@ void setup_addition_variables(){
     mult_fac1.m_number.push_back(0);
     mult_fac1.m_number.push_back(9);
     mult_fac1.m_number.push_back(7);
-    mult_fac2.m_sign.make_positive();
+    mult_fac2.make_positive();
     mult_fac2.m_number.push_back(0);
     mult_fac2.m_number.push_back(0);
     mult_fac2.m_number.push_back(9);
@@ -88,9 +88,9 @@ void setup_addition_variables(){
 
 
 
-    speed_add_var1.m_sign.make_positive();
-    speed_add_var2.m_sign.make_positive();
-    speed_sub_var.m_sign.make_negative();
+    speed_add_var1.make_positive();
+    speed_add_var2.make_positive();
+    speed_sub_var.make_negative();
     for(unsigned i = 0; i < 100; ++i){
         speed_add_var1.m_number.push_back(i % 10);
         speed_add_var2.m_number.push_back((i*2) % 10);

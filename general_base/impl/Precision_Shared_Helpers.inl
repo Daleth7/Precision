@@ -1,5 +1,7 @@
 #include "Type_Traits_Extended/Type_Traits_Ext.h"
 
+//#include "Precision_Signed_Interface.h"
+
 #include "Precision_Tags.h"
 
 #include "Precision_Precedence_Pack.h"
@@ -77,6 +79,10 @@ namespace Precision{
         template <typename Number_Type>
         bool is_neg_one(const Number_Type& num)
             {return num.is_neg_one();}
+
+        template <typename Number_Type>
+        bool is_negative(const Number_Type& num)
+            {return num.is_negative();}
 
         template <typename Number_Type>
         bool is_odd(const Number_Type& num)

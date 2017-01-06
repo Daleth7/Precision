@@ -29,22 +29,22 @@ void test_mult_speed(test_and_log_util::out_type&);
 
 
 void setup_multiplication_variables(){
-    all_digs_int.m_sign.make_positive();
+    all_digs_int.make_positive();
     for(unsigned i = 0; i < 10; ++i)
         all_digs_int.m_number.push_back(i % 10);
 
-    sub_le_int.m_sign.make_negative();
+    sub_le_int.make_negative();
     sub_le_int.m_number.push_back(0);
     sub_le_int.m_number.push_back(0);
     sub_le_int.m_number.push_back(0);
     sub_le_int.m_number.push_back(1);
 
     zero_list_int.m_number.push_back(0);
-    zero_list_int.m_sign.make_positive();
+    zero_list_int.make_positive();
     one_list_int.m_number.push_back(1);
-    one_list_int.m_sign.make_positive();
+    one_list_int.make_positive();
     neg_one_int.m_number.push_back(1);
-    neg_one_int.m_sign.make_negative();
+    neg_one_int.make_negative();
 
     speed_mult_var1.m_number = Core_Int::diglist_type(5, 0);
     speed_mult_var2.m_number = Core_Int::diglist_type(5, 0);

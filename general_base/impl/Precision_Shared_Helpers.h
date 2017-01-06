@@ -4,8 +4,8 @@
  *  decouple algorithms for possible future improvement.
  */
 
-#ifndef PRECISON_MATH_SHARED_HELPERS__H__
-#define PRECISON_MATH_SHARED_HELPERS__H__
+#ifndef PR777ECISON_OPERATIONS_SHARED_HELPERS__H__
+#define PR777ECISON_OPERATIONS_SHARED_HELPERS__H__
 
 #include <type_traits>
 
@@ -82,6 +82,15 @@ namespace Precision{
          */
         template <typename Number_Type>
         bool is_neg_one(const Number_Type& num);
+
+        /** Decoupled check if the number sign is negative.
+         *
+         * \tparam Number_Type The type of the number under test 
+         * \param num Number to test. 
+         * \return Whether or not num < 0. 
+         */
+        template <typename Number_Type>
+        bool is_negative(const Number_Type& num);
 
         /** Decoupled check if the number is odd.
          *

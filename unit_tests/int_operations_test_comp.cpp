@@ -31,10 +31,10 @@ void test_compare_speed(test_and_log_util::out_type&);
 
 
 void setup_comparison_variables(){
-    func_variable.m_sign.assign(1);
-    func_dig_gr_variable.m_sign.assign(-1);
-    func_dig_le_variable.m_sign.assign(1);
-    func_dig_eq_variable.m_sign.assign(1);
+    func_variable.sign(1);
+    func_dig_gr_variable.sign(-1);
+    func_dig_le_variable.sign(1);
+    func_dig_eq_variable.sign(1);
     for(unsigned i = 0; i < 20; ++i){
         func_variable.m_number.push_back(i % 10);
         func_dig_gr_variable.m_number.push_back(i % 10);
@@ -44,16 +44,16 @@ void setup_comparison_variables(){
     func_dig_gr_variable.m_number.front() = 1;
     func_dig_le_variable.m_number.back() = 8;
 
-    func_gr_variable.m_sign.assign(-1);
+    func_gr_variable.sign(-1);
     for(unsigned i = 0; i < 22; ++i)
         func_gr_variable.m_number.push_back(i % 10);
 
-    func_le_variable.m_sign.assign(1);
+    func_le_variable.sign(1);
     for(unsigned i = 0; i < 18; ++i)
         func_le_variable.m_number.push_back(i % 10);
 
-    speed_variable.m_sign.assign(-1);
-    speed_eq_variable.m_sign.assign(-1);
+    speed_variable.sign(-1);
+    speed_eq_variable.sign(-1);
     for(unsigned i = 0; i < 100; ++i){
         speed_variable.m_number.push_back(i % 10);
         speed_eq_variable.m_number.push_back(i % 10);

@@ -32,7 +32,7 @@ namespace Precision{
 
                 // Determine which number is larger
                 short comp = compare_lists(diglist1, diglist2);
-                bool sign_neq = sign1.value() != sign2.value();
+                bool sign_neq = sign1 != sign2;
 
                 using ld_type = typename IntType::catalyst_type;
 
@@ -56,7 +56,7 @@ namespace Precision{
                         // -operand1 + 0
                         if( comp < 0
                             && *fit != 0 && *sit == 0
-                            && sign2.is_negative()
+                            && sign2 < 0
                             ){
                             operand2 -= base;
                             borrowed = true;
@@ -64,7 +64,7 @@ namespace Precision{
                         // 0 - operand2
                         if( comp > 0
                             && *fit == 0 && *sit != 0
-                            && sign1.is_negative()
+                            && sign1 < 0
                             ){
                             operand1 -= base;
                             borrowed = true;
@@ -90,7 +90,7 @@ namespace Precision{
                     if(base <= catalyst){
                         // Both signs must be equal for catalyst > base
                         catalyst -= base;
-                        carry = sign1.value();
+                        carry = sign1;
                     } else if(catalyst < 0){
                         catalyst += base;
                         carry = -1;
@@ -159,7 +159,7 @@ namespace Precision{
                         // -operand1 + 0
                         if( comp < 0
                             && lhs.digit(fit) != 0 && rhs.digit(sit) == 0
-                            && rhs_sign.is_negative()
+                            && rhs_sign < 0
                             ){
                             operand2 -= lhs.base();
                             borrowed = true;
@@ -167,7 +167,7 @@ namespace Precision{
                         // 0 - operand2
                         if( comp > 0
                             && lhs.digit(fit) == 0 && rhs.digit(sit) != 0
-                            && lhs.sign().is_negative()
+                            && lhs.sign() < 0
                             ){
                             operand1 -= lhs.base();
                             borrowed = true;
@@ -193,7 +193,7 @@ namespace Precision{
                     if(lhs.base() <= catalyst){
                         // Both signs must be equal for catalyst > base
                         catalyst -= lhs.base();
-                        carry = lhs.sign().value();
+                        carry = lhs.sign();
                     } else if(catalyst < 0){
                         catalyst += lhs.base();
                         carry = -1;
@@ -275,7 +275,7 @@ namespace Precision{
             namespace Arith_Helper{
                 // Specify the minimum number of digits before the
                 // multiplication function switches algorithms
-                static constexpr std::size_t acc_sw_min = 1000;
+                static constexpr std::size_t acc_sw_min = 100000;
                 template <typename IntType>
                 using bucket_type = std::vector<IntType>;
 
@@ -320,6 +320,11 @@ namespace Precision{
                         dest.append(std::fmod(carry, dest.base()));
                         carry /= dest.base();
                     }
+
+                    // Remove excess 0's
+                    while( dest.count_digits() > 1
+                        && dest.digit(dest.count_digits()-1) == 0
+                    )   dest.detach();
                 }
 
                 template <typename IntType>
@@ -356,15 +361,16 @@ namespace Precision{
 
                     // Perform elementary multiplication using additions
                     const size_type zeros = idx;
-                    Helper::make_zero(lhs);
+                    IntType product = Helper::make_zero_temp(lhs);
                     for(; idx < rhs.count_digits(); ++idx){
                         IntType addend(base_adder);
                         multiply_diglist(addend, rhs.digit(idx));
 
                         addend.shift_left(idx-zeros);
 
-                        add(lhs, addend);
+                        add(product, addend);
                     }
+                    lhs = std::move(product);
                 }
             }
 
@@ -476,7 +482,7 @@ namespace Precision{
 
                     ld rhs_lead_copy = rhs_lead;
 
-                    while(rhs_lead < mod_lead){
+                    while(!(mod_lead < rhs_lead)){
                         ++subtraction_count;
                         rhs_lead += rhs_lead_copy;
                     }
@@ -494,9 +500,9 @@ namespace Precision{
 
                     IntType rhs_lead_copy = rhs_lead;
 
-                    while( compare_lists( rhs_lead.digit_list(),
-                                          mod_lead.digit_list()
-                                          ) < 0
+                    while( !(compare_lists( mod_lead.digit_list(),
+                                          rhs_lead.digit_list()
+                                          ) < 0)
                     ){
                         ++subtraction_count;
                         add(rhs_lead, rhs_lead_copy);

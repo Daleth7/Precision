@@ -170,10 +170,10 @@ namespace Precision{
              *  \tparam IntType Number type from which type and base
              *                  information is extracted.
              * 
-             *  \param bitstring The original number
+             *  \param bitstring The number to modify
              */
             template <typename IntType>
-            IntType bitwise_complement(const IntType& bitstring);
+            void bitwise_complement(IntType& bitstring);
 
             /** Binary base relative function that performs one of
              *  several bitwise operations (AND, OR, XOR) to two
@@ -368,17 +368,14 @@ namespace Precision{
              *  function does not support floating point
              *  exponents.
              * 
-             *  \tparam Number_Type Type of the first number
-             *  \tparam Number_Type2 Type of the second number
+             *  \tparam IntType Number type from which type and base
+             *                  information is extracted.
              * 
              *  \param base The number to exponentiate
              *  \param exp The exponent integer
-             *  \return The result of POWER(base, exp)
              */
-            template <typename Number_Type, typename Number_Type2>
-            Number_Type exponentiate( const Number_Type& base,
-                                      const Number_Type2& exp
-                                      );
+            template <typename IntType>
+            void exponentiate(IntType& base, const IntType& exp);
 
 
 

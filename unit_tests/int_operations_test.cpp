@@ -5,6 +5,8 @@
 #include "int_operations_test_add.h"      // Addition tests
 #include "int_operations_test_mult.h"     // Multiplication tests
 #include "int_operations_test_div.h"      // Division and Modulus tests
+#include "int_operations_test_exp.h"      // Exponentiation tests
+#include "int_operations_test_bit.h"      // Bitwise tests
 
 void setup_variables();
 // Cleanup function to free memory
@@ -20,6 +22,8 @@ void int_operations_test(){
     add_addition_tests(test_list);
     add_multiplication_tests(test_list);
     add_division_tests(test_list);
+    add_exponentiation_tests(test_list);
+    add_bitwise_tests(test_list);
 
     setup_variables();
 
@@ -33,6 +37,8 @@ void setup_variables(){
     setup_addition_variables();
     setup_multiplication_variables();
     setup_division_variables();
+    setup_exponentiation_variables();
+    setup_bitwise_variables();
 }
 
 void cleanup(){
@@ -40,4 +46,6 @@ void cleanup(){
     addition_test_cleanup();
     multiplication_test_cleanup();
     division_test_cleanup();
+    exponentiation_test_cleanup();
+    bitwise_test_cleanup();
 }
