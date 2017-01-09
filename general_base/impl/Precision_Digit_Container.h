@@ -8,31 +8,114 @@
 
 #include "Precision_Defaults.h"
 
+#include <initializer_list>
+
 namespace Precision{
+    /** Precision::Digit_Container provides a set of functions for
+     *  manipulating the digit string that can be inherited, to ease
+     *  the implementation of child classes.
+     *  This class also serves as a thin layer over the underlying
+     *  container type, such that child classes still follow a
+     *  composition structure and can pass a reference to or copy of
+     *  the digit string itself when needed.
+     *  Note that this class is blind to the actual number base, so
+     *  this class does not provide digit changing/adding functions.
+     *  The child class is expected to provide these and to ensure
+     *  all digits in the container are valid according to the number
+     *  base. This class will not store base information to avoid
+     *  forcing child classes to treat the number base a certain way.
+     *  This class also assumes that, no matter the number base, that
+     *  the associated digits are consecutive integers starting at 0.
+     *
+     *  Digits are stored in reverse. For example, the number 1234 will
+     *  be stored as {4, 3, 2, 1}.
+     *
+     *  \tparam ByteType The primitive used to store a digit.
+     *  \tparam Container The underlying container to store a string of digits.
+     */
     template < typename ByteType = Default::byte_type,
                template <typename...> class Container = Default::container_type
                >
-    class DigitContainer{
+    class Digit_Container{
         public:
             // Type-aliases
+
+            /** The raw primitive representing the digit. */
             using digit_type   = ByteType;
+
+            /** The underlying container storing the string of digits.
+              * The container is assumed to support:
+              *     * Random access iterators
+              *     * Type Container<digit_type>::size_type
+              *     * Method size_type Container<digit_type>::size()
+              *     * Method digit_type Container<digit_type>::front()
+              *     * Method iterator Container<digit_type>::begin()
+              *     * Method void Container<digit_type>::insert
+              *                   (iterator, size_type, digit_type)
+              *     * Method void Container<digit_type>::erase(iterator, iterator)
+              *     * Method void Container<digit_type>::push_back()
+              *     * Method void Container<digit_type>::pop_back()
+              *     * Method Container<digit_type>::Container(size_type, digit_type)
+              *     * Method Container<digit_type>::Container
+              *              (const std::initializer_list<digit_type>&)
+              *     * Method Container<digit_type>::Container(iterator, iterator)
+              */
             using diglist_type = Container<digit_type>;
-            using size_type    = default_size_type;
+
+            /** The primitive representing size in diglist_type.
+              */
+            using size_type    = typename diglist_type::size_type;
+
+
 
             // Read-only
+
+            /** Check if the digit string is equivalent to 0.
+              *
+              * \return True if the string is 0. False otherwise.
+              */
             bool is_zero()const
                 {return m_number.size() == 1 && m_number.front() == 0;}
-            bool is_one()const
-                {return m_number.size() == 1 && m_number.front() == 1;}
+
+            /** Check if the rightmost (first) digit of the string is
+              * even.
+              *
+              * \return True if the string is even. False otherwise.
+              */
             bool is_even()const
                 {return (m_number.front() % 2) == 0;}
 
+            /** Check if the rightmost (first) digit of the string is
+              * odd.
+              *
+              * \return True if the string is odd. False otherwise.
+              */
+            bool is_odd()const
+                {return !(this->is_even());}
+
+            /** Return a reference to the underlying container.
+              *
+              * \return a read-only reference to the underlying container.
+              */
             const diglist_type& digit_list()const
                 {return m_number;}
 
+            /** Count the number of digits in the string. The value returned
+              * should always be at least one.
+              *
+              * \return The number of digits in the string.
+              */
             size_type count_digits()const
                 {return m_number.size();}
 
+            /** Get a copy of a specific digit in the string. Note that the
+              * index does not have to be bound to the actual size of the
+              * string since any digit beyond is essentially 0.
+              *
+              * \param index The position of a digit to retrieve.
+              *
+              * \return The requested digit at position index.
+              */
             digit_type digit(size_type index)const{
                 if(index >= this->count_digits()) return 0;
                 return m_number[index];
@@ -42,43 +125,79 @@ namespace Precision{
 
             // Modifiers
 
-            void make_zero()
-                {m_number = diglist_type(1, 0);}
-
-            void make_one()
-                {m_number = diglist_type(1, 1);}
-
-            void make_two()
-                {m_number = diglist_type(1, 2);}
-
+            /** Extend the digit string. This is equivalent to multiplying
+              * the number by a power of its number base.
+              *
+              * \param e The number of digit places to shift to the left by.
+              */
             void shift_left(size_type e){
                 if(this->is_zero()) return;
                 else                m_number.insert(m_number.begin(), e, 0);
             }
 
+            /** Extend the digit string. This is equivalent to dividing
+              * the number by a power of its number base.
+              *
+              * \param e The number of digit places to shift to the right by.
+              */
             void shift_right(size_type e){
                 if(m_number.size() <= e)
                     m_number = diglist_type(1, 0);
                 else{
-                    auto end(m_number.begin());
-                    std::advance(end, e);
-                    m_number.erase(m_number.begin(), end);
+                    auto erase_end(m_number.begin());
+                    std::advance(erase_end, e);
+                    m_number.erase(m_number.begin(), erase_end);
                 }   
             }
 
-            void digit(size_type index, digit_type new_digit){
-                if(index >= m_number.size()) return;
-
-                auto it = m_number.begin();
-                std::advance(it, index);
-                *it = new_digit % this->base();
-            }
-
-            void append(digit_type new_digit)
-                {m_number.push_back(new_digit % this->base());}
-
+            /** Remove the leftmost (last) digit in the string. */
             void detach()
                 {m_number.pop_back();}
+
+
+            // Constructors and destructor
+
+            /** Construct a string from a specified set.
+              *
+              * \param str The string of digits to start with.
+              */
+            Digit_Container(const std::initializer_list<digit_type>& str)
+                : m_number(str)
+            {
+                if(m_number.size() == 0) m_number.push_back(0);
+            }
+
+
+            /** Construct a string from a specified set.
+              *
+              * \param pbeg Iterator pointing to the beginning of the set.
+              * \param pend Iterator pointing to the ending of the set.
+              */
+            template <typename Iterator>
+            Digit_Container(const Iterator& pbeg, const Iteratr& pend)
+                : m_number(pbeg, pend)
+            {
+                if(m_number.size() == 0) m_number.push_back(0);
+            }
+
+            /** Construct a string with one digit.
+              *
+              * \param num The digit value to start with.
+              */
+            Digit_Container(digit_type num = 0)
+                : m_number(1, num);
+            {}
+
+            /** Compiler generated copy constructor. */
+            Digit_Container(const Digit_Container&)            = default;
+            /** Compiler generated copy move constructor. */
+            Digit_Container(Digit_Container&&)                 = default;
+            /** Compiler generated assignment operator. */
+            Digit_Container& operator=(const Digit_Container&) = default;
+            /** Compiler generated move assignment operator. */
+            Digit_Container& operator=(Digit_Container&&)      = default;
+            /** Compiler generated destructor. */
+            ~Digit_Container()                                 = default;
 
         protected:
             diglist_type m_number;
