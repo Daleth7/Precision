@@ -63,7 +63,7 @@ namespace Precision{
          * \return Whether or not num == 0. 
          */
         template <typename Number_Type>
-        bool is_zero(const Number_Type& num);
+        inline bool is_zero(const Number_Type& num);
 
         /** Decoupled check if the number is equivalent to 1.
          *
@@ -72,7 +72,7 @@ namespace Precision{
          * \return Whether or not num == 1. 
          */
         template <typename Number_Type>
-        bool is_one(const Number_Type& num);
+        inline bool is_one(const Number_Type& num);
 
         /** Decoupled check if the number is equivalent to -1.
          *
@@ -81,7 +81,7 @@ namespace Precision{
          * \return Whether or not num == -1. 
          */
         template <typename Number_Type>
-        bool is_neg_one(const Number_Type& num);
+        inline bool is_neg_one(const Number_Type& num);
 
         /** Decoupled check if the number sign is negative.
          *
@@ -90,7 +90,7 @@ namespace Precision{
          * \return Whether or not num < 0. 
          */
         template <typename Number_Type>
-        bool is_negative(const Number_Type& num);
+        inline bool is_negative(const Number_Type& num);
 
         /** Decoupled check if the number is odd.
          *
@@ -99,7 +99,7 @@ namespace Precision{
          * \return Whether or not num is odd. 
          */
         template <typename Number_Type>
-        bool is_odd(const Number_Type& num);
+        inline bool is_odd(const Number_Type& num);
 
         /** Decoupled check if the number is even.
          *
@@ -108,7 +108,7 @@ namespace Precision{
          * \return Whether or not num is even. 
          */
         template <typename Number_Type>
-        bool is_even(const Number_Type& num);
+        inline bool is_even(const Number_Type& num);
 
         /** Decoupled modifier to divide a number by 2.
          *
@@ -116,7 +116,7 @@ namespace Precision{
          * \param num Number to change. 
          */
         template <typename Number_Type>
-        void halve(Number_Type& num);
+        inline void halve(Number_Type& num);
 
         /** Decoupled modifier to find a 1/num.
          *
@@ -124,7 +124,7 @@ namespace Precision{
          * \param num Number to change. 
          */
         template <typename Number_Type>
-        void reciprocate(Number_Type& num);
+        inline void reciprocate(Number_Type& num);
 
         /** Decoupled modifier to flip a number's numerical sign.
          *
@@ -132,7 +132,7 @@ namespace Precision{
          * \param num Number to change. 
          */
         template <typename Number_Type>
-        void negate(Number_Type& num);
+        inline void negate(Number_Type& num);
 
         /** Modifier to change the number base of a Number_Type
          *  object to the number base of a Number_Type2 object.
@@ -145,7 +145,7 @@ namespace Precision{
          * \param ref Number to extract base information from. 
          */
         template <typename Number_Type, typename Number_Type2>
-        void match_base(Number_Type& num, const Number_Type2& ref);
+        inline void match_base(Number_Type& num, const Number_Type2& ref);
 
         /** Decoupled modifier to assign 0 to a number.
          *
@@ -155,7 +155,7 @@ namespace Precision{
          * \param ref Number to extract base information from. 
          */
         template <typename Number_Type, typename Number_Type2>
-        void make_zero(Number_Type& num, const Number_Type2& ref);
+        inline void make_zero(Number_Type& num, const Number_Type2& ref);
 
         /** Decoupled modifier to assign 1 to a number.
          *
@@ -165,7 +165,7 @@ namespace Precision{
          * \param ref Number to extract base information from. 
          */
         template <typename Number_Type, typename Number_Type2>
-        void make_one(Number_Type& num, const Number_Type2& ref);
+        inline void make_one(Number_Type& num, const Number_Type2& ref);
 
         /** Decoupled modifier to assign 2 to a number.
          *
@@ -175,7 +175,7 @@ namespace Precision{
          * \param ref Number to extract base information from. 
          */
         template <typename Number_Type, typename Number_Type2>
-        void make_two(Number_Type& num, const Number_Type2& ref);
+        inline void make_two(Number_Type& num, const Number_Type2& ref);
 
         /** Decoupled modifier to assign 0 to a number.
          *
@@ -183,7 +183,7 @@ namespace Precision{
          * \param num Number to change.  
          */
         template <typename Number_Type>
-        void make_zero(Number_Type& num);
+        inline void make_zero(Number_Type& num);
 
         /** Decoupled modifier to assign 1 to a number.
          *
@@ -191,7 +191,7 @@ namespace Precision{
          * \param num Number to change.  
          */
         template <typename Number_Type>
-        void make_one(Number_Type& num);
+        inline void make_one(Number_Type& num);
 
         /** Decoupled modifier to assign 2 to a number.
          *
@@ -199,7 +199,7 @@ namespace Precision{
          * \param num Number to change.  
          */
         template <typename Number_Type>
-        void make_two(Number_Type& num);
+        inline void make_two(Number_Type& num);
 
         /** Decoupled modifier to make a temporary number with value 0.
          *
@@ -207,7 +207,7 @@ namespace Precision{
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
-        Number_Type make_zero_temp(const Number_Type& ref);
+        inline Number_Type make_zero_temp(const Number_Type& ref);
 
         /** Decoupled modifier to make a temporary number with value 1.
          *
@@ -215,15 +215,15 @@ namespace Precision{
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
-        Number_Type make_one_temp(const Number_Type& ref);
+        inline Number_Type make_one_temp(const Number_Type& ref);
 
         /** Decoupled modifier to make a temporary number with value 2.
          *
-         * \tparam Number_Type The type of the reference number 
+         * \tparam Base_Type The type of the reference number 
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
-        Number_Type make_two_temp(const Number_Type& ref);
+        inline Number_Type make_two_temp(const Number_Type& ref);
     }
 }
 

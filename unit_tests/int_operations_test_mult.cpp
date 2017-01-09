@@ -90,7 +90,7 @@ void multiplication_test_cleanup(){
 test_and_log_util::result_type test_mult_list_1(test_and_log_util::out_type&){
     Core_Int mult_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::multiply_diglist<Core_Int>(mult_copy, 1);
+    Precision::Volatile::Int_Operations::multiply_factor<Core_Int>(mult_copy, 1);
 
     test_and_log_util::result_type res;
     res.expected = "+9876543210";
@@ -102,7 +102,7 @@ test_and_log_util::result_type test_mult_list_1(test_and_log_util::out_type&){
 test_and_log_util::result_type test_mult_list_3(test_and_log_util::out_type&){
     Core_Int mult_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::multiply_diglist<Core_Int>(mult_copy, 3);
+    Precision::Volatile::Int_Operations::multiply_factor<Core_Int>(mult_copy, 3);
 
     test_and_log_util::result_type res;
     res.expected = "+29629629630";
@@ -114,7 +114,7 @@ test_and_log_util::result_type test_mult_list_3(test_and_log_util::out_type&){
 test_and_log_util::result_type test_mult_list_7(test_and_log_util::out_type&){
     Core_Int mult_copy = all_digs_int;
 
-    Precision::Volatile::Int_Operations::multiply_diglist<Core_Int>(mult_copy, 7);
+    Precision::Volatile::Int_Operations::multiply_factor<Core_Int>(mult_copy, 7);
 
     test_and_log_util::result_type res;
     res.expected = "+69135802470";
@@ -126,7 +126,7 @@ test_and_log_util::result_type test_mult_list_7(test_and_log_util::out_type&){
 void test_mult_list_speed(test_and_log_util::out_type&){
     Core_Int mult_copy = speed_mult_var1;
 
-    Precision::Volatile::Int_Operations::multiply_diglist<Core_Int>(mult_copy, 9);
+    Precision::Volatile::Int_Operations::multiply_factor<Core_Int>(mult_copy, 9);
 }
 
 test_and_log_util::result_type test_mult_list2_eq0(test_and_log_util::out_type&){

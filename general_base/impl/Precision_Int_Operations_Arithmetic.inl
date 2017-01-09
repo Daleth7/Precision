@@ -13,113 +13,6 @@
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
-            //Arithmetic operators
-            template <typename IntType>
-            void add_diglist(
-                typename IntType::diglist_type& diglist1,
-                const typename IntType::diglist_type& diglist2,
-                typename IntType::sign_type& sign1,
-                typename IntType::sign_type sign2,
-                typename IntType::digit_type base
-            ){
-                // Deal with cases where the number is equal to 0
-                if(is_zero_list(diglist2)) return;
-                if(is_zero_list(diglist1)){
-                    diglist1 = diglist2;
-                    sign1 = sign2;
-                    return;
-                }
-
-                // Determine which number is larger
-                short comp = compare_lists(diglist1, diglist2);
-                bool sign_neq = sign1 != sign2;
-
-                using ld_type = typename IntType::catalyst_type;
-
-                // Iterate through each digit and add, carry, and borrow as needed
-                bool fend(false);// Track when iterator reach the end
-                auto dend1 = diglist1.end(), dend2 = diglist2.end();
-                bool borrowed = false;
-                ld_type carry = 0;
-                for( auto fit(diglist1.begin()), sit(diglist2.begin())
-                     ; !( (fend = (fit == dend1)) && (sit == dend2) )
-                     ;
-                ){
-                    // Determine each digit to add based on if the end of
-                    //  the digit list is reached
-                    ld_type operand1 = sign1 * (fend ? 0 : *fit),
-                            operand2 = sign2 * ((sit != dend2) ? *sit : 0)
-                            ;
-
-                    // Deal with borrowing when there is a 0-x case
-                    if(sign_neq){
-                        // -operand1 + 0
-                        if( comp < 0
-                            && *fit != 0 && *sit == 0
-                            && sign2 < 0
-                            ){
-                            operand2 -= base;
-                            borrowed = true;
-                        }
-                        // 0 - operand2
-                        if( comp > 0
-                            && *fit == 0 && *sit != 0
-                            && sign1 < 0
-                            ){
-                            operand1 -= base;
-                            borrowed = true;
-                        }
-                    }
-
-                    // Perform the main addition between two digits
-                    ld_type catalyst = operand1
-                                     + operand2
-                                     + carry
-                                     ;
-
-                    if(borrowed){
-                        catalyst *= -1;
-                        carry = 1;
-                    }
-
-                    if(!sign_neq){
-                        catalyst *= sign1;
-                    }
-
-                    // Deal with carrying and borrowing
-                    if(base <= catalyst){
-                        // Both signs must be equal for catalyst > base
-                        catalyst -= base;
-                        carry = sign1;
-                    } else if(catalyst < 0){
-                        catalyst += base;
-                        carry = -1;
-                    } else if(!borrowed){
-                        carry = 0;
-                    }
-
-                    // Store calculated sum into first digit list
-                    if(fend) diglist1.push_back(catalyst);
-                    else     *fit = catalyst;
-
-                    // Update iterators as needed
-                    if(!fend) ++fit;
-                    if(sit != dend2) ++sit;
-                } // End for loop
-
-                // Deal with over and underflow
-                if((carry > 0 || carry < 0) && !borrowed){
-                    diglist1.push_back(1);
-                }
-
-                // Store the final numerical sign
-                if(comp < 0) sign1 = sign2;
-
-                // Remove excess 0's
-                while(diglist1.size() > 1 && diglist1.back() == 0)
-                    diglist1.pop_back();
-            }
-
             template <typename IntType>
             void add(IntType& lhs, const IntType& rhs, short add_sign){
                 // Deal with cases where the number is equal to 0
@@ -224,7 +117,7 @@ namespace Precision{
             }
 
             template <typename IntType>
-            void multiply_diglist(IntType& num, typename IntType::digit_type fac){
+            void multiply_factor(IntType& num, typename IntType::digit_type fac){
                 // Deal with trivial multiplications if fac is 0 or 1
                 if(fac == 0){
                     Helper::make_zero(num);
@@ -341,7 +234,7 @@ namespace Precision{
                     bucket_type<IntType> bucket;
                     for(; idx < rhs.count_digits(); ++idx){
                         IntType addend(base_adder);
-                        multiply_diglist(addend, rhs.digit(idx));
+                        multiply_factor(addend, rhs.digit(idx));
 
                         addend.shift_left(idx-zeros);
 
@@ -364,7 +257,7 @@ namespace Precision{
                     IntType product = Helper::make_zero_temp(lhs);
                     for(; idx < rhs.count_digits(); ++idx){
                         IntType addend(base_adder);
-                        multiply_diglist(addend, rhs.digit(idx));
+                        multiply_factor(addend, rhs.digit(idx));
 
                         addend.shift_left(idx-zeros);
 
@@ -452,7 +345,7 @@ namespace Precision{
                     // Max propogation refers to the maximum number of
                     // digits the act of carrying can propogate when one
                     // number is multiplied by a single digit number,
-                    // as is the case with multiply_diglist(). Take the
+                    // as is the case with multiply_factor(). Take the
                     // worst case scenario: 1234567890123456789 * 9
                     //                      [base 10]
                     // Notice that carrying propogates until 0 is reached,
@@ -511,7 +404,7 @@ namespace Precision{
 
                     // Update modulus
                     IntType rhs_mult(rhs);
-                    multiply_diglist(rhs_mult, subtraction_count);
+                    multiply_factor(rhs_mult, subtraction_count);
                     rhs_mult.sign(-1);
                     add(mod, rhs_mult);
 
@@ -540,9 +433,9 @@ namespace Precision{
 
                         size_type subtraction_count = div_core(modulus, shifter);
 
-                        // Leverage multiply_diglist() to avoid
+                        // Leverage multiply_factor() to avoid
                         // reduce number of additions.
-                        multiply_diglist(addend, subtraction_count);
+                        multiply_factor(addend, subtraction_count);
                         if(acc) bucket.push_back(addend);
                         else    add(quotient, addend);
 

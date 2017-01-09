@@ -61,25 +61,25 @@ void image_operations_test(){
     ADD_TEST(test_list, test_str_zero);
     ADD_TEST_BOTH( test_list,
                    test_str, test_str_speed,
-                   1000000
+                   10000
                    );
     ADD_TEST(test_list, test_sci_note_e0);
     ADD_TEST_BOTH( test_list,
                    test_sci_note_all, test_sci_note_speed,
-                   1000000
+                   10000
                    );
     ADD_TEST_BOTH( test_list,
                    test_sci_note_lim, test_sci_note_lim_speed,
-                   1000000
+                   10000
                    );
     ADD_TEST_BOTH( test_list,
                    test_sci_note_w_spaces, test_sci_note_w_spaces_speed,
-                   1000000
+                   10000
                    );
     ADD_TEST(test_list, test_parse_typos);
     ADD_TEST_BOTH( test_list,
                    test_parse, test_parse_speed,
-                   1000000
+                   10000
                    );
 
     setup_speed_variables();
