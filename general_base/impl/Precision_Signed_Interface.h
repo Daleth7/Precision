@@ -18,6 +18,10 @@ namespace Precision{
      *  composition structure and can pass a sign object to functions
      *  without having to pass a reference to the whole class, which would
      *  not make sense in situations where only a sign is required.
+     *
+     *  \tparam SignType The underlying object type to use for composition.
+     *                   SignType is expected to support the same member
+     *                   functions and sign rules as this class.
      *  
      *  This class obeys the same rules as Precision::SignClass as follows:
      *      - Negative == -1
@@ -25,13 +29,14 @@ namespace Precision{
      *  For purposes of conversion, positive includes [0, inf) and
      *  negative includes (-inf, 0).
      */
+    template <typename SignType = Precision::SignClass>
     class Signed_Interface{
         public:
             // Type-aliases
             /** sign_type represents the underlying sign class used for
              *  composition. The class is assumed to be a lightweight POD.
              */
-            using sign_type = Precision::SignClass;
+            using sign_type = SignType;
 
             // Read-only
             /** Return if the sign is positive, or +1.

@@ -4,7 +4,7 @@
 #ifndef DEAU5628FAUL_T_TY7777PEESSS_PRECISISSONN223H___
 #define DEAU5628FAUL_T_TY7777PEESSS_PRECISISSONN223H___
 
-#include "Precision_Signed_Interface.h"
+#include "Precision_Signed_Class.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -15,7 +15,7 @@ namespace Precision{
         using byte_type = std::int_least8_t;
         template <typename... TArgs>
             using default_container_type = std::vector<TArgs...>;
-        using sign_type = Precision::Signed_Integer;
+        using sign_type = Precision::SignClass;
         using size_type = std::size_t;
     }
 }
