@@ -66,6 +66,11 @@ namespace Precision{
               */
             using size_type    = typename diglist_type::size_type;
 
+            /** A primitive type used for dealing with size related
+              * operations that still need the negative range.
+              */
+            using signed_size_type = std::int_least32_t;
+
 
 
             // Read-only
@@ -76,6 +81,14 @@ namespace Precision{
               */
             bool is_zero()const
                 {return m_number.size() == 1 && m_number.front() == 0;}
+
+            /** Check if the digit string is equivalent to 1, regardless
+              * of sign.
+              *
+              * \return True if the string is 1. False otherwise.
+              */
+            bool is_mag_one()const
+                {return m_number.size() == 1 && m_number.front() == 1;}
 
             /** Check if the rightmost (first) digit of the string is
               * even.
@@ -135,6 +148,16 @@ namespace Precision{
                 else                m_number.insert(m_number.begin(), e, 0);
             }
 
+            /** Extend or shrink the digit string by inserting 0's at the
+              * beginning or removing digits from the beginning.
+              *
+              * \param sz The number of digit places to shift by.
+              */
+            void shift(signed_size_type sz){
+                if(sz < 0) this->shift_right(-sz);
+                else       this->shift_left(sz);
+            }
+
             /** Extend the digit string. This is equivalent to dividing
               * the number by a power of its number base.
               *
@@ -168,6 +191,21 @@ namespace Precision{
             }
 
 
+            /** Construct a string from an already existing digit string.
+              *
+              * \param new_num The digit string to copy
+              */
+            template <typename Iterator>
+            Digit_Container(const diglist_type& new_num)
+                : m_number(new_num)
+            {
+                for(auto it = m_number.begin(); it != m_number.end(); ++it){
+                    if(*it >= this->base()) *it = 0;
+                }
+                Helper::remove_excess_zeros(m_number);
+            }
+
+
             /** Construct a string from a specified set.
               *
               * \param pbeg Iterator pointing to the beginning of the set.
@@ -178,6 +216,10 @@ namespace Precision{
                 : m_number(pbeg, pend)
             {
                 if(m_number.size() == 0) m_number.push_back(0);
+                for(auto it = m_number.begin(); it != m_number.end(); ++it){
+                    if(*it >= this->base()) *it = 0;
+                }
+                Helper::remove_excess_zeros(m_number);
             }
 
             /** Construct a string with one digit.

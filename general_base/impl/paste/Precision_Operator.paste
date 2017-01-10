@@ -1,0 +1,71 @@
+PASTE_TEMPL_
+PASTE_INST_ operator+(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) += rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator-(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) -= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator*(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) *= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator/(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) /= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator%(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) %= rhs;}
+
+
+
+PASTE_TEMPL_
+PASTE_INST_ operator&(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) &= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator|(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) |= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator^(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) ^= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator>>(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) >>= rhs;}
+
+PASTE_TEMPL_
+PASTE_INST_ operator<<(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return PASTE_INST_(lhs) <<= rhs;}
+
+
+
+PASTE_TEMPL_
+bool operator==(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return lhs.compare(rhs) == 0;}
+
+PASTE_TEMPL_
+bool operator!=(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return lhs.compare(rhs) != 0;}
+
+PASTE_TEMPL_
+bool operator>=(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return !(lhs.compare(rhs) < 0);}
+
+PASTE_TEMPL_
+bool operator<=(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return !(lhs.compare(rhs) > 0);}
+
+PASTE_TEMPL_
+bool operator>(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return lhs.compare(rhs) > 0;}
+
+PASTE_TEMPL_
+bool operator<(const PASTE_INST_& lhs, const PASTE_INST_& rhs)
+    {return lhs.compare(rhs) < 0;}
+
+PASTE_TEMPL_
+bool operator!(const PASTE_INST_& num)
+    {return num.is_zero();}
