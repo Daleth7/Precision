@@ -44,6 +44,11 @@ int main(){
     int_operations_test();
     #endif
 
+    #ifdef TEST_ABSTRACT_STATIC_GENERAL_BASE_INT_CLASS
+    extern void abstract_static_general_base_int_test();
+    abstract_static_general_base_int_test();
+    #endif
+
 
 
     clock::time_point fin = clock::now();

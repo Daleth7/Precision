@@ -7,6 +7,7 @@
 #define CONTAIN23ER_NUMBER_HOL978DING_DIGIT22222____HHHH
 
 #include "Precision_Defaults.h"
+#include "Precision_Shared_Helpers.h"
 
 #include <initializer_list>
 
@@ -187,7 +188,7 @@ namespace Precision{
             Digit_Container(const std::initializer_list<digit_type>& str)
                 : m_number(str)
             {
-                if(m_number.size() == 0) m_number.push_back(0);
+                this->verify_diglist();
             }
 
 
@@ -199,10 +200,7 @@ namespace Precision{
             Digit_Container(const diglist_type& new_num)
                 : m_number(new_num)
             {
-                for(auto it = m_number.begin(); it != m_number.end(); ++it){
-                    if(*it >= this->base()) *it = 0;
-                }
-                Helper::remove_excess_zeros(m_number);
+                this->verify_diglist();
             }
 
 
@@ -212,14 +210,10 @@ namespace Precision{
               * \param pend Iterator pointing to the ending of the set.
               */
             template <typename Iterator>
-            Digit_Container(const Iterator& pbeg, const Iteratr& pend)
+            Digit_Container(const Iterator& pbeg, const Iterator& pend)
                 : m_number(pbeg, pend)
             {
-                if(m_number.size() == 0) m_number.push_back(0);
-                for(auto it = m_number.begin(); it != m_number.end(); ++it){
-                    if(*it >= this->base()) *it = 0;
-                }
-                Helper::remove_excess_zeros(m_number);
+                this->verify_diglist();
             }
 
             /** Construct a string with one digit.
@@ -227,7 +221,7 @@ namespace Precision{
               * \param num The digit value to start with.
               */
             Digit_Container(digit_type num = 0)
-                : m_number(1, num);
+                : m_number(1, num)
             {}
 
             /** Compiler generated copy constructor. */
@@ -242,6 +236,18 @@ namespace Precision{
             ~Digit_Container()                                 = default;
 
         protected:
+
+            /** Make sure all the digits in m_number are valid and that
+              * the size is at least one.
+              */
+            void verify_diglist(){
+                if(m_number.size() == 0) m_number.push_back(0);
+                for(auto it = m_number.begin(); it != m_number.end(); ++it){
+                    if(*it >= this->base()) *it = 0;
+                }
+                Helper::remove_excess_zeros(m_number);
+            }
+
             diglist_type m_number;
     };
 }

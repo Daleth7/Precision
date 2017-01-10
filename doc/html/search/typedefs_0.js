@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['signed_5ftype',['signed_type',['../class_precision_1_1_sign_class.html#ac18e403f879662542745bc1ef5203ee1',1,'Precision::SignClass']]],
-  ['str_5ftype',['str_type',['../class_precision_1_1exception.html#adb6d056a1221c78b271dfda41e9141de',1,'Precision::exception']]]
+  ['catalyst_5ftype',['catalyst_type',['../class_precision_1_1_general___base_1_1_static_1_1_abstract_1_1_int.html#a14c1a19ae199608d19894bef0ece6ebf',1,'Precision::General_Base::Static::Abstract::Int']]]
 ];

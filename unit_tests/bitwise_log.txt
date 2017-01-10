@@ -1,0 +1,89 @@
+-9876543210 ^ -1123456789
+	counter = 0 lhs = 9876543210 rhs_copy = 1123456789
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 1
+	counter = 1 lhs = 4938271605 rhs_copy = 561728394
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 2
+	counter = 2 lhs = 2469135802 rhs_copy = 280864197
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 4
+	counter = 3 lhs = 1234567901 rhs_copy = 140432098
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 8
+	counter = 4 lhs = 617283950 rhs_copy = 70216049
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 16
+	counter = 5 lhs = 308641975 rhs_copy = 35108024
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 32
+	counter = 6 lhs = 154320987 rhs_copy = 17554012
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 64
+	counter = 7 lhs = 77160493 rhs_copy = 8777006
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 128
+	counter = 8 lhs = 38580246 rhs_copy = 4388503
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 256
+	counter = 9 lhs = 19290123 rhs_copy = 2194251
+	lhs even? false  rhs even? false --> bit = false
+	counter = 10 lhs = 9645061 rhs_copy = 1097125
+	lhs even? false  rhs even? false --> bit = false
+	counter = 11 lhs = 4822530 rhs_copy = 548562
+	lhs even? true  rhs even? true --> bit = false
+	counter = 12 lhs = 2411265 rhs_copy = 274281
+	lhs even? false  rhs even? false --> bit = false
+	counter = 13 lhs = 1205632 rhs_copy = 137140
+	lhs even? true  rhs even? true --> bit = false
+	counter = 14 lhs = 602816 rhs_copy = 68570
+	lhs even? true  rhs even? true --> bit = false
+	counter = 15 lhs = 301408 rhs_copy = 34285
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 32768
+	counter = 16 lhs = 150704 rhs_copy = 17142
+	lhs even? true  rhs even? true --> bit = false
+	counter = 17 lhs = 75352 rhs_copy = 8571
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 131072
+	counter = 18 lhs = 37676 rhs_copy = 4285
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 262144
+	counter = 19 lhs = 18838 rhs_copy = 2142
+	lhs even? true  rhs even? true --> bit = false
+	counter = 20 lhs = 9419 rhs_copy = 1071
+	lhs even? false  rhs even? false --> bit = false
+	counter = 21 lhs = 4709 rhs_copy = 535
+	lhs even? false  rhs even? false --> bit = false
+	counter = 22 lhs = 2354 rhs_copy = 267
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 4194304
+	counter = 23 lhs = 1177 rhs_copy = 133
+	lhs even? false  rhs even? false --> bit = false
+	counter = 24 lhs = 588 rhs_copy = 66
+	lhs even? true  rhs even? true --> bit = false
+	counter = 25 lhs = 294 rhs_copy = 33
+	lhs even? true  rhs even? false --> bit = true
+		Added to bucket: 33554432
+	counter = 26 lhs = 147 rhs_copy = 16
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 67108864
+	counter = 27 lhs = 73 rhs_copy = 8
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 134217728
+	counter = 28 lhs = 36 rhs_copy = 4
+	lhs even? true  rhs even? true --> bit = false
+	counter = 29 lhs = 18 rhs_copy = 2
+	lhs even? true  rhs even? true --> bit = false
+	counter = 30 lhs = 9 rhs_copy = 1
+	lhs even? false  rhs even? false --> bit = false
+	counter = 31 lhs = 4 rhs_copy = 0
+	lhs even? true  rhs even? true --> bit = false
+	counter = 32 lhs = 2 rhs_copy = 0
+	lhs even? true  rhs even? true --> bit = false
+	counter = 33 lhs = 1 rhs_copy = 0
+	lhs even? false  rhs even? true --> bit = true
+		Added to bucket: 8589934592
+Bit string: 1000001110010001101000000111111111
+Done
+

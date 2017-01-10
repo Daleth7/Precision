@@ -229,7 +229,7 @@ struct Core_Int {
 };
 //*/
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 // For converting results to comparable strings
 #include "general_base/impl/Precision_Int_Operations_Img.h"
 
@@ -238,7 +238,8 @@ test_and_log_util::str_type to_str(const IntType& num){
     static char const *const digs = "0123456789";
     static char const *const syms = "+-.e /i";
 
-    return Precision::Volatile::Int_Operations::Img::str<IntType>(num, digs, syms);
+    return Precision::Volatile::Int_Operations::Img::str
+           <test_and_log_util::str_type, IntType>(num, digs, syms);
 }
 
 template <typename IntType>
@@ -246,8 +247,8 @@ test_and_log_util::str_type to_sci_note_str(const IntType& num, std::size_t prec
     static char const *const digs = "0123456789";
     static char const *const syms = "+-.e /i";
 
-    return Precision::Volatile::Int_Operations::Img::sci_note<IntType>
-                                                    (num, prec, digs, syms);
+    return Precision::Volatile::Int_Operations::Img::sci_note
+           <test_and_log_util::str_type, IntType>(num, prec, digs, syms);
 }
 
 #endif

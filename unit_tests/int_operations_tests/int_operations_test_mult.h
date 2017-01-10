@@ -1,7 +1,7 @@
 #ifndef MULT_223TFETES452_FEDECL____288288
 #define MULT_223TFETES452_FEDECL____288288
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 
 // Multiplication tests
 void setup_multiplication_variables();

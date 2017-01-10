@@ -1,13 +1,12 @@
 #include "Test_Shared_Utilities.h"
 
-#include "int_operations_test_fake_int.h" // For Core_Int
-#include "int_operations_test_comp.h"     // Comparison tests
-#include "int_operations_test_add.h"      // Addition tests
-#include "int_operations_test_mult.h"     // Multiplication tests
-#include "int_operations_test_div.h"      // Division and Modulus tests
-#include "int_operations_test_exp.h"      // Exponentiation tests
-#include "int_operations_test_bit.h"      // Bitwise tests
-#include "int_operations_test_log.h"      // Logical tests
+#include "int_operations_tests/int_operations_test_comp.h" // Comparison tests
+#include "int_operations_tests/int_operations_test_add.h"  // Addition tests
+#include "int_operations_tests/int_operations_test_mult.h" // Multiplication tests
+#include "int_operations_tests/int_operations_test_div.h"  // Division and Modulus tests
+#include "int_operations_tests/int_operations_test_exp.h"  // Exponentiation tests
+#include "int_operations_tests/int_operations_test_bit.h"  // Bitwise tests
+#include "int_operations_tests/int_operations_test_log.h"  // Logical tests
 
 void setup_variables();
 // Cleanup function to free memory

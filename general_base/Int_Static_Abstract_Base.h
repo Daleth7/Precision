@@ -11,6 +11,7 @@
 
 #include "impl/Precision_Signed_Interface.h"
 #include "impl/Precision_Digit_Container.h"
+#include "impl/Precision_Defaults.h"
 
 namespace Precision{
     namespace General_Base{
@@ -97,6 +98,107 @@ namespace Precision{
                         using sign_type = SignType;
 
                         */
+
+
+
+                        //Read-only functions
+
+                        /* Inherited from Digit_Container
+
+                        bool is_zero()const;
+                        bool is_mag_one()const;
+                        bool is_even()const;
+                        bool is_odd()const;
+                        const diglist_type& digit_list()const;
+                        size_type count_digits()const;
+                        digit_type digit(size_type index)const;
+
+                        */
+
+                        /* Inherited from Sign_Interface
+
+                        bool is_positive()const;
+                        bool is_negative()const;
+                        sign_type sign()const;
+
+                        */
+
+                        /** Generate the positive version of this number.
+                          *
+                          * \return The magnitude of this number.
+                          */
+                        Int magnitude()const;
+
+                        /** Compare two integers to determine if the left
+                          * hand side is less than, greater than, or equal
+                          * to the right hand side.
+                          *
+                          * \param rhs The number to compare against
+                          *
+                          * \return The result of the comparison:
+                          *         * -1 - this < rhs
+                          *         *  0 - this == rhs
+                          *         * +1 - this > rhs
+                          */
+                        short compare(const Int& rhs)const;
+
+                        /** Generate the opposite sign version of this number.
+                          *
+                          * \return The negated version of this number.
+                          */
+                        Int operator-()const;
+
+                        /** Determine if this number is equal to positive one.
+                          *
+                          * \return Whether or not this == +1.
+                          */
+                        bool is_one()const;
+
+                        /** Determine if this number is equal to negative one.
+                          *
+                          * \return Whether or not this == -1.
+                          */
+                        bool is_neg_one()const;
+
+                        /** Return the number base of this number.
+                          *
+                          * \return The number base.
+                          */
+                        static constexpr digit_type base();
+
+
+
+                        //Modifiers
+
+                        /* Inherited from Digit_Container
+
+                        void shift(signed_size_type);
+                        void shift_left(size_type e);
+                        void shift_right(size_type e);
+                        void detach();
+
+                        */
+
+                        /* Inherited from Sign_Interface
+
+                        void negate();
+                        void make_positive();
+                        void make_negative();
+                        void sign(sign_type new_sign);
+
+                        */
+
+                        /** Force the number to be 0 */
+                        void make_zero();
+
+                        /** Force the number to be +1 */
+                        void make_one();
+
+                        /** Force the number to be -1 */
+                        void make_neg_one();
+
+                        /** Force the number to be +2 */
+                        void make_two();
 
 
 
@@ -290,107 +392,6 @@ namespace Precision{
 
 
 
-                        //Read-only functions
-
-                        /* Inherited from Digit_Container
-
-                        bool is_zero()const;
-                        bool is_mag_one()const;
-                        bool is_even()const;
-                        bool is_odd()const;
-                        const diglist_type& digit_list()const;
-                        size_type count_digits()const;
-                        digit_type digit(size_type index)const;
-
-                        */
-
-                        /* Inherited from Sign_Interface
-
-                        bool is_positive()const;
-                        bool is_negative()const;
-                        sign_type sign()const;
-
-                        */
-
-                        /** Generate the positive version of this number.
-                          *
-                          * \return The magnitude of this number.
-                          */
-                        Int magnitude()const;
-
-                        /** Compare two integers to determine if the left
-                          * hand side is less than, greater than, or equal
-                          * to the right hand side.
-                          *
-                          * \param rhs The number to compare against
-                          *
-                          * \return The result of the comparison:
-                          *         * -1 - this < rhs
-                          *         *  0 - this == rhs
-                          *         * +1 - this > rhs
-                          */
-                        short compare(const Int& rhs)const;
-
-                        /** Generate the opposite sign version of this number.
-                          *
-                          * \return The negated version of this number.
-                          */
-                        Int operator-()const;
-
-                        /** Determine if this number is equal to positive one.
-                          *
-                          * \return Whether or not this == +1.
-                          */
-                        bool is_one()const;
-
-                        /** Determine if this number is equal to negative one.
-                          *
-                          * \return Whether or not this == -1.
-                          */
-                        bool is_neg_one()const;
-
-                        /** Return the number base of this number.
-                          *
-                          * \return The number base.
-                          */
-                        static constexpr digit_type base();
-
-
-
-                        //Other modifiers
-
-                        /* Inherited from Digit_Container
-
-                        void shift(signed_size_type);
-                        void shift_left(size_type e);
-                        void shift_right(size_type e);
-                        void detach();
-
-                        */
-
-                        /* Inherited from Sign_Interface
-
-                        void negate();
-                        void make_positive();
-                        void make_negative();
-                        void sign(sign_type new_sign);
-
-                        */
-
-                        /** Force the number to be 0 */
-                        void make_zero();
-
-                        /** Force the number to be +1 */
-                        void make_one();
-
-                        /** Force the number to be -1 */
-                        void make_neg_one();
-
-                        /** Force the number to be +2 */
-                        void make_two();
-
-
-
                         //Constructors and destructor
 
                         /** Construct the number starting with a signed
@@ -465,7 +466,7 @@ namespace Precision{
                                 >
 #define PASTE_INST_ Int <ByteType, Base, Container, SignType>
 
-                #include "paste/Precision_Operator.paste"
+                #include "impl/paste/Precision_Operator.paste"
 
 #undef PASTE_TEMPL_
 #undef PASTE_INST_

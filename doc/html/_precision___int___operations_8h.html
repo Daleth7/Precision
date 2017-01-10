@@ -70,27 +70,37 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;functional&gt;</code><br />
-<code>#include &quot;Precision_Int_Operations.inl&quot;</code><br />
+<code>#include &quot;Precision_Int_Operations_Arithmetic.inl&quot;</code><br />
+<code>#include &quot;Precision_Int_Operations_Bitwise.inl&quot;</code><br />
+<code>#include &quot;Precision_Int_Operations_Logical.inl&quot;</code><br />
+<code>#include &quot;Precision_Int_Operations_Exponential.inl&quot;</code><br />
+<code>#include &quot;Precision_Int_Operations_Comparisons.inl&quot;</code><br />
 </div>
 <p><a href="_precision___int___operations_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aad88376a38a12f29e89477a79f31c363"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:aad88376a38a12f29e89477a79f31c363"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#aad88376a38a12f29e89477a79f31c363">Precision::Volatile::Int_Operations::add</a> (typename IntType::diglist_type &amp;diglist1, typename IntType::diglist_type diglist2, typename IntType::sign_type &amp;sign1, typename IntType::sign_type sign2, typename IntType::digit_type base)</td></tr>
-<tr class="separator:aad88376a38a12f29e89477a79f31c363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9058717d59ad3d921fb4f357f637f84a"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a9058717d59ad3d921fb4f357f637f84a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a9058717d59ad3d921fb4f357f637f84a">Precision::Volatile::Int_Operations::add_diglist</a> (typename IntType::diglist_type &amp;diglist1, const typename IntType::diglist_type &amp;diglist2, typename IntType::sign_type &amp;sign1, typename IntType::sign_type sign2, typename IntType::digit_type base)</td></tr>
+<tr class="separator:a9058717d59ad3d921fb4f357f637f84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96134d0ff039e6a1cf7d596db9bc17a2"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a96134d0ff039e6a1cf7d596db9bc17a2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a96134d0ff039e6a1cf7d596db9bc17a2">Precision::Volatile::Int_Operations::add</a> (IntType &amp;lhs, const IntType &amp;rhs, short add_sign=1)</td></tr>
+<tr class="separator:a96134d0ff039e6a1cf7d596db9bc17a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6c0804a153fd09bede916d85dde6236"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:ac6c0804a153fd09bede916d85dde6236"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ac6c0804a153fd09bede916d85dde6236">Precision::Volatile::Int_Operations::multiply_diglist</a> (IntType &amp;num, typename IntType::digit_type fac)</td></tr>
+<tr class="separator:ac6c0804a153fd09bede916d85dde6236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4b05f9d2e26bcd2a8d23991e998444e"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
 <tr class="memitem:ad4b05f9d2e26bcd2a8d23991e998444e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ad4b05f9d2e26bcd2a8d23991e998444e">Precision::Volatile::Int_Operations::multiply</a> (IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
 <tr class="separator:ad4b05f9d2e26bcd2a8d23991e998444e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a740c2b58eb77817f7f2f946c81ad8ad4"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:a740c2b58eb77817f7f2f946c81ad8ad4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a740c2b58eb77817f7f2f946c81ad8ad4">Precision::Volatile::Int_Operations::divide_mod</a> (const IntType &amp;lhs, const IntType &amp;rhs, IntType *div_req, IntType *mod_req)</td></tr>
-<tr class="separator:a740c2b58eb77817f7f2f946c81ad8ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad87da65ac732dcae51e631de9edf3fd4"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:ad87da65ac732dcae51e631de9edf3fd4"><td class="memTemplItemLeft" align="right" valign="top">IntType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ad87da65ac732dcae51e631de9edf3fd4">Precision::Volatile::Int_Operations::bitwise_complement</a> (const IntType &amp;bitstring)</td></tr>
-<tr class="separator:ad87da65ac732dcae51e631de9edf3fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a505c93f73925424dbdc809ad786be895"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:a505c93f73925424dbdc809ad786be895"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a505c93f73925424dbdc809ad786be895">Precision::Volatile::Int_Operations::bitwise_operation</a> (IntType &amp;lhs, IntType rhs, std::function&lt; bool(bool, bool)&gt; &amp;&amp;oper)</td></tr>
-<tr class="separator:a505c93f73925424dbdc809ad786be895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ee569062ed607d4451f0761ca30396d"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a1ee569062ed607d4451f0761ca30396d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a1ee569062ed607d4451f0761ca30396d">Precision::Volatile::Int_Operations::divide_mod</a> (const IntType &amp;lhs, const IntType &amp;rhs, IntType &amp;quotient, IntType &amp;modulus)</td></tr>
+<tr class="separator:a1ee569062ed607d4451f0761ca30396d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb9d54665f8effdee8f6558c8b9418e"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a3fb9d54665f8effdee8f6558c8b9418e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a3fb9d54665f8effdee8f6558c8b9418e">Precision::Volatile::Int_Operations::bitwise_complement</a> (IntType &amp;bitstring)</td></tr>
+<tr class="separator:a3fb9d54665f8effdee8f6558c8b9418e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2b1c74202f63d6154a720ef55ddf87"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:afa2b1c74202f63d6154a720ef55ddf87"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#afa2b1c74202f63d6154a720ef55ddf87">Precision::Volatile::Int_Operations::bitwise_operation</a> (IntType &amp;lhs, const IntType &amp;rhs, unsigned short op)</td></tr>
+<tr class="separator:afa2b1c74202f63d6154a720ef55ddf87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37c712840c2d1ab04a8eaddcaca8d487"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
 <tr class="memitem:a37c712840c2d1ab04a8eaddcaca8d487"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a37c712840c2d1ab04a8eaddcaca8d487">Precision::Volatile::Int_Operations::bitwise_and_eq</a> (IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
 <tr class="separator:a37c712840c2d1ab04a8eaddcaca8d487"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -106,24 +116,27 @@ Functions</h2></td></tr>
 <tr class="memitem:aeae1f908334d24c17d35ccdcdf85004e"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
 <tr class="memitem:aeae1f908334d24c17d35ccdcdf85004e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#aeae1f908334d24c17d35ccdcdf85004e">Precision::Volatile::Int_Operations::bitwise_rshift_eq</a> (IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
 <tr class="separator:aeae1f908334d24c17d35ccdcdf85004e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cedf60482ffd9480778ae76874a5910"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:a9cedf60482ffd9480778ae76874a5910"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a9cedf60482ffd9480778ae76874a5910">Precision::Volatile::Int_Operations::logical_operation</a> (typename IntType::diglist_type &amp;diglist1, typename IntType::diglist_type diglist2, typename IntType::sign_type &amp;sign1, typename IntType::sign_type sign2, unsigned short oper, typename IntType::digit_type base)</td></tr>
-<tr class="separator:a9cedf60482ffd9480778ae76874a5910"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2884ca9a64093584d5fc2ea390fc877"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:ae2884ca9a64093584d5fc2ea390fc877"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ae2884ca9a64093584d5fc2ea390fc877">Precision::Volatile::Int_Operations::logical_and</a> (typename IntType::diglist_type &amp;diglist1, typename IntType::diglist_type diglist2, typename IntType::sign_type &amp;sign1, typename IntType::sign_type sign2, typename IntType::digit_type base)</td></tr>
-<tr class="separator:ae2884ca9a64093584d5fc2ea390fc877"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0912057a8eacacc159c55fb914e177d"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:ac0912057a8eacacc159c55fb914e177d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ac0912057a8eacacc159c55fb914e177d">Precision::Volatile::Int_Operations::logical_or</a> (typename IntType::diglist_type &amp;diglist1, typename IntType::diglist_type diglist2, typename IntType::sign_type &amp;sign1, typename IntType::sign_type sign2, typename IntType::digit_type base)</td></tr>
-<tr class="separator:ac0912057a8eacacc159c55fb914e177d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50008d122401db9c2f9d1e0a2cb50561"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:a50008d122401db9c2f9d1e0a2cb50561"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a50008d122401db9c2f9d1e0a2cb50561">Precision::Volatile::Int_Operations::logical_xor</a> (typename IntType::diglist_type &amp;diglist1, typename IntType::diglist_type diglist2, typename IntType::sign_type &amp;sign1, typename IntType::sign_type sign2, typename IntType::digit_type base)</td></tr>
-<tr class="separator:a50008d122401db9c2f9d1e0a2cb50561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebcb7383260b15d695948687a6c8d7bc"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
-<tr class="memitem:aebcb7383260b15d695948687a6c8d7bc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#aebcb7383260b15d695948687a6c8d7bc">Precision::Volatile::Int_Operations::logical_complement</a> (typename IntType::diglist_type &amp;diglist, typename IntType::sign_type &amp;int_sign, typename IntType::digit_type base)</td></tr>
-<tr class="separator:aebcb7383260b15d695948687a6c8d7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3505bcb22a7546ec060611deda8e6283"><td class="memTemplParams" colspan="2">template&lt;typename Number_Type , typename Number_Type2 &gt; </td></tr>
-<tr class="memitem:a3505bcb22a7546ec060611deda8e6283"><td class="memTemplItemLeft" align="right" valign="top">Number_Type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a3505bcb22a7546ec060611deda8e6283">Precision::Volatile::Int_Operations::exponentiate</a> (const Number_Type &amp;base, const Number_Type2 &amp;exp)</td></tr>
-<tr class="separator:a3505bcb22a7546ec060611deda8e6283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1962d20a311be325ea55f0c3342d412a"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a1962d20a311be325ea55f0c3342d412a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a1962d20a311be325ea55f0c3342d412a">Precision::Volatile::Int_Operations::logical_operation</a> (IntType &amp;lhs, const IntType &amp;rhs, unsigned short oper)</td></tr>
+<tr class="separator:a1962d20a311be325ea55f0c3342d412a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a042bf17ea1c0cb1faf74a4d02ad057e0"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a042bf17ea1c0cb1faf74a4d02ad057e0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a042bf17ea1c0cb1faf74a4d02ad057e0">Precision::Volatile::Int_Operations::logical_and_eq</a> (IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
+<tr class="separator:a042bf17ea1c0cb1faf74a4d02ad057e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06eda4976a85957d0541a211625929ce"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a06eda4976a85957d0541a211625929ce"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a06eda4976a85957d0541a211625929ce">Precision::Volatile::Int_Operations::logical_or_eq</a> (IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
+<tr class="separator:a06eda4976a85957d0541a211625929ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c1686820233a58146b60d3394782353"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a8c1686820233a58146b60d3394782353"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a8c1686820233a58146b60d3394782353">Precision::Volatile::Int_Operations::logical_xor_eq</a> (IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
+<tr class="separator:a8c1686820233a58146b60d3394782353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75c37ed972b2c8f5a7b835aa369bc767"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a75c37ed972b2c8f5a7b835aa369bc767"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a75c37ed972b2c8f5a7b835aa369bc767">Precision::Volatile::Int_Operations::logical_complement_eq</a> (IntType &amp;orig)</td></tr>
+<tr class="separator:a75c37ed972b2c8f5a7b835aa369bc767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac07007c8ef804c0ceb152357bdc24c0c"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:ac07007c8ef804c0ceb152357bdc24c0c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ac07007c8ef804c0ceb152357bdc24c0c">Precision::Volatile::Int_Operations::logical_xor_rev_eq</a> (IntType &amp;xor_res, const IntType &amp;rhs)</td></tr>
+<tr class="separator:ac07007c8ef804c0ceb152357bdc24c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68c5754c2c67603014af6e7b2861bce1"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
+<tr class="memitem:a68c5754c2c67603014af6e7b2861bce1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a68c5754c2c67603014af6e7b2861bce1">Precision::Volatile::Int_Operations::exponentiate</a> (IntType &amp;base, const IntType &amp;exp)</td></tr>
+<tr class="separator:a68c5754c2c67603014af6e7b2861bce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a556733618d611fdbeb19b1d9d05f72fe"><td class="memTemplParams" colspan="2">template&lt;typename IntType &gt; </td></tr>
 <tr class="memitem:a556733618d611fdbeb19b1d9d05f72fe"><td class="memTemplItemLeft" align="right" valign="top">short&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a556733618d611fdbeb19b1d9d05f72fe">Precision::Volatile::Int_Operations::compare</a> (const IntType &amp;lhs, const IntType &amp;rhs)</td></tr>
 <tr class="separator:a556733618d611fdbeb19b1d9d05f72fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,12 +146,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ac0b1e5560a052947e97648214ec6b99a"><td class="memTemplParams" colspan="2">template&lt;typename DigListType &gt; </td></tr>
 <tr class="memitem:ac0b1e5560a052947e97648214ec6b99a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#ac0b1e5560a052947e97648214ec6b99a">Precision::Volatile::Int_Operations::is_zero_list</a> (const DigListType &amp;diglist)</td></tr>
 <tr class="separator:ac0b1e5560a052947e97648214ec6b99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a833bf7f2e703c3613c56ba0fb3e55a48"><td class="memTemplParams" colspan="2">template&lt;typename DigListType , typename SignType &gt; </td></tr>
+<tr class="memitem:a833bf7f2e703c3613c56ba0fb3e55a48"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a833bf7f2e703c3613c56ba0fb3e55a48">Precision::Volatile::Int_Operations::is_one_list</a> (const DigListType &amp;diglist, const SignType &amp;sign)</td></tr>
+<tr class="separator:a833bf7f2e703c3613c56ba0fb3e55a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a198a3d535c575aa4946f460b87ad545c"><td class="memTemplParams" colspan="2">template&lt;typename DigListType , typename SignType &gt; </td></tr>
+<tr class="memitem:a198a3d535c575aa4946f460b87ad545c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations_8h.html#a198a3d535c575aa4946f460b87ad545c">Precision::Volatile::Int_Operations::is_neg_one_list</a> (const DigListType &amp;diglist, const SignType &amp;sign)</td></tr>
+<tr class="separator:a198a3d535c575aa4946f460b87ad545c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file centralizes the base algorithms all the number types use. By doing this, the library can be extended more easily. An example of this is the difference between Dynamic and Static number types. Despite sharing the same algorithms, their behaviour for compile-time and run-time is different enough that they cannot share the same inheritance tree or utilize composition. The algorithms are placed under the Volatile namespace since they require the number base to be passed as a parameter to correctly run the algorithm. </p>
+<div class="textblock"><p>This file centralizes the base algorithms all the number types use. By doing this, the library can be extended more easily. An example of this is the difference between Dynamic and Static number types. Despite sharing the same algorithms, their behaviour for compile-time and run-time is different enough that they cannot share the same inheritance tree or utilize composition. The algorithms are placed under the Volatile namespace since they require the number base to be passed as a parameter to correctly run the algorithm. Most of the algorithms in here will, instead of returning a copy of the result, will store the result in the first parameter. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="file_aad88376a38a12f29e89477a79f31c363"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_aad88376a38a12f29e89477a79f31c363">&sect;&nbsp;</a></span>add()</h2>
+<a id="file_a96134d0ff039e6a1cf7d596db9bc17a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a96134d0ff039e6a1cf7d596db9bc17a2">&sect;&nbsp;</a></span>add()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,13 +167,81 @@ template&lt;typename IntType &gt; </div>
         <tr>
           <td class="memname">void Precision::Volatile::Int_Operations::add </td>
           <td>(</td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>add_sign</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A simple add function taking two integers and calculating the sum.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted. This function assumes IntType has the public members:<ul>
+<li>Type IntType::diglist_type</li>
+<li>Type IntType::sign_type</li>
+<li>Type IntType::size_type</li>
+<li>Type IntType::digit_type</li>
+<li>Type IntType::catalyst_type</li>
+<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#ade132cdfd51bb038d8b3f885b7482476">IntType::is_zero()</a></li>
+<li>Method digit_type IntType::digit(size_type)</li>
+<li>Method diglist_type IntType::digit_list()</li>
+<li>Method size_type IntType::count_digits()</li>
+<li>Method sign_type IntType::sign()</li>
+<li>Method digit_type IntType::base()</li>
+<li>Method void IntType::append()</li>
+<li>Method void IntType::detach(digit_type)</li>
+<li>Method void IntType::digit(size_type, digit_type)</li>
+<li>Method sign_type IntType::sign(sign_type)</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lhs</td><td>The first number to add and in which to store the sum </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second number to add </td></tr>
+    <tr><td class="paramname">add_sign</td><td>An optional specification of whether to perform a subtraction (-1) or addition (1) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="file_a9058717d59ad3d921fb4f357f637f84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a9058717d59ad3d921fb4f357f637f84a">&sect;&nbsp;</a></span>add_diglist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IntType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void Precision::Volatile::Int_Operations::add_diglist </td>
+          <td>(</td>
           <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
           <td class="paramname"><em>diglist1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename IntType::diglist_type&#160;</td>
+          <td class="paramtype">const typename IntType::diglist_type &amp;&#160;</td>
           <td class="paramname"><em>diglist2</em>, </td>
         </tr>
         <tr>
@@ -182,7 +269,25 @@ template&lt;typename IntType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A simple add function taking two digit strings and calculating the sum. Note that the operation may be slow since the second digit string is copied. [TODO: Optimize algorithm to not make copies] [TODO: Optimize algorithm to avoid iterating when borrowing]</p>
+<p>A simple add function taking two digit strings and calculating the sum. This function is kept here if another function needs to pass the digit lists and signs directly. Otherwise, <a class="el" href="_precision___int___operations_8h.html#a96134d0ff039e6a1cf7d596db9bc17a2">add()</a> is preferred.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted. This function assumes IntType has the public members:<ul>
+<li>Type IntType::diglist_type</li>
+<li>Type IntType::sign_type</li>
+<li>Type IntType::digit_type</li>
+<li>Type IntType::catalyst_type</li>
+<li>Method iterator diglist_type::begin()</li>
+<li>Method iterator diglist_type::end()</li>
+<li>Method size_type diglist_type::size()</li>
+<li>Method void diglist_type::push_back()</li>
+<li>Method void diglist_type::pop_back()</li>
+<li>Method digit_type diglist_type::back()</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diglist1</td><td>The digit string of the first number </td></tr>
@@ -224,6 +329,12 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Binary AND operation calculated by performing x &amp; y on each digit.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
@@ -234,8 +345,8 @@ template&lt;typename IntType &gt; </div>
 
 </div>
 </div>
-<a id="file_ad87da65ac732dcae51e631de9edf3fd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ad87da65ac732dcae51e631de9edf3fd4">&sect;&nbsp;</a></span>bitwise_complement()</h2>
+<a id="file_a3fb9d54665f8effdee8f6558c8b9418e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a3fb9d54665f8effdee8f6558c8b9418e">&sect;&nbsp;</a></span>bitwise_complement()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -243,18 +354,24 @@ template&lt;typename IntType &gt; </div>
 template&lt;typename IntType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">IntType Precision::Volatile::Int_Operations::bitwise_complement </td>
+          <td class="memname">void Precision::Volatile::Int_Operations::bitwise_complement </td>
           <td>(</td>
-          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramtype">IntType &amp;&#160;</td>
           <td class="paramname"><em>bitstring</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Complement function that calculates the binary, or bitwise, complement.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bitstring</td><td>The original number </td></tr>
+    <tr><td class="paramname">bitstring</td><td>The number to modify </td></tr>
   </table>
   </dd>
 </dl>
@@ -289,6 +406,12 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Binary left shift operation that is equivalent to performing x *= 2 by y times.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
@@ -299,8 +422,8 @@ template&lt;typename IntType &gt; </div>
 
 </div>
 </div>
-<a id="file_a505c93f73925424dbdc809ad786be895"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a505c93f73925424dbdc809ad786be895">&sect;&nbsp;</a></span>bitwise_operation()</h2>
+<a id="file_afa2b1c74202f63d6154a720ef55ddf87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_afa2b1c74202f63d6154a720ef55ddf87">&sect;&nbsp;</a></span>bitwise_operation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,14 +439,14 @@ template&lt;typename IntType &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IntType&#160;</td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
           <td class="paramname"><em>rhs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::function&lt; bool(bool, bool)&gt; &amp;&amp;&#160;</td>
-          <td class="paramname"><em>oper</em>&#160;</td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>op</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -333,11 +456,22 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Binary base relative function that performs one of several bitwise operations (AND, OR, XOR) to two digit strings. The numerical signs are treated separately. Note that this algorithm may be slower since the second integer is copied.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
     <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
-    <tr><td class="paramname">oper</td><td>A callback function that performs the bitwise operation on each digit. </td></tr>
+    <tr><td class="paramname">op</td><td>The bitwise operation to perform per bit 0. COMPLEMENT<ol type="1">
+<li>AND</li>
+<li>OR</li>
+<li>XOR </li>
+</ol>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -372,6 +506,12 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Binary OR operation calculated by performing x | y on each digit.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
@@ -410,6 +550,12 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Binary right shift operation that is equivalent to performing x /= 2 by y times.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
@@ -448,6 +594,12 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Binary XOR operation calculated by performing x ^ y on each digit.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
@@ -486,6 +638,22 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Comparison function that determines which integer is greater than the other.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted. It is assumed that this type supports the following:<ul>
+<li>Type IntType::diglist_type</li>
+<li>Method sign_type IntType::sign()</li>
+<li>Method diglist_type IntType::digit_list()</li>
+<li>Method size_type DigListType::size()</li>
+<li>Method const_iterator diglist_type::crbegin()</li>
+<li>Method const_iterator diglist_type::crend()</li>
+<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#ace0ce9e0c82ed3dc0bf03850c520c4a4">IntType::is_negative()</a></li>
+<li>Method bool sign_type::value()</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
@@ -530,6 +698,17 @@ template&lt;typename DigListType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>More basic function that only compares two digit lists. Because there is no numerical sign information, this is a comparison of the numbers' magnitudes.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DigListType</td><td>Type of the STL compliant container holding the digits of a number. It is assumed that this type supports the following:<ul>
+<li>Method size_type DigListType::size()</li>
+<li>Method const_iterator DigListType::crbegin()</li>
+<li>Method const_iterator DigListType::crend()</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diglist1</td><td>The digit string of the first number </td></tr>
@@ -546,8 +725,8 @@ template&lt;typename DigListType &gt; </div>
 
 </div>
 </div>
-<a id="file_a740c2b58eb77817f7f2f946c81ad8ad4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a740c2b58eb77817f7f2f946c81ad8ad4">&sect;&nbsp;</a></span>divide_mod()</h2>
+<a id="file_a1ee569062ed607d4451f0761ca30396d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a1ee569062ed607d4451f0761ca30396d">&sect;&nbsp;</a></span>divide_mod()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -569,14 +748,14 @@ template&lt;typename IntType &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IntType *&#160;</td>
-          <td class="paramname"><em>div_req</em>, </td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>quotient</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IntType *&#160;</td>
-          <td class="paramname"><em>mod_req</em>&#160;</td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>modulus</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -585,37 +764,49 @@ template&lt;typename IntType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A simple divide function taking two digit strings and calculating the quotient and modulus. Algorithm does not need number base information.</p>
+<p>A simple divide function taking two digit strings and calculating the quotient and modulus. Algorithm does not need number base information. The division and modulus are defined as follows: Numerator / Denominator = Quotient + Modulus / Denominator This is important because the sign of the modulus will match the sign of the quotient.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted. In addition to the requirements as detailed by <a class="el" href="_precision___int___operations_8h.html#ad4b05f9d2e26bcd2a8d23991e998444e">multiply()</a>, IntType is assumed to support:<ul>
+<li>Method diglist_type IntType::digit_list()</li>
+<li>Method IntType IntType::magnitude()</li>
+<li>Method void <a class="el" href="_precision___shared___helpers_8h.html#a108ca8db4ef18350f325aa4592990dd2">IntType::make_one()</a></li>
+<li>Method void IntType::shift_right(size_type)</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
     <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
-    <tr><td class="paramname">div_req</td><td>Pointer to where quotient result is stored </td></tr>
-    <tr><td class="paramname">mod_req</td><td>Pointer to where modulus result is stored </td></tr>
+    <tr><td class="paramname">quotient</td><td>Reference to where quotient result is stored </td></tr>
+    <tr><td class="paramname">modulus</td><td>Reference to where modulus result is stored </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="file_a3505bcb22a7546ec060611deda8e6283"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a3505bcb22a7546ec060611deda8e6283">&sect;&nbsp;</a></span>exponentiate()</h2>
+<a id="file_a68c5754c2c67603014af6e7b2861bce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a68c5754c2c67603014af6e7b2861bce1">&sect;&nbsp;</a></span>exponentiate()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Number_Type , typename Number_Type2 &gt; </div>
+template&lt;typename IntType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Number_Type Precision::Volatile::Int_Operations::exponentiate </td>
+          <td class="memname">void Precision::Volatile::Int_Operations::exponentiate </td>
           <td>(</td>
-          <td class="paramtype">const Number_Type &amp;&#160;</td>
+          <td class="paramtype">IntType &amp;&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Number_Type2 &amp;&#160;</td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
           <td class="paramname"><em>exp</em>&#160;</td>
         </tr>
         <tr>
@@ -626,6 +817,12 @@ template&lt;typename Number_Type , typename Number_Type2 &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Integer exponentiation function that employs the exponentiation by squaring algorithm. This function does not support floating point exponents.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The number to exponentiate </td></tr>
@@ -633,7 +830,110 @@ template&lt;typename Number_Type , typename Number_Type2 &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of POWER(base, exp) </dd></dl>
+
+</div>
+</div>
+<a id="file_a198a3d535c575aa4946f460b87ad545c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a198a3d535c575aa4946f460b87ad545c">&sect;&nbsp;</a></span>is_neg_one_list()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename DigListType , typename SignType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Precision::Volatile::Int_Operations::is_neg_one_list </td>
+          <td>(</td>
+          <td class="paramtype">const DigListType &amp;&#160;</td>
+          <td class="paramname"><em>diglist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SignType &amp;&#160;</td>
+          <td class="paramname"><em>sign</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper function to tell if a number is basically -1.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DigListType</td><td>Type of the STL compliant container holding the digits of a number. It is assumed that this type supports the following:<ul>
+<li>Method size_type DigListType::size()</li>
+<li>Method digit_type DigListType::front() </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">SignType</td><td>Type representing the numerical sign. It is assumed that this type supports:<ul>
+<li>bool <a class="el" href="_precision___shared___helpers_8h.html#ace0ce9e0c82ed3dc0bf03850c520c4a4">SignType::is_negative()</a></li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">diglist</td><td>The digit string of the number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether or not the list contains only {1} and the sign is negative. </dd></dl>
+
+</div>
+</div>
+<a id="file_a833bf7f2e703c3613c56ba0fb3e55a48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a833bf7f2e703c3613c56ba0fb3e55a48">&sect;&nbsp;</a></span>is_one_list()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename DigListType , typename SignType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Precision::Volatile::Int_Operations::is_one_list </td>
+          <td>(</td>
+          <td class="paramtype">const DigListType &amp;&#160;</td>
+          <td class="paramname"><em>diglist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SignType &amp;&#160;</td>
+          <td class="paramname"><em>sign</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper function to tell if a number is basically 1.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DigListType</td><td>Type of the STL compliant container holding the digits of a number. It is assumed that this type supports the following:<ul>
+<li>Method size_type DigListType::size()</li>
+<li>Method digit_type DigListType::front() </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">SignType</td><td>Type representing the numerical sign. It is assumed that this type supports:<ul>
+<li>bool SignType::is_positive()</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">diglist</td><td>The digit string of the number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether or not the list contains only {1}. </dd></dl>
 
 </div>
 </div>
@@ -655,6 +955,16 @@ template&lt;typename DigListType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Helper function to tell if a number is basically 0.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DigListType</td><td>Type of the STL compliant container holding the digits of a number. It is assumed that this type supports the following:<ul>
+<li>Method size_type DigListType::size()</li>
+<li>Method digit_type DigListType::front()</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diglist</td><td>The digit string of the number </td></tr>
@@ -665,8 +975,8 @@ template&lt;typename DigListType &gt; </div>
 
 </div>
 </div>
-<a id="file_ae2884ca9a64093584d5fc2ea390fc877"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae2884ca9a64093584d5fc2ea390fc877">&sect;&nbsp;</a></span>logical_and()</h2>
+<a id="file_a042bf17ea1c0cb1faf74a4d02ad057e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a042bf17ea1c0cb1faf74a4d02ad057e0">&sect;&nbsp;</a></span>logical_and_eq()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -674,34 +984,16 @@ template&lt;typename DigListType &gt; </div>
 template&lt;typename IntType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void Precision::Volatile::Int_Operations::logical_and </td>
+          <td class="memname">void Precision::Volatile::Int_Operations::logical_and_eq </td>
           <td>(</td>
-          <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
-          <td class="paramname"><em>diglist1</em>, </td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename IntType::diglist_type&#160;</td>
-          <td class="paramname"><em>diglist2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type &amp;&#160;</td>
-          <td class="paramname"><em>sign1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type&#160;</td>
-          <td class="paramname"><em>sign2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::digit_type&#160;</td>
-          <td class="paramname"><em>base</em>&#160;</td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -711,21 +1003,24 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Logical base AND operation calculated by performing x * y on each digit.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">diglist1</td><td>The digit string of the first number </td></tr>
-    <tr><td class="paramname">diglist2</td><td>The digit string of the second number </td></tr>
-    <tr><td class="paramname">sign1</td><td>The numeric sign of the first number </td></tr>
-    <tr><td class="paramname">sign2</td><td>The numeric sign of the second number </td></tr>
-    <tr><td class="paramname">base</td><td>The number base of both numbers </td></tr>
+    <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="file_aebcb7383260b15d695948687a6c8d7bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_aebcb7383260b15d695948687a6c8d7bc">&sect;&nbsp;</a></span>logical_complement()</h2>
+<a id="file_a75c37ed972b2c8f5a7b835aa369bc767"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a75c37ed972b2c8f5a7b835aa369bc767">&sect;&nbsp;</a></span>logical_complement_eq()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -733,44 +1028,32 @@ template&lt;typename IntType &gt; </div>
 template&lt;typename IntType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void Precision::Volatile::Int_Operations::logical_complement </td>
+          <td class="memname">void Precision::Volatile::Int_Operations::logical_complement_eq </td>
           <td>(</td>
-          <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
-          <td class="paramname"><em>diglist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>orig</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">typename IntType::sign_type &amp;&#160;</td>
-          <td class="paramname"><em>int_sign</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::digit_type&#160;</td>
-          <td class="paramname"><em>base</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Complement function that is relative to the number base of the IntType object.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">diglist</td><td>The digit string of the integer </td></tr>
-    <tr><td class="paramname">int_sign</td><td>The numerical sign of the integer </td></tr>
-    <tr><td class="paramname">base</td><td>The number base of the integer </td></tr>
+    <tr><td class="paramname">orig</td><td>The integer to find the complement of </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="file_a9cedf60482ffd9480778ae76874a5910"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a9cedf60482ffd9480778ae76874a5910">&sect;&nbsp;</a></span>logical_operation()</h2>
+<a id="file_a1962d20a311be325ea55f0c3342d412a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a1962d20a311be325ea55f0c3342d412a">&sect;&nbsp;</a></span>logical_operation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -780,38 +1063,20 @@ template&lt;typename IntType &gt; </div>
         <tr>
           <td class="memname">void Precision::Volatile::Int_Operations::logical_operation </td>
           <td>(</td>
-          <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
-          <td class="paramname"><em>diglist1</em>, </td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename IntType::diglist_type&#160;</td>
-          <td class="paramname"><em>diglist2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type &amp;&#160;</td>
-          <td class="paramname"><em>sign1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type&#160;</td>
-          <td class="paramname"><em>sign2</em>, </td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">unsigned short&#160;</td>
-          <td class="paramname"><em>oper</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::digit_type&#160;</td>
-          <td class="paramname"><em>base</em>&#160;</td>
+          <td class="paramname"><em>oper</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -820,29 +1085,32 @@ template&lt;typename IntType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number base relative function that performs one of several logical operations (AND, OR, XOR, COMPL) to two digit strings. The numerical signs are treated separately and go through the respective bitwise operation.</p>
+<p>Number base relative function that performs one of several logical operations (AND, OR, XOR, COMPL) to two digit strings. The numerical signs are treated separately and go through the respective logical operation.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">diglist1</td><td>The digit string of the first number </td></tr>
-    <tr><td class="paramname">diglist2</td><td>The digit string of the second number </td></tr>
-    <tr><td class="paramname">sign1</td><td>The numeric sign of the first number </td></tr>
-    <tr><td class="paramname">sign2</td><td>The numeric sign of the second number </td></tr>
-    <tr><td class="paramname">oper</td><td>Determines which operation to perform<ol type="1">
+    <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
+    <tr><td class="paramname">oper</td><td>The operation to perform per digit<ol type="1">
 <li>AND</li>
 <li>OR</li>
 <li>XOR</li>
 <li>COMPLEMENT </li>
 </ol>
 </td></tr>
-    <tr><td class="paramname">base</td><td>The number base of both numbers </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="file_ac0912057a8eacacc159c55fb914e177d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ac0912057a8eacacc159c55fb914e177d">&sect;&nbsp;</a></span>logical_or()</h2>
+<a id="file_a06eda4976a85957d0541a211625929ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a06eda4976a85957d0541a211625929ce">&sect;&nbsp;</a></span>logical_or_eq()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -850,34 +1118,16 @@ template&lt;typename IntType &gt; </div>
 template&lt;typename IntType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void Precision::Volatile::Int_Operations::logical_or </td>
+          <td class="memname">void Precision::Volatile::Int_Operations::logical_or_eq </td>
           <td>(</td>
-          <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
-          <td class="paramname"><em>diglist1</em>, </td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename IntType::diglist_type&#160;</td>
-          <td class="paramname"><em>diglist2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type &amp;&#160;</td>
-          <td class="paramname"><em>sign1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type&#160;</td>
-          <td class="paramname"><em>sign2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::digit_type&#160;</td>
-          <td class="paramname"><em>base</em>&#160;</td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -887,21 +1137,24 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Logical base OR operation that is equivalent to COMPL( AND( COMPL(x), COMPL(y) ) )</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">diglist1</td><td>The digit string of the first number </td></tr>
-    <tr><td class="paramname">diglist2</td><td>The digit string of the second number </td></tr>
-    <tr><td class="paramname">sign1</td><td>The numeric sign of the first number </td></tr>
-    <tr><td class="paramname">sign2</td><td>The numeric sign of the second number </td></tr>
-    <tr><td class="paramname">base</td><td>The number base of both numbers </td></tr>
+    <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="file_a50008d122401db9c2f9d1e0a2cb50561"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a50008d122401db9c2f9d1e0a2cb50561">&sect;&nbsp;</a></span>logical_xor()</h2>
+<a id="file_a8c1686820233a58146b60d3394782353"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a8c1686820233a58146b60d3394782353">&sect;&nbsp;</a></span>logical_xor_eq()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -909,34 +1162,16 @@ template&lt;typename IntType &gt; </div>
 template&lt;typename IntType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void Precision::Volatile::Int_Operations::logical_xor </td>
+          <td class="memname">void Precision::Volatile::Int_Operations::logical_xor_eq </td>
           <td>(</td>
-          <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
-          <td class="paramname"><em>diglist1</em>, </td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename IntType::diglist_type&#160;</td>
-          <td class="paramname"><em>diglist2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type &amp;&#160;</td>
-          <td class="paramname"><em>sign1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::sign_type&#160;</td>
-          <td class="paramname"><em>sign2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename IntType::digit_type&#160;</td>
-          <td class="paramname"><em>base</em>&#160;</td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -946,13 +1181,60 @@ template&lt;typename IntType &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Logical base XOR operation calculated by performing x + y on each digit.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">diglist1</td><td>The digit string of the first number </td></tr>
-    <tr><td class="paramname">diglist2</td><td>The digit string of the second number </td></tr>
-    <tr><td class="paramname">sign1</td><td>The numeric sign of the first number </td></tr>
-    <tr><td class="paramname">sign2</td><td>The numeric sign of the second number </td></tr>
-    <tr><td class="paramname">base</td><td>The number base of both numbers </td></tr>
+    <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="file_ac07007c8ef804c0ceb152357bdc24c0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ac07007c8ef804c0ceb152357bdc24c0c">&sect;&nbsp;</a></span>logical_xor_rev_eq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IntType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void Precision::Volatile::Int_Operations::logical_xor_rev_eq </td>
+          <td>(</td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>xor_res</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const IntType &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A specical logical base reverse XOR operation that can take the result of a logical XOR operation and recalculate one of the original keys. This is akin to the special case: binary XOR, where applying XOR again returns the original key.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xor_res</td><td>The first integer which was the result of a previous xor operation </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
   </table>
   </dd>
 </dl>
@@ -986,11 +1268,79 @@ template&lt;typename IntType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A simple multiply function taking two digit strings and calculating the product. Algorithm does not need number base information. [TODO: Optimize algorithm to make less copies]</p>
+<p>A simple multiply function taking two digit strings and calculating the product. Algorithm does not need number base information.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted. In addition to the requirements as detailed by <a class="el" href="_precision___int___operations_8h.html#a96134d0ff039e6a1cf7d596db9bc17a2">add()</a> and <a class="el" href="_precision___int___operations_8h.html#ac6c0804a153fd09bede916d85dde6236">multiply_diglist()</a>, IntType is assumed to support:<ul>
+<li>Type IntType::size_type</li>
+<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#ade132cdfd51bb038d8b3f885b7482476">IntType::is_zero()</a></li>
+<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#af98063dd6c3b5a6457698a33f24a90f0">IntType::is_one()</a></li>
+<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#a3e0dff28e3f40142f9f685589ec554d5">IntType::is_neg_one()</a></li>
+<li>Method void <a class="el" href="_precision___shared___helpers_8h.html#ad3c98a309788b71dfcf713203cac47f4">IntType::negate()</a></li>
+<li>Method void <a class="el" href="_precision___shared___helpers_8h.html#aeb5d533c78128637e2a0ef4c180b2f69">IntType::make_zero()</a></li>
+<li>Method void IntType::sign(sign_type)</li>
+<li>Method void IntType::shift_left(size_type)</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lhs</td><td>The first integer </td></tr>
     <tr><td class="paramname">rhs</td><td>The second integer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="file_ac6c0804a153fd09bede916d85dde6236"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ac6c0804a153fd09bede916d85dde6236">&sect;&nbsp;</a></span>multiply_diglist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IntType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void Precision::Volatile::Int_Operations::multiply_diglist </td>
+          <td>(</td>
+          <td class="paramtype">IntType &amp;&#160;</td>
+          <td class="paramname"><em>num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">typename IntType::digit_type&#160;</td>
+          <td class="paramname"><em>fac</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A helper multiply function that acts as an accumulation function.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>Number type from which type and base information is extracted. IntType is is assumed to support the following:<ul>
+<li>Type IntType::digit_type</li>
+<li>Type IntType::catalyst_type</li>
+<li>Method digit_type IntType::base()</li>
+<li>Method size_type IntType::count_digits()</li>
+<li>Method digit_type&amp; IntType::digit(size_type)</li>
+<li>Method void IntType::append(digit_type)</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>The integer to multiply </td></tr>
+    <tr><td class="paramname">fac</td><td>The single digit multiplication factor that belongs in the range [0, base-1] </td></tr>
   </table>
   </dd>
 </dl>

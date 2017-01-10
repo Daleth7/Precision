@@ -1,7 +1,7 @@
 #ifndef IMG_S54445TR_EHEFEDECL____288288
 #define IMG_S54445TR_EHEFEDECL____288288
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 
 // Addition tests
 void setup_addition_variables();

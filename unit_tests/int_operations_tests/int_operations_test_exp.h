@@ -1,7 +1,7 @@
 #ifndef EXP0N223TIA42L_UTIL____
 #define EXP0N223TIA42L_UTIL____
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 
 // Exponential tests
 void setup_exponentiation_variables();

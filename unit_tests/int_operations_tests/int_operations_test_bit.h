@@ -1,7 +1,7 @@
 #ifndef BIT3993HEA___DER__GHHHHH___
 #define BIT3993HEA___DER__GHHHHH___
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 
 // Exponential tests
 void setup_bitwise_variables();

@@ -1,7 +1,7 @@
 #ifndef COMPAR_STEST_ASPSACE_FEDECL____288288
 #define COMPAR_STEST_ASPSACE_FEDECL____288288
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 
 // Comparison tests
 void setup_comparison_variables();

@@ -8,7 +8,7 @@ INCLUDE = -I../
 
 FLAGS = $(OPTIMIZE) -Wall -std=$(STD) $(INCLUDE) -DNDEBUG
 
-TEST_SRC = ./*.cpp
+TEST_SRC = ./*.cpp ./int_operations_tests/*.cpp
 LIB_SRC = ../src/*.cpp
 
 SRC = $(TEST_SRC) $(LIB_SRC)

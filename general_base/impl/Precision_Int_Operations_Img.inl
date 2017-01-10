@@ -4,16 +4,14 @@ namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
             namespace Img{
-                template <typename IntType, typename CharTIterator>
-                typename IntType::str_type
-                    str( const IntType& num,
-                         CharTIterator digs, CharTIterator syms
+                template <typename StrType, typename IntType, typename CharTIterator>
+                StrType str( const IntType& num,
+                             CharTIterator digs, CharTIterator syms
                 ){
-                    typedef typename IntType::str_type str_type;
                     typedef typename IntType::size_type size_type;
                     if(num.is_zero())
-                        return str_type(1, *syms) + str_type(1, *digs);
-                    str_type toreturn(num.count_digits() + 1, *digs);
+                        return StrType(1, *syms) + StrType(1, *digs);
+                    StrType toreturn(num.count_digits() + 1, *digs);
                     CharTIterator s2(syms);
                     std::advance(s2, 1);
                     toreturn[0] = (num.is_positive() ? *syms : *s2);
@@ -30,27 +28,25 @@ namespace Precision{
                 }
 
                 //Set the precision through parameter
-                template <typename IntType, typename CharTIterator>
-                typename IntType::str_type
-                    sci_note( const IntType& num,
-                              typename IntType::size_type prec,
-                              CharTIterator digs, CharTIterator syms
+                template <typename StrType, typename IntType, typename CharTIterator>
+                StrType sci_note( const IntType& num,
+                                  typename IntType::size_type prec,
+                                  CharTIterator digs, CharTIterator syms
                 ){
-                    typedef typename IntType::str_type str_type;
                     if(num.is_zero())
-                        return str_type(1, *syms) + str_type(1, *digs);
+                        return StrType(1, *syms) + StrType(1, *digs);
 
                     // Move to the exponent symbol
                     CharTIterator s2(syms);
                     std::advance(s2, 3);
 
+                    //Display +#E0
                     if(num.count_digits() < 2)
-                        //Display +#E0
-                        return  str(num, digs, syms)
-                                + str_type(1, *s2) + str_type(1, *digs);
+                        return str<StrType>(num, digs, syms)
+                                + StrType(1, *s2) + StrType(1, *digs);
 
                     // Start with the basic stringification of the number
-                    str_type toreturn(str(num, digs, syms));
+                    StrType toreturn(str<StrType>(num, digs, syms));
 
                     // Calculate exponent number
                     typename IntType::size_type exp(toreturn.size() - 2);
@@ -67,10 +63,10 @@ namespace Precision{
 
                     // Move back to the exponent symbol and append to base
                     std::advance(s2, 1);
-                    toreturn += str_type(1, *s2);
+                    toreturn += StrType(1, *s2);
 
                     // Convert the exponent number to a string and append
-                    str_type exp_str;
+                    StrType exp_str;
                     do{
                         s2 = digs;
                         std::advance(s2, exp % num.base());
@@ -83,15 +79,13 @@ namespace Precision{
                     return toreturn;
                 }
 
-                template <typename IntType, typename CharTIterator>
-                typename IntType::str_type
-                    sci_note_w_spaces( const IntType& num,
-                                       typename IntType::size_type prec,
-                                       CharTIterator digs, CharTIterator syms
+                template <typename StrType, typename IntType, typename CharTIterator>
+                StrType sci_note_w_spaces( const IntType& num,
+                                           typename IntType::size_type prec,
+                                           CharTIterator digs, CharTIterator syms
                 ){
-                    typedef typename IntType::str_type str_type;
-                    str_type toreturn(sci_note(num, prec, digs, syms));
-                    if(toreturn == str_type(1, *digs)) return toreturn;
+                    StrType toreturn(sci_note<StrType>(num, prec, digs, syms));
+                    if(toreturn == StrType(1, *digs)) return toreturn;
                     std::advance(syms, 4);
                     toreturn.insert(1, 1, *syms);//Insert space after the sign
                     CharTIterator s2(syms);
@@ -101,8 +95,8 @@ namespace Precision{
                     return toreturn;
                 }
 
-                template <typename IntType, typename CharTIterator>
-                void parse( const typename IntType::str_type& src,
+                template <typename StrType, typename IntType, typename CharTIterator>
+                void parse( const StrType& src,
                             typename IntType::diglist_type& new_list,
                             typename IntType::digit_type base,
                             const CharTIterator dig_glyphs

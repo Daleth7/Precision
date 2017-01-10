@@ -1,7 +1,7 @@
 #ifndef LOG39HE___ICAL2299____HHH
 #define LOG39HE___ICAL2299____HHH
 
-#include "Test_Shared_Utilities.h"
+#include "unit_tests/Test_Shared_Utilities.h"
 
 // Exponential tests
 void setup_logical_variables();
