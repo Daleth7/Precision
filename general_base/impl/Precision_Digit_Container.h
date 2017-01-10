@@ -7,7 +7,6 @@
 #define CONTAIN23ER_NUMBER_HOL978DING_DIGIT22222____HHHH
 
 #include "Precision_Defaults.h"
-#include "Precision_Shared_Helpers.h"
 
 #include <initializer_list>
 
@@ -63,8 +62,7 @@ namespace Precision{
               */
             using diglist_type = Container<digit_type>;
 
-            /** The primitive representing size in diglist_type.
-              */
+            /** The primitive representing size in diglist_type. */
             using size_type    = typename diglist_type::size_type;
 
             /** A primitive type used for dealing with size related
@@ -174,6 +172,11 @@ namespace Precision{
                 }   
             }
 
+            /** Insert a new digit at the end of the string. */
+            void append(digit_type new_dig){
+                if(new_dig > 0) m_number.push_back(new_dig);
+            }
+
             /** Remove the leftmost (last) digit in the string. */
             void detach()
                 {m_number.pop_back();}
@@ -187,9 +190,7 @@ namespace Precision{
               */
             Digit_Container(const std::initializer_list<digit_type>& str)
                 : m_number(str)
-            {
-                this->verify_diglist();
-            }
+            {}
 
 
             /** Construct a string from an already existing digit string.
@@ -199,9 +200,7 @@ namespace Precision{
             template <typename Iterator>
             Digit_Container(const diglist_type& new_num)
                 : m_number(new_num)
-            {
-                this->verify_diglist();
-            }
+            {}
 
 
             /** Construct a string from a specified set.
@@ -212,9 +211,7 @@ namespace Precision{
             template <typename Iterator>
             Digit_Container(const Iterator& pbeg, const Iterator& pend)
                 : m_number(pbeg, pend)
-            {
-                this->verify_diglist();
-            }
+            {}
 
             /** Construct a string with one digit.
               *
@@ -236,18 +233,6 @@ namespace Precision{
             ~Digit_Container()                                 = default;
 
         protected:
-
-            /** Make sure all the digits in m_number are valid and that
-              * the size is at least one.
-              */
-            void verify_diglist(){
-                if(m_number.size() == 0) m_number.push_back(0);
-                for(auto it = m_number.begin(); it != m_number.end(); ++it){
-                    if(*it >= this->base()) *it = 0;
-                }
-                Helper::remove_excess_zeros(m_number);
-            }
-
             diglist_type m_number;
     };
 }

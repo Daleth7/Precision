@@ -97,9 +97,9 @@ void test_asgbi_log_rshift_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_log_shift(test_and_log_util::out_type&);
 void test_asgbi_log_shift_speed(test_and_log_util::out_type&);
 
-void setup_variables();
+void setup_asgbi_variables();
 // Cleanup function to free memory
-void cleanup();
+void cleanup_asgbi();
 
 template <typename IntType>
 test_and_log_util::str_type to_str(const IntType& num){
@@ -121,17 +121,17 @@ void abstract_static_general_base_int_test(){
 
     ADD_TEST(test_list, test_asgbi_signed_size);
 
-    setup_variables();
+    setup_asgbi_variables();
 
     test_list.execute_tests();
 
-    cleanup();
+    cleanup_asgbi();
 }
 
-void setup_variables(){
+void setup_asgbi_variables(){
 }
 
-void cleanup(){
+void cleanup_asgbi(){
 }
 
 // Constructor tests

@@ -14,7 +14,7 @@ namespace Precision{
     namespace Default{
         using byte_type = std::int_least8_t;
         template <typename... TArgs>
-            using default_container_type = std::vector<TArgs...>;
+            using container_type = std::vector<TArgs...>;
         using sign_type = Precision::SignClass;
         using size_type = std::size_t;
     }

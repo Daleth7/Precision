@@ -1,4 +1,5 @@
 #include "Precision_Int_Operations.h"
+#include "Precision_Shared_Helpers.h"
 
 #define INT_TEMP_ template < typename ByteType, ByteType Base,       \
                              template <typename...> class Container, \
@@ -33,8 +34,9 @@ namespace Precision{
                     {return this->is_negative() && this->is_mag_one();}
 
                 INT_TEMP_
-                auto INT_INST_::base() -> digit_type
-                    {return Base;}
+                constexpr typename INT_INST_::dig_container::digit_type
+                    INT_INST_::base()
+                {return Base;}
 
 
 
@@ -42,29 +44,38 @@ namespace Precision{
 
                 INT_TEMP_
                 void INT_INST_::make_zero(){
-                    m_number.front() = 0;
-                    m_number.erase(m_number.begin() + 1, m_number.end());
+                    dig_container::m_number.front() = 0;
+                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
+                                                   dig_container::m_number.end()
+                                                   );
                     this->make_positive();
                 }
 
                 INT_TEMP_
                 void INT_INST_::make_one(){
-                    m_number.front() = 1;
-                    m_number.erase(m_number.begin() + 1, m_number.end());
+                    dig_container::m_number.front() = 1;
+                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
+                                                   dig_container::m_number.end()
+                                                   );
                     this->make_positive();
                 }
 
                 INT_TEMP_
                 void INT_INST_::make_neg_one(){
-                    m_number.front() = 1;
-                    m_number.erase(m_number.begin() + 1, m_number.end());
+                    dig_container::m_number.front() = 1;
+                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
+                                                   dig_container::m_number.end()
+                                                   );
                     this->make_negative();
                 }
 
                 INT_TEMP_
                 void INT_INST_::make_two(){
-                    m_number.front() = 2;
-                    m_number.erase(m_number.begin() + 1, m_number.end());
+                    dig_container::m_number.front() = 2;
+                    dig_container::m_number.front() = 2;
+                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
+                                                   dig_container::m_number.end()
+                                                   );
                     this->make_positive();
                 }
 
@@ -129,7 +140,7 @@ namespace Precision{
                 INT_TEMP_
                 INT_INST_& INT_INST_::operator++(){
                     Int increment(1);
-                    *this += decrement;
+                    *this += increment;
 
                     return *this;
                 }
@@ -152,7 +163,7 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                INT_INST_& INT_INST_::operator|=(const INT_INST_& rhs); {
+                INT_INST_& INT_INST_::operator|=(const INT_INST_& rhs){
                     Volatile::Int_Operations::bitwise_or_eq(*this, rhs);
 
                     return *this;
@@ -223,7 +234,9 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                INT_INST_ INT_INST_::logical_shift(signed_size_type sz)const{
+                INT_INST_ INT_INST_::logical_shift
+                    (typename dig_container::signed_size_type sz)const
+                {
                     Int toreturn(*this);
 
                     toreturn.shift(sz);
@@ -232,7 +245,9 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                INT_INST_ INT_INST_::logical_shift_left(size_type sz)const{
+                INT_INST_ INT_INST_::logical_shift_left
+                    (typename dig_container::size_type sz)const
+                {
                     Int toreturn(*this);
 
                     toreturn.logical_shift_left(sz);
@@ -241,7 +256,9 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                INT_INST_ INT_INST_::logical_shift_right(size_type sz)const{
+                INT_INST_ INT_INST_::logical_shift_right
+                    (typename dig_container::size_type sz)const
+                {
                     Int toreturn(*this);
 
                     toreturn.logical_shift_right(sz);
@@ -254,8 +271,8 @@ namespace Precision{
                 //Constructors and destructor
 
                 INT_TEMP_
-                INT_INST_::INT_INST_(signed_size_type val)
-                    : Digit_Container({{}})
+                INT_INST_::Int(typename dig_container::signed_size_type val)
+                    : dig_container({})
                     , Signed_Interface((val < 0) * -1)
                 {
                     val *= this->sign();
@@ -267,21 +284,38 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                INT_INST_::INT_INST_( const diglist_type& new_str,
-                                      sign_type new_sign
+                INT_INST_::Int( const typename dig_container::diglist_type& new_str,
+                                typename signed_interface::sign_type new_sign
                 )
-                    : Digit_Container(new_str)
+                    : dig_container(new_str)
                     , Signed_Interface(new_sign)
-                {}
+                {
+                    this->verify_diglist();
+                }
 
                 INT_TEMP_
                 template <typename Iterator>
-                INT_INST_::INT_INST_( const Iterator& pbeg, const Iterator& pend,
-                                      sign_type new_sign
+                INT_INST_::Int( const Iterator& pbeg, const Iterator& pend,
+                                typename signed_interface::sign_type new_sign
                 )
-                    : Digit_Container(pbeg, pend)
+                    : dig_container(pbeg, pend)
                     , Signed_Interface(new_sign)
-                {}
+                {
+                    this->verify_diglist();
+                }
+
+                INT_TEMP_
+                void INT_INST_::verify_diglist(){
+                    if(dig_container::m_number.size() == 0)
+                        dig_container::m_number.push_back(0);
+                    for( auto it = dig_container::m_number.begin();
+                         it != dig_container::m_number.end();
+                         ++it
+                    ){
+                        if(*it >= this->base()) *it = 0;
+                    }
+                    Helper::remove_excess_zeros(dig_container::m_number);
+                }
             }
         }
     }

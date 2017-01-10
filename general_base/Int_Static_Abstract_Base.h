@@ -84,6 +84,12 @@ namespace Precision{
                           */
                         using catalyst_type = long double;
 
+                        /** Parent class with the digit container */
+                        using dig_container = Digit_Container<ByteType, Container>;
+
+                        /** Parent class with the signed interface */
+                        using signed_interface = Signed_Interface<SignClass>;
+
                         /* Inherited from Digit_Container
 
                         using digit_type;
@@ -164,7 +170,7 @@ namespace Precision{
                           *
                           * \return The number base.
                           */
-                        static constexpr digit_type base();
+                        static constexpr typename dig_container::digit_type base();
 
 
 
@@ -368,7 +374,8 @@ namespace Precision{
                           *
                           * \return The logical shift of this number.
                           */
-                        Int logical_shift(signed_size_type sz)const;
+                        Int logical_shift
+                            (typename dig_container::signed_size_type sz)const;
 
                         /** Logical, base dependent LEFT SHIFT operator. The
                           * operation is equivalent to multiplying this number
@@ -378,7 +385,8 @@ namespace Precision{
                           *
                           * \return The logical shift of this number.
                           */
-                        Int logical_shift_left(size_type sz)const;
+                        Int logical_shift_left
+                            (typename dig_container::size_type sz)const;
 
                         /** Logical, base dependent RIGHT SHIFT operator. The
                           * operation is equivalent to dividing this number
@@ -388,7 +396,8 @@ namespace Precision{
                           *
                           * \return The logical shift of this number.
                           */
-                        Int logical_shift_right(size_type sz)const;
+                        Int logical_shift_right
+                            (typename dig_container::size_type sz)const;
 
 
 
@@ -399,7 +408,7 @@ namespace Precision{
                           *
                           * \param val The signed integer number to start with.
                           */
-                        Int(signed_size_type val=0);
+                        Int(typename dig_container::signed_size_type val=0);
 
                         /** Construct the number starting with a string of
                           * digits and a numerical sign.
@@ -407,7 +416,9 @@ namespace Precision{
                           * \param new_diglist A string of digits to start with.
                           * \param new_sign A numerical sign to start with.
                           */
-                        Int(const diglist_type& new_diglist, sign_type new_sign);
+                        Int( const typename dig_container::diglist_type& new_diglist,
+                             typename signed_interface::sign_type new_sign
+                             );
 
                         /** Construct the number using a string of digits pointed
                           * to by iterators.
@@ -420,7 +431,7 @@ namespace Precision{
                           */
                         template <typename Iterator>
                         Int( const Iterator& pbeg, const Iterator& pend,
-                             sign_type new_sign
+                             typename signed_interface::sign_type new_sign
                              );
 
                         /** Compiler generated copy constructor. */
@@ -448,6 +459,11 @@ namespace Precision{
                         sign_type m_sign;
 
                         */
+
+                        /** Make sure all the digits in m_number are valid and that
+                          * the size is at least one.
+                          */
+                        void verify_diglist();
 
 
 

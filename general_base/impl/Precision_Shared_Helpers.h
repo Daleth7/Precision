@@ -16,8 +16,10 @@ namespace Precision{
          *  of Fraction types, to avoid infinite loops or recursions.
          *
          * \tparam Number_Type Type of the numbers passed as arguments 
+         *
          * \param f The first number to compare against 
          * \param s The second number to compare against 
+         *
          * \return Whether or not the arguments f and s are equivalent.
          */
         template <typename Number_Type>
@@ -32,10 +34,12 @@ namespace Precision{
          *
          * \tparam Number_Type1 The type of the sample number  
          * \tparam Number_Type2 The type of the number to cast   
+         *
          * \param sample Number from which precision or number base
          *               can be extracted.
          * \param orig The number to cast from Number_Type2 to
          *             Number_Type1
+         *
          * \return The result of casting orig to Number_Type1 
          */
         template <typename Number_Type1, typename Number_Type2>
@@ -46,7 +50,9 @@ namespace Precision{
          *  and integer members.
          *
          * \tparam T The type of the number under test 
+         *
          * \param testee Number to test. May be fundamental. 
+         *
          * \return Whether or not testee is an integer. 
          */
         template <typename T>
@@ -59,7 +65,9 @@ namespace Precision{
         /** Decoupled check if the number is equivalent to 0.
          *
          * \tparam Number_Type The type of the number under test 
+         *
          * \param num Number to test. 
+         *
          * \return Whether or not num == 0. 
          */
         template <typename Number_Type>
@@ -68,7 +76,9 @@ namespace Precision{
         /** Decoupled check if the number is equivalent to 1.
          *
          * \tparam Number_Type The type of the number under test 
+         *
          * \param num Number to test. 
+         *
          * \return Whether or not num == 1. 
          */
         template <typename Number_Type>
@@ -77,7 +87,9 @@ namespace Precision{
         /** Decoupled check if the number is equivalent to -1.
          *
          * \tparam Number_Type The type of the number under test 
+         *
          * \param num Number to test. 
+         *
          * \return Whether or not num == -1. 
          */
         template <typename Number_Type>
@@ -86,7 +98,9 @@ namespace Precision{
         /** Decoupled check if the number sign is negative.
          *
          * \tparam Number_Type The type of the number under test 
+         *
          * \param num Number to test. 
+         *
          * \return Whether or not num < 0. 
          */
         template <typename Number_Type>
@@ -95,7 +109,9 @@ namespace Precision{
         /** Decoupled check if the number is odd.
          *
          * \tparam Number_Type The type of the number under test 
+         *
          * \param num Number to test. 
+         *
          * \return Whether or not num is odd. 
          */
         template <typename Number_Type>
@@ -104,7 +120,9 @@ namespace Precision{
         /** Decoupled check if the number is even.
          *
          * \tparam Number_Type The type of the number under test 
+         *
          * \param num Number to test. 
+         *
          * \return Whether or not num is even. 
          */
         template <typename Number_Type>
@@ -113,6 +131,7 @@ namespace Precision{
         /** Decoupled modifier to divide a number by 2.
          *
          * \tparam Number_Type The type of the number being changed 
+         *
          * \param num Number to change. 
          */
         template <typename Number_Type>
@@ -121,6 +140,7 @@ namespace Precision{
         /** Decoupled modifier to find a 1/num.
          *
          * \tparam Number_Type The type of the number being changed 
+         *
          * \param num Number to change. 
          */
         template <typename Number_Type>
@@ -129,6 +149,7 @@ namespace Precision{
         /** Decoupled modifier to flip a number's numerical sign.
          *
          * \tparam Number_Type The type of the number being changed 
+         *
          * \param num Number to change. 
          */
         template <typename Number_Type>
@@ -141,6 +162,7 @@ namespace Precision{
          *
          * \tparam Number_Type The type of the number being changed 
          * \tparam Number_Type2 The type of the reference number 
+         *
          * \param num Number to change the base of.  
          * \param ref Number to extract base information from. 
          */
@@ -151,6 +173,7 @@ namespace Precision{
          *
          * \tparam Number_Type The type of the number being changed 
          * \tparam Number_Type2 The type of the reference number 
+         *
          * \param num Number to change.  
          * \param ref Number to extract base information from. 
          */
@@ -161,6 +184,7 @@ namespace Precision{
          *
          * \tparam Number_Type The type of the number being changed 
          * \tparam Number_Type2 The type of the reference number 
+         *
          * \param num Number to change.  
          * \param ref Number to extract base information from. 
          */
@@ -171,6 +195,7 @@ namespace Precision{
          *
          * \tparam Number_Type The type of the number being changed 
          * \tparam Number_Type2 The type of the reference number 
+         *
          * \param num Number to change.  
          * \param ref Number to extract base information from. 
          */
@@ -180,6 +205,7 @@ namespace Precision{
         /** Decoupled modifier to assign 0 to a number.
          *
          * \tparam Number_Type The type of the number being changed 
+         *
          * \param num Number to change.  
          */
         template <typename Number_Type>
@@ -188,6 +214,7 @@ namespace Precision{
         /** Decoupled modifier to assign 1 to a number.
          *
          * \tparam Number_Type The type of the number being changed 
+         *
          * \param num Number to change.  
          */
         template <typename Number_Type>
@@ -196,6 +223,7 @@ namespace Precision{
         /** Decoupled modifier to assign 2 to a number.
          *
          * \tparam Number_Type The type of the number being changed 
+         *
          * \param num Number to change.  
          */
         template <typename Number_Type>
@@ -204,6 +232,7 @@ namespace Precision{
         /** Decoupled modifier to make a temporary number with value 0.
          *
          * \tparam Number_Type The type of the reference number 
+         *
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
@@ -212,6 +241,7 @@ namespace Precision{
         /** Decoupled modifier to make a temporary number with value 1.
          *
          * \tparam Number_Type The type of the reference number 
+         *
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
@@ -219,11 +249,30 @@ namespace Precision{
 
         /** Decoupled modifier to make a temporary number with value 2.
          *
-         * \tparam Base_Type The type of the reference number 
+         * \tparam Number_Type The type of the reference number 
+         *
          * \param ref Number to extract base information from.  
          */
         template <typename Number_Type>
         inline Number_Type make_two_temp(const Number_Type& ref);
+
+        /** Decoupled modifier to make a temporary number with value 2.
+         *
+         * \tparam Base_Type The type of the reference number 
+         *
+         * \param ref Number to extract base information from.  
+         */
+        template <typename Number_Type>
+        inline Number_Type make_two_temp(const Number_Type& ref);
+
+        /** Helper to remove extra leading zeros.
+         *
+         * \tparam Number_Type The type of the number to change
+         *
+         * \param num Number to change.
+         */
+        template <typename Number_Type>
+        inline void remove_excess_zeros(Number_Type& num);
     }
 }
 

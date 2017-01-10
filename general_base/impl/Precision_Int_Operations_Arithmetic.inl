@@ -111,9 +111,7 @@ namespace Precision{
                 // Store the final numerical sign
                 if(comp < 0) lhs.sign(rhs.sign());
 
-                // Remove excess 0's
-                while(lhs.count_digits() > 1 && lhs.digit(lhs.count_digits()-1) == 0)
-                    lhs.detach();
+                Helper::remove_excess_zeros(lhs);
             }
 
             template <typename IntType>
@@ -160,9 +158,7 @@ namespace Precision{
                     carry_int /= base;
                 }
 
-                // Remove excess 0's
-                while(num.count_digits() > 1 && num.digit(num.count_digits()-1) == 0)
-                    num.detach();
+                Helper::remove_excess_zeros(num);
             }
 
             namespace Arith_Helper{
@@ -214,10 +210,7 @@ namespace Precision{
                         carry /= dest.base();
                     }
 
-                    // Remove excess 0's
-                    while( dest.count_digits() > 1
-                        && dest.digit(dest.count_digits()-1) == 0
-                    )   dest.detach();
+                    Helper::remove_excess_zeros(dest);
                 }
 
                 template <typename IntType>
