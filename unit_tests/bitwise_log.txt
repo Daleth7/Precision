@@ -1,0 +1,96 @@
++9876543210 & +123456789
+	[counter = +0 lhs = +9876543210 rhs_copy = +123456789] bit = 0 & 1 = 0
+	[counter = +1 lhs = +493827165 rhs_copy = +61728394] bit = 1 & 0 = 0
+	[counter = +2 lhs = +246913582 rhs_copy = +3864197] bit = 0 & 1 = 0
+	[counter = +3 lhs = +123456791 rhs_copy = +193298] bit = 1 & 0 = 0
+	[counter = +4 lhs = +61728395 rhs_copy = +96649] bit = 1 & 1 = 1 --> Added to bucket: +16
+	[counter = +5 lhs = +3864197 rhs_copy = +48324] bit = 1 & 0 = 0
+	[counter = +6 lhs = +193298 rhs_copy = +24162] bit = 0 & 0 = 0
+	[counter = +7 lhs = +96649 rhs_copy = +1281] bit = 1 & 1 = 1 --> Added to bucket: +128
+	[counter = +8 lhs = +48324 rhs_copy = +640] bit = 0 & 0 = 0
+	[counter = +9 lhs = +24162 rhs_copy = +320] bit = 0 & 0 = 0
+	[counter = +10 lhs = +1281 rhs_copy = +160] bit = 1 & 0 = 0
+	[counter = +11 lhs = +640 rhs_copy = +80] bit = 0 & 0 = 0
+	[counter = +12 lhs = +320 rhs_copy = +40] bit = 0 & 0 = 0
+	[counter = +13 lhs = +160 rhs_copy = +20] bit = 0 & 0 = 0
+	[counter = +14 lhs = +80 rhs_copy = +10] bit = 0 & 0 = 0
+	[counter = +15 lhs = +40 rhs_copy = +5] bit = 0 & 1 = 0
+	[counter = +16 lhs = +20 rhs_copy = +2] bit = 0 & 0 = 0
+	[counter = +17 lhs = +10 rhs_copy = +1] bit = 0 & 1 = 0
+	[counter = +18 lhs = +5 rhs_copy = +0] bit = 1 & 0 = 0
+	[counter = +19 lhs = +2 rhs_copy = +0] bit = 0 & 0 = 0
+	[counter = +20 lhs = +1 rhs_copy = +0] bit = 1 & 0 = 0
+Done
+
++9876543210 | +123456789
+	[counter = +0 lhs = +9876543210 rhs_copy = +123456789] bit = 0 | 1 = 1 --> Added to bucket: +1
+	[counter = +1 lhs = +493827165 rhs_copy = +61728394] bit = 1 | 0 = 1 --> Added to bucket: +2
+	[counter = +2 lhs = +246913582 rhs_copy = +3864197] bit = 0 | 1 = 1 --> Added to bucket: +4
+	[counter = +3 lhs = +123456791 rhs_copy = +193298] bit = 1 | 0 = 1 --> Added to bucket: +8
+	[counter = +4 lhs = +61728395 rhs_copy = +96649] bit = 1 | 1 = 1 --> Added to bucket: +16
+	[counter = +5 lhs = +3864197 rhs_copy = +48324] bit = 1 | 0 = 1 --> Added to bucket: +32
+	[counter = +6 lhs = +193298 rhs_copy = +24162] bit = 0 | 0 = 0
+	[counter = +7 lhs = +96649 rhs_copy = +1281] bit = 1 | 1 = 1 --> Added to bucket: +128
+	[counter = +8 lhs = +48324 rhs_copy = +640] bit = 0 | 0 = 0
+	[counter = +9 lhs = +24162 rhs_copy = +320] bit = 0 | 0 = 0
+	[counter = +10 lhs = +1281 rhs_copy = +160] bit = 1 | 0 = 1 --> Added to bucket: +124
+	[counter = +11 lhs = +640 rhs_copy = +80] bit = 0 | 0 = 0
+	[counter = +12 lhs = +320 rhs_copy = +40] bit = 0 | 0 = 0
+	[counter = +13 lhs = +160 rhs_copy = +20] bit = 0 | 0 = 0
+	[counter = +14 lhs = +80 rhs_copy = +10] bit = 0 | 0 = 0
+	[counter = +15 lhs = +40 rhs_copy = +5] bit = 0 | 1 = 1 --> Added to bucket: +3968
+	[counter = +16 lhs = +20 rhs_copy = +2] bit = 0 | 0 = 0
+	[counter = +17 lhs = +10 rhs_copy = +1] bit = 0 | 1 = 1 --> Added to bucket: +13172
+	[counter = +18 lhs = +5 rhs_copy = +0] bit = 1 | 0 = 1 --> Added to bucket: +262144
+	[counter = +19 lhs = +2 rhs_copy = +0] bit = 0 | 0 = 0
+	[counter = +20 lhs = +1 rhs_copy = +0] bit = 1 | 0 = 1 --> Added to bucket: +148576
+Done
+
++9876543210 ^ +123456789
+	[counter = +0 lhs = +9876543210 rhs_copy = +123456789] bit = 0 ^ 1 = 1 --> Added to bucket: +1
+	[counter = +1 lhs = +493827165 rhs_copy = +61728394] bit = 1 ^ 0 = 1 --> Added to bucket: +2
+	[counter = +2 lhs = +246913582 rhs_copy = +3864197] bit = 0 ^ 1 = 1 --> Added to bucket: +4
+	[counter = +3 lhs = +123456791 rhs_copy = +193298] bit = 1 ^ 0 = 1 --> Added to bucket: +8
+	[counter = +4 lhs = +61728395 rhs_copy = +96649] bit = 1 ^ 1 = 0
+	[counter = +5 lhs = +3864197 rhs_copy = +48324] bit = 1 ^ 0 = 1 --> Added to bucket: +32
+	[counter = +6 lhs = +193298 rhs_copy = +24162] bit = 0 ^ 0 = 0
+	[counter = +7 lhs = +96649 rhs_copy = +1281] bit = 1 ^ 1 = 0
+	[counter = +8 lhs = +48324 rhs_copy = +640] bit = 0 ^ 0 = 0
+	[counter = +9 lhs = +24162 rhs_copy = +320] bit = 0 ^ 0 = 0
+	[counter = +10 lhs = +1281 rhs_copy = +160] bit = 1 ^ 0 = 1 --> Added to bucket: +124
+	[counter = +11 lhs = +640 rhs_copy = +80] bit = 0 ^ 0 = 0
+	[counter = +12 lhs = +320 rhs_copy = +40] bit = 0 ^ 0 = 0
+	[counter = +13 lhs = +160 rhs_copy = +20] bit = 0 ^ 0 = 0
+	[counter = +14 lhs = +80 rhs_copy = +10] bit = 0 ^ 0 = 0
+	[counter = +15 lhs = +40 rhs_copy = +5] bit = 0 ^ 1 = 1 --> Added to bucket: +3968
+	[counter = +16 lhs = +20 rhs_copy = +2] bit = 0 ^ 0 = 0
+	[counter = +17 lhs = +10 rhs_copy = +1] bit = 0 ^ 1 = 1 --> Added to bucket: +13172
+	[counter = +18 lhs = +5 rhs_copy = +0] bit = 1 ^ 0 = 1 --> Added to bucket: +262144
+	[counter = +19 lhs = +2 rhs_copy = +0] bit = 0 ^ 0 = 0
+	[counter = +20 lhs = +1 rhs_copy = +0] bit = 1 ^ 0 = 1 --> Added to bucket: +148576
+Done
+
++9876543210 ~ +9876543210
+	[counter = +0 lhs = +9876543210 rhs_copy = +9876543210] bit = 0 ~ 0 = 1 --> Added to bucket: +1
+	[counter = +1 lhs = +493827165 rhs_copy = +493827165] bit = 1 ~ 1 = 0
+	[counter = +2 lhs = +246913582 rhs_copy = +246913582] bit = 0 ~ 0 = 1 --> Added to bucket: +4
+	[counter = +3 lhs = +123456791 rhs_copy = +123456791] bit = 1 ~ 1 = 0
+	[counter = +4 lhs = +61728395 rhs_copy = +61728395] bit = 1 ~ 1 = 0
+	[counter = +5 lhs = +3864197 rhs_copy = +3864197] bit = 1 ~ 1 = 0
+	[counter = +6 lhs = +193298 rhs_copy = +193298] bit = 0 ~ 0 = 1 --> Added to bucket: +64
+	[counter = +7 lhs = +96649 rhs_copy = +96649] bit = 1 ~ 1 = 0
+	[counter = +8 lhs = +48324 rhs_copy = +48324] bit = 0 ~ 0 = 1 --> Added to bucket: +256
+	[counter = +9 lhs = +24162 rhs_copy = +24162] bit = 0 ~ 0 = 1 --> Added to bucket: +512
+	[counter = +10 lhs = +1281 rhs_copy = +1281] bit = 1 ~ 1 = 0
+	[counter = +11 lhs = +640 rhs_copy = +640] bit = 0 ~ 0 = 1 --> Added to bucket: +248
+	[counter = +12 lhs = +320 rhs_copy = +320] bit = 0 ~ 0 = 1 --> Added to bucket: +496
+	[counter = +13 lhs = +160 rhs_copy = +160] bit = 0 ~ 0 = 1 --> Added to bucket: +992
+	[counter = +14 lhs = +80 rhs_copy = +80] bit = 0 ~ 0 = 1 --> Added to bucket: +1984
+	[counter = +15 lhs = +40 rhs_copy = +40] bit = 0 ~ 0 = 1 --> Added to bucket: +3968
+	[counter = +16 lhs = +20 rhs_copy = +20] bit = 0 ~ 0 = 1 --> Added to bucket: +65536
+	[counter = +17 lhs = +10 rhs_copy = +10] bit = 0 ~ 0 = 1 --> Added to bucket: +13172
+	[counter = +18 lhs = +5 rhs_copy = +5] bit = 1 ~ 1 = 0
+	[counter = +19 lhs = +2 rhs_copy = +2] bit = 0 ~ 0 = 1 --> Added to bucket: +524288
+	[counter = +20 lhs = +1 rhs_copy = +1] bit = 1 ~ 1 = 0
+Done
+
