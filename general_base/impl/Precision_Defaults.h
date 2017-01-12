@@ -12,7 +12,7 @@
 
 namespace Precision{
     namespace Default{
-        using byte_type = std::int_least8_t;
+        using byte_type = unsigned char;
         template <typename... TArgs>
             using container_type = std::vector<TArgs...>;
         using sign_type = Precision::SignClass;

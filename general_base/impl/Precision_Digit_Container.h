@@ -178,8 +178,13 @@ namespace Precision{
             }
 
             /** Remove the leftmost (last) digit in the string. */
-            void detach()
-                {m_number.pop_back();}
+            void detach(){
+                if(m_number.size() == 1){
+                    m_number.front() = 0;
+                    return;
+                }
+                m_number.pop_back();
+            }
 
 
             // Constructors and destructor
@@ -197,7 +202,6 @@ namespace Precision{
               *
               * \param new_num The digit string to copy
               */
-            template <typename Iterator>
             Digit_Container(const diglist_type& new_num)
                 : m_number(new_num)
             {}
@@ -233,6 +237,48 @@ namespace Precision{
             ~Digit_Container()                                 = default;
 
         protected:
+
+            /** Assign a specific digit in the string to be a new value.
+              *
+              * \param idx The position of a digit to change.
+              * \param new_dig The new digit value.
+              * \param base The number base to restrict the digit to.
+              */
+            void assign_digit(size_type idx, digit_type new_dig, digit_type base){
+                if(idx >= m_number.size() || new_dig < 0 || new_dig >= base)
+                    return;
+                m_number[idx] = new_dig;
+            }
+
+            /** Force a specific digit to be a new value.
+              *
+              * \param idx The position of a digit to change.
+              * \param new_dig The new digit value.
+              * \param base The number base to restrict the digit to.
+              */
+            void force_assign_digit( size_type idx,
+                                     digit_type new_dig,
+                                     digit_type base
+            ){
+                if(new_dig < 0 || new_dig >= base)
+                    return;
+                if(idx < m_number.size()) m_number[idx] = new_dig;
+                else {
+                    m_number.insert(m_number.end(), idx-m_number.size(), 0);
+                    m_number.push_back(new_dig);
+                }
+            }
+
+            /** Force the string to have one digit at the specified value
+              *
+              * \param digit_type The single digit value. The child class is
+              *                   expected to verify the digit is valid.
+              */
+            void force_single_digit(digit_type new_dig){
+                m_number.front() = new_dig;
+                m_number.erase(m_number.begin()+1, m_number.end());
+            }
+
             diglist_type m_number;
     };
 }

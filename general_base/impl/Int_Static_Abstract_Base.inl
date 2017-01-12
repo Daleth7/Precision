@@ -15,7 +15,7 @@ namespace Precision{
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::magnitude()const
-                    {return Int(this->diglist(), 1);}
+                    {return Int(this->digit_list(), 1);}
 
                 INT_TEMP_
                 short INT_INST_::compare(const INT_INST_& rhs)const
@@ -23,7 +23,7 @@ namespace Precision{
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::operator-()const
-                    {return Int(this->diglist(), -this->sign());}
+                    {return Int(this->digit_list(), -this->sign());}
 
                 INT_TEMP_
                 bool INT_INST_::is_one()const
@@ -44,40 +44,47 @@ namespace Precision{
 
                 INT_TEMP_
                 void INT_INST_::make_zero(){
-                    dig_container::m_number.front() = 0;
-                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
-                                                   dig_container::m_number.end()
-                                                   );
+                    this->force_single_digit(0);
                     this->make_positive();
                 }
 
                 INT_TEMP_
                 void INT_INST_::make_one(){
-                    dig_container::m_number.front() = 1;
-                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
-                                                   dig_container::m_number.end()
-                                                   );
+                    this->force_single_digit(1);
                     this->make_positive();
                 }
 
                 INT_TEMP_
                 void INT_INST_::make_neg_one(){
-                    dig_container::m_number.front() = 1;
-                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
-                                                   dig_container::m_number.end()
-                                                   );
+                    this->force_single_digit(1);
                     this->make_negative();
                 }
 
                 INT_TEMP_
                 void INT_INST_::make_two(){
-                    dig_container::m_number.front() = 2;
-                    dig_container::m_number.front() = 2;
-                    dig_container::m_number.erase( dig_container::m_number.begin()+1,
-                                                   dig_container::m_number.end()
-                                                   );
+                    if(Int::base() > 2) this->force_single_digit(2);
+                    else{
+                        this->make_zero();
+                        this->append(1);
+                    }
                     this->make_positive();
                 }
+
+                INT_TEMP_
+                void INT_INST_::halve()
+                    {*this /= Int(2);}
+
+                INT_TEMP_
+                void INT_INST_::assign( typename dig_container::size_type index,
+                                        typename dig_container::digit_type new_dig
+                ){this->assign_digit(index, new_dig, this->base());}
+
+                INT_TEMP_
+                void INT_INST_::force_assign( typename dig_container::size_type
+                                                index,
+                                              typename dig_container::digit_type
+                                                new_dig
+                ){this->force_assign_digit(index, new_dig, this->base());}
 
 
 
@@ -134,7 +141,8 @@ namespace Precision{
                 INT_TEMP_
                 INT_INST_ INT_INST_::operator--(int){
                     Int toreturn(*this);
-                    return --(*this);
+                    --(*this);
+                    return toreturn;
                 }
 
                 INT_TEMP_
@@ -148,7 +156,8 @@ namespace Precision{
                 INT_TEMP_
                 INT_INST_ INT_INST_::operator++(int){
                     Int toreturn(*this);
-                    return ++(*this);
+                    ++(*this);
+                    return toreturn;
                 }
 
 
@@ -205,23 +214,29 @@ namespace Precision{
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::logical_and(const INT_INST_& rhs)const{
-                    Volatile::Int_Operations::logical_and_eq(*this, rhs);
+                    Int toreturn(*this);
 
-                    return *this;
+                    Volatile::Int_Operations::logical_and_eq(toreturn, rhs);
+
+                    return toreturn;
                 }
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::logical_or(const INT_INST_& rhs)const{
-                    Volatile::Int_Operations::logical_or_eq(*this, rhs);
+                    Int toreturn(*this);
 
-                    return *this;
+                    Volatile::Int_Operations::logical_or_eq(toreturn, rhs);
+
+                    return toreturn;
                 }
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::logical_xor(const INT_INST_& rhs)const{
-                    Volatile::Int_Operations::logical_xor_eq(*this, rhs);
+                    Int toreturn(*this);
 
-                    return *this;
+                    Volatile::Int_Operations::logical_xor_eq(toreturn, rhs);
+
+                    return toreturn;
                 }
 
                 INT_TEMP_
@@ -250,7 +265,7 @@ namespace Precision{
                 {
                     Int toreturn(*this);
 
-                    toreturn.logical_shift_left(sz);
+                    toreturn.shift_left(sz);
 
                     return toreturn;
                 }
@@ -261,7 +276,7 @@ namespace Precision{
                 {
                     Int toreturn(*this);
 
-                    toreturn.logical_shift_right(sz);
+                    toreturn.shift_right(sz);
 
                     return toreturn;
                 }
@@ -272,15 +287,20 @@ namespace Precision{
 
                 INT_TEMP_
                 INT_INST_::Int(typename dig_container::signed_size_type val)
-                    : dig_container({})
+                    : dig_container(0)
                     , Signed_Interface((val < 0) * -1)
                 {
                     val *= this->sign();
+                    dig_container::m_number.front() = val % this->base();
+                    val /= this->base();
 
                     while(val > 0){
                         this->append(val % this->base());
                         val /= this->base();
                     }
+
+                    if(this->count_digits() == 0)
+                        dig_container::m_number.push_back(0);
                 }
 
                 INT_TEMP_
@@ -312,9 +332,9 @@ namespace Precision{
                          it != dig_container::m_number.end();
                          ++it
                     ){
-                        if(*it >= this->base()) *it = 0;
+                        if(*it >= this->base() || *it < 0) *it = 0;
                     }
-                    Helper::remove_excess_zeros(dig_container::m_number);
+                    Helper::remove_excess_zeros(*this);
                 }
             }
         }

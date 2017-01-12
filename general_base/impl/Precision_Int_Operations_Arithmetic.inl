@@ -96,7 +96,7 @@ namespace Precision{
 
                     // Store calculated sum into first digit list
                     if(fend) lhs.append(catalyst);
-                    else     lhs.digit(fit, catalyst);
+                    else     lhs.assign(fit, catalyst);
 
                     // Update iterators as needed
                     if(!fend) ++fit;
@@ -148,7 +148,7 @@ namespace Precision{
                     }
 
                     // Store calculated product into number
-                    num.digit(i, catalyst);
+                    num.assign(i, catalyst);
                 }
 
                 // Deal with overflow
@@ -201,7 +201,7 @@ namespace Precision{
 
                         // Store calculated sum into number
                         if(i >= dest.count_digits()) dest.append(catalyst);
-                        else                         dest.digit(i, catalyst);
+                        else                         dest.assign(i, catalyst);
                     }
 
                     // Deal with overflow
@@ -319,6 +319,57 @@ namespace Precision{
             }
 
             namespace Arith_Helper{
+                template <typename Size, typename Catalyst, typename IntType>
+                Size fast_div_count(const IntType& mod, const IntType& rhs){
+                    Catalyst rhs_lead = 0, mod_lead = 0;
+
+                    // Calculate leading digits for rhs and mod
+                    Catalyst ten_mult = 1;
+                    for( Size i = min_index;
+                         i < Helper::int_size(mod);
+                         ++i, ten_mult *= mod.base()
+                    ){
+                        if(i < Helper::int_size(rhs))
+                            rhs_lead += ten_mult * rhs.digit(i);
+                        mod_lead += ten_mult * mod.digit(i);
+                    }
+
+                    Catalyst rhs_lead_copy = rhs_lead;
+
+                    Size toreturn = 0;
+                    while(!(mod_lead < rhs_lead)){
+                        ++toreturn;
+                        rhs_lead += rhs_lead_copy;
+                    }
+                    return toreturn;
+                }
+
+                template <typename Size, typename IntType>
+                Size slow_div_count(const IntType& mod, const IntType& rhs){
+                    IntType rhs_lead(Helper::make_zero_temp(mod)),
+                            mod_lead(Helper::make_zero_temp(mod))
+                            ;
+
+                    // Calculate leading digits for rhs and mod
+                    for(Size i = min_index; i < Helper::int_size(mod); ++i){
+                        if(i < rhs.count_digits())
+                            rhs_lead.append(rhs.digit(i));
+                        mod_lead.append(mod.digit(i));
+                    }
+
+                    IntType rhs_lead_copy = rhs_lead;
+
+                    Size toreturn = 0;
+                    while( !(compare_lists( mod_lead.digit_list(),
+                                          rhs_lead.digit_list()
+                                          ) < 0)
+                    ){
+                        ++toreturn;
+                        add(rhs_lead, rhs_lead_copy);
+                    }
+                    return toreturn;
+                }
+
                 template <typename IntType>
                 typename IntType::size_type div_core( IntType& mod,
                                                       const IntType& rhs

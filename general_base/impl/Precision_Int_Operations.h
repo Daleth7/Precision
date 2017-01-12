@@ -19,6 +19,7 @@
 #define INTEGRAL_SHARED_ALGORITHMS93000000_HHHH_DETAIL____BASE
 
 #include <functional>
+#include <type_traits>
 
 namespace Precision{
     namespace Volatile {
@@ -280,7 +281,9 @@ namespace Precision{
              *           4. COMPLEMENT
              */
             template <typename IntType>
-            void logical_operation( IntType& lhs, const IntType& rhs,
+            void logical_operation( IntType& lhs,
+                                    const typename std::remove_const<IntType>::type&
+                                       rhs,
                                     unsigned short oper
                                     );
 
@@ -294,7 +297,10 @@ namespace Precision{
              *  \param rhs  The second integer
              */
             template <typename IntType>
-            void logical_and_eq(IntType& lhs, const IntType& rhs);
+            void logical_and_eq( IntType& lhs,
+                                 const typename std::remove_const<IntType>::type&
+                                    rhs
+                                 );
 
             /** Logical base OR operation that is equivalent to
              *  COMPL( AND( COMPL(x), COMPL(y) ) )
@@ -306,7 +312,10 @@ namespace Precision{
              *  \param rhs  The second integer
              */
             template <typename IntType>
-            void logical_or_eq(IntType& lhs, const IntType& rhs);
+            void logical_or_eq( IntType& lhs,
+                                 const typename std::remove_const<IntType>::type&
+                                    rhs
+                                 );
 
             /** Logical base XOR operation calculated by performing
              *  x + y on each digit.
@@ -318,7 +327,10 @@ namespace Precision{
              *  \param rhs  The second integer
              */
             template <typename IntType>
-            void logical_xor_eq(IntType& lhs, const IntType& rhs);
+            void logical_xor_eq( IntType& lhs,
+                                 const typename std::remove_const<IntType>::type&
+                                    rhs
+                                 );
 
             /** Complement function that is relative to the
              *  number base of the IntType object.

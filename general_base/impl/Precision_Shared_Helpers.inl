@@ -8,37 +8,37 @@
 
 namespace Precision{
     namespace Helper{
-        template <typename Number_Type>
+        template <typename IntType>
         bool are_equal(
-            const Number_Type& f, const Number_Type& s,
+            const IntType& f, const IntType& s,
             Tag::Fraction
         ){return f.decimal() == s.decimal();}
 
-        template <typename Number_Type>
+        template <typename IntType>
         bool are_equal_float_fund(
-            const Number_Type& f, const Number_Type& s,
+            const IntType& f, const IntType& s,
             std::true_type
         ){return ( (f < s+1e-7) && (s-1e-7 < f) );}
 
-        template <typename Number_Type>
+        template <typename IntType>
         bool are_equal_float_fund(
-            const Number_Type& f, const Number_Type& s,
+            const IntType& f, const IntType& s,
             std::false_type
         ){return f == s;}
 
-        template <typename Number_Type, typename U>
-        bool are_equal(const Number_Type& f, const Number_Type& s, U){
+        template <typename IntType, typename U>
+        bool are_equal(const IntType& f, const IntType& s, U){
             return are_equal_float_fund(
                 f, s,
-                typename std::is_floating_point<Number_Type>::type()
+                typename std::is_floating_point<IntType>::type()
             );
         }
 
-        template <typename Number_Type>
-        bool are_equal(const Number_Type& f, const Number_Type& s){
+        template <typename IntType>
+        bool are_equal(const IntType& f, const IntType& s){
             return are_equal(
                 f, s,
-                typename Type_Trait::find_base<Number_Type, PRE_CATE_>::type()
+                typename Type_Trait::find_base<IntType, PRE_CATE_>::type()
             );
         }
 
@@ -68,99 +68,107 @@ namespace Precision{
         bool is_integer(const T& val)
             {return is_integer(val, typename std::is_fundamental<T>::type());}
 
-        template <typename Number_Type>
-        bool is_zero(const Number_Type& num)
+        template <typename IntType>
+        bool is_zero(const IntType& num)
             {return num.is_zero();}
 
-        template <typename Number_Type>
-        bool is_one(const Number_Type& num)
+        template <typename IntType>
+        bool is_one(const IntType& num)
             {return num.is_one();}
 
-        template <typename Number_Type>
-        bool is_neg_one(const Number_Type& num)
+        template <typename IntType>
+        bool is_neg_one(const IntType& num)
             {return num.is_neg_one();}
 
-        template <typename Number_Type>
-        bool is_negative(const Number_Type& num)
+        template <typename IntType>
+        bool is_negative(const IntType& num)
             {return num.is_negative();}
 
-        template <typename Number_Type>
-        bool is_odd(const Number_Type& num)
+        template <typename IntType>
+        bool is_odd(const IntType& num)
             {return num.is_odd();}
 
-        template <typename Number_Type>
-        bool is_even(const Number_Type& num)
+        template <typename IntType>
+        bool is_even(const IntType& num)
             {return num.is_even();}
 
-        template <typename Number_Type>
-        void halve(Number_Type& num)
+        template <typename IntType>
+        typename Int_Type::size_type int_size(const IntType& num)
+            {return num.count_digits();}
+
+        template <typename IntType>
+        typename Int_Type::digit_type base(const IntType& num)
+            {return num.base();}
+
+        template <typename IntType>
+        void halve(IntType& num)
             {num.halve();}
 
-        template <typename Number_Type>
-        void reciprocate(Number_Type& num)
+        template <typename IntType>
+        void reciprocate(IntType& num)
             {num.reciprocate();}
 
-        template <typename Number_Type>
-        void negate(Number_Type& num)
+        template <typename IntType>
+        void negate(IntType& num)
             {num.negate();}
 
-        template <typename Number_Type, typename Number_Type2>
-        void match_base(Number_Type& num, const Number_Type2& ref)
+        template <typename IntType, typename Number_Type2>
+        void match_base(IntType& num, const Number_Type2& ref)
             {num.set_base(ref.base());}
 
-        template <typename Number_Type, typename Number_Type2>
-        void make_zero(Number_Type& num, const Number_Type2& ref){
+        template <typename IntType, typename Number_Type2>
+        void make_zero(IntType& num, const Number_Type2& ref){
             match_base(num, ref);
             num.make_zero();
         }
 
-        template <typename Number_Type, typename Number_Type2>
-        void make_one(Number_Type& num, const Number_Type2& ref){
+        template <typename IntType, typename Number_Type2>
+        void make_one(IntType& num, const Number_Type2& ref){
             match_base(num, ref);
             num.make_one();
         }
 
-        template <typename Number_Type, typename Number_Type2>
-        void make_two(Number_Type& num, const Number_Type2& ref){
+        template <typename IntType, typename Number_Type2>
+        void make_two(IntType& num, const Number_Type2& ref){
             match_base(num, ref);
             num.make_two();
         }
 
-        template <typename Number_Type>
-        void make_zero(Number_Type& num)
+        template <typename IntType>
+        void make_zero(IntType& num)
             {num.make_zero();}
 
-        template <typename Number_Type>
-        void make_one(Number_Type& num)
+        template <typename IntType>
+        void make_one(IntType& num)
             {num.make_one();}
 
-        template <typename Number_Type>
-        void make_two(Number_Type& num)
+        template <typename IntType>
+        void make_two(IntType& num)
             {num.make_two();}
 
-        template <typename Number_Type>
-        Number_Type make_zero_temp(const Number_Type& ref){
-            Number_Type toreturn;
+        template <typename IntType>
+        IntType make_zero_temp(const IntType& ref){
+            IntType toreturn;
             make_zero(toreturn, ref);
             return toreturn;
         }
 
-        template <typename Number_Type>
-        Number_Type make_one_temp(const Number_Type& ref){
-            Number_Type toreturn;
+        template <typename IntType>
+        IntType make_one_temp(const IntType& ref){
+            IntType toreturn;
             make_one(toreturn, ref);
             return toreturn;
         }
 
-        template <typename Number_Type>
-        Number_Type make_two_temp(const Number_Type& ref){
-            Number_Type toreturn;
+        template <typename IntType>
+        IntType make_two_temp(const IntType& ref){
+            IntType toreturn;
             make_two(toreturn, ref);
             return toreturn;
         }
 
-        template <typename Number_Type>
-        void remove_excess_zeros(Number_Type& num){
+        template <typename IntType>
+        void remove_excess_zeros(IntType& num){
             while(num.count_digits() > 1 && num.digit(num.count_digits()-1) == 0)
                 num.detach();
         }

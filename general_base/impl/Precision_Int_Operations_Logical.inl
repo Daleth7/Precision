@@ -5,7 +5,9 @@ namespace Precision{
         namespace Int_Operations {
             //Logical Operators
             template <typename IntType>
-            void logical_operation( IntType& lhs, const IntType& rhs,
+            void logical_operation( IntType& lhs,
+                                    const typename std::remove_const<IntType>::type&
+                                       rhs,
                                     unsigned short oper
             ){
                 typedef typename IntType::catalyst_type ld;
@@ -57,12 +59,11 @@ namespace Precision{
                     }
 
                     // Replace the value or append
-                    lhs.force_digit(i, new_dig);
+                    lhs.force_assign(i, new_dig);
                 }
 
                 // Remove excess 0's, which is possible since digits were forced
-                while(lhs.count_digits() > 1 && lhs.digit(lhs.count_digits()-1) == 0)
-                    lhs.detach();
+                Helper::remove_excess_zeros(lhs);
 
                 // Calculate the new sign
                 switch(oper){
@@ -91,15 +92,24 @@ namespace Precision{
             }
 
             template <typename IntType>
-            void logical_and_eq(IntType& lhs, const IntType& rhs)
+            void logical_and_eq( IntType& lhs,
+                                 const typename std::remove_const<IntType>::type&
+                                    rhs
+                                 )
                 {logical_operation<IntType>(lhs, rhs, 1);}
 
             template <typename IntType>
-            void logical_or_eq(IntType& lhs, const IntType& rhs)
+            void logical_or_eq( IntType& lhs,
+                                 const typename std::remove_const<IntType>::type&
+                                    rhs
+                                 )
                 {logical_operation<IntType>(lhs, rhs, 2);}
 
             template <typename IntType>
-            void logical_xor_eq(IntType& lhs, const IntType& rhs)
+            void logical_xor_eq( IntType& lhs,
+                                 const typename std::remove_const<IntType>::type&
+                                    rhs
+                                 )
                 {logical_operation<IntType>(lhs, rhs, 3);}
 
             template <typename IntType>

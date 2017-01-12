@@ -206,6 +206,38 @@ namespace Precision{
                         /** Force the number to be +2 */
                         void make_two();
 
+                        /** Divide this number by two */
+                        void halve();
+
+                        /** Change a single digit to a specified value.
+                          *
+                          * \param index Position of the digit to change.
+                          * \param new_dig The new digit to assign.
+                          *
+                          */
+                        void assign( typename dig_container::size_type index,
+                                     typename dig_container::digit_type new_dig
+                                     );
+
+                        /** Force a single digit to a specified value.
+                          *
+                          * \param index Position of the digit to change.
+                          * \param new_dig The new digit to assign.
+                          *
+                          */
+                        void force_assign( typename dig_container::size_type index,
+                                           typename dig_container::digit_type new_dig
+                                           );
+
+                        /** Change the base. Since this is a static number, i.e.
+                          * has a fixed base, this function does nothing. This
+                          * is required for certain algorithms.
+                          *
+                          * \param new_base The base to change to.
+                          *
+                          */
+                        void set_base(typename dig_container::digit_type new_base){}
+
 
 
                         //Arithmetic operators
