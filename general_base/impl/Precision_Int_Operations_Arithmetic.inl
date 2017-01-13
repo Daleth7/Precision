@@ -34,7 +34,9 @@ namespace Precision{
 
                 // Iterate through each digit and add, carry, and borrow as needed
                 bool fend(false);// Track when iterator reach the end
-                size_type dend1 = lhs.count_digits(), dend2 = rhs.count_digits();
+                size_type dend1 = Helper::int_size(lhs),
+                          dend2 = Helper::int_size(rhs)
+                          ;
                 bool borrowed = false;
                 ld carry = 0;
                 for( size_type fit(0), sit(0)
@@ -43,26 +45,28 @@ namespace Precision{
                 ){
                     // Determine each digit to add based on if the end of
                     //  the digit list is reached
-                    ld operand1 = lhs.sign() * (fend ? 0 : lhs.digit(fit)),
-                       operand2 = rhs_sign * ((sit < dend2) ? rhs.digit(sit) : 0)
+                    ld operand1 = lhs.sign() * (fend ? 0 : Helper::digit(lhs, fit)),
+                       operand2 = rhs_sign * ((sit < dend2) ? Helper::digit(rhs, sit) : 0)
                        ;
 
                     // Deal with borrowing when there is a 0-x case
                     if(sign_neq){
                         // -operand1 + 0
                         if( comp < 0
-                            && lhs.digit(fit) != 0 && rhs.digit(sit) == 0
+                            && Helper::digit(lhs, fit) != 0
+                            && Helper::digit(rhs, sit) == 0
                             && rhs_sign < 0
                             ){
-                            operand2 -= lhs.base();
+                            operand2 -= Helper::base(lhs);
                             borrowed = true;
                         }
                         // 0 - operand2
                         if( comp > 0
-                            && lhs.digit(fit) == 0 && rhs.digit(sit) != 0
+                            && Helper::digit(lhs, fit) == 0
+                            && Helper::digit(rhs, sit) != 0
                             && lhs.sign() < 0
                             ){
-                            operand1 -= lhs.base();
+                            operand1 -= Helper::base(lhs);
                             borrowed = true;
                         }
                     }
@@ -83,12 +87,12 @@ namespace Precision{
                     }
 
                     // Deal with carrying and borrowing
-                    if(lhs.base() <= catalyst){
+                    if(Helper::base(lhs) <= catalyst){
                         // Both signs must be equal for catalyst > base
-                        catalyst -= lhs.base();
+                        catalyst -= Helper::base(lhs);
                         carry = lhs.sign();
                     } else if(catalyst < 0){
-                        catalyst += lhs.base();
+                        catalyst += Helper::base(lhs);
                         carry = -1;
                     } else if(!borrowed){
                         carry = 0;
@@ -124,7 +128,7 @@ namespace Precision{
                     return;
                 }
 
-                const typename IntType::digit_type base = num.base();
+                const typename IntType::digit_type base = Helper::base(num);
 
                 fac %= base; // Make sure factor is limited
 
@@ -133,10 +137,10 @@ namespace Precision{
 
                 // Iterate through each digit and add and carry
                 ld_type carry = 0;
-                for(size_type i = 0; i < num.count_digits(); ++i){
+                for(size_type i = 0; i < Helper::int_size(num); ++i){
 
                     // Perform main addition
-                    ld_type dig = num.digit(i);
+                    ld_type dig = Helper::digit(num, i);
                     ld_type catalyst = carry + fac * dig;
 
                     // Deal with carrying
@@ -174,10 +178,10 @@ namespace Precision{
                     using size_type = typename IntType::size_type;
 
                     // Find the length of the longest integer
-                    size_type max_len = bucket.back().count_digits();
+                    size_type max_len = Helper::int_size(bucket.back());
                     for(const auto& num : bucket){
-                        if(num.count_digits() > max_len)
-                            max_len = num.count_digits();
+                        if(Helper::int_size(num) > max_len)
+                            max_len = Helper::int_size(num);
                     }
 
                     // Take the sum of each digit place
@@ -188,26 +192,26 @@ namespace Precision{
                         // Perform main addition
                         ld_type catalyst = carry;
                         for(const auto& num : bucket){
-                            if(i < num.count_digits()) catalyst += num.digit(i);
+                            if(i < Helper::int_size(num))
+                                catalyst += Helper::digit(num, i);
                         }
 
                         // Deal with carrying
-                        if(dest.base() <= catalyst){
-                            carry = catalyst / dest.base();
-                            catalyst = std::fmod(catalyst, dest.base());
+                        if(Helper::base(dest) <= catalyst){
+                            carry = catalyst / Helper::base(dest);
+                            catalyst = std::fmod(catalyst, Helper::base(dest));
                         } else {
                             carry = 0;
                         }
 
                         // Store calculated sum into number
-                        if(i >= dest.count_digits()) dest.append(catalyst);
-                        else                         dest.assign(i, catalyst);
+                        dest.force_assign(i, catalyst);
                     }
 
                     // Deal with overflow
                     while(carry > 0){
-                        dest.append(std::fmod(carry, dest.base()));
-                        carry /= dest.base();
+                        dest.append(std::fmod(carry, Helper::base(dest)));
+                        carry /= Helper::base(dest);
                     }
 
                     Helper::remove_excess_zeros(dest);
@@ -225,9 +229,9 @@ namespace Precision{
                     // digits one by one at the end.
                     const typename IntType::size_type zeros = idx;
                     bucket_type<IntType> bucket;
-                    for(; idx < rhs.count_digits(); ++idx){
+                    for(; idx < Helper::int_size(rhs); ++idx){
                         IntType addend(base_adder);
-                        multiply_factor(addend, rhs.digit(idx));
+                        multiply_factor(addend, Helper::digit(rhs, idx));
 
                         addend.shift_left(idx-zeros);
 
@@ -248,9 +252,9 @@ namespace Precision{
                     // Perform elementary multiplication using additions
                     const size_type zeros = idx;
                     IntType product = Helper::make_zero_temp(lhs);
-                    for(; idx < rhs.count_digits(); ++idx){
+                    for(; idx < Helper::int_size(rhs); ++idx){
                         IntType addend(base_adder);
-                        multiply_factor(addend, rhs.digit(idx));
+                        multiply_factor(addend, Helper::digit(rhs, idx));
 
                         addend.shift_left(idx-zeros);
 
@@ -294,10 +298,10 @@ namespace Precision{
                 //  of zeros to attach later.
                 size_type total_z_count(0), idx = 0;
                 // Tally the zeros from lhs
-                while(big.digit(total_z_count) == 0)  ++total_z_count;
+                while(Helper::digit(big, total_z_count) == 0)  ++total_z_count;
                 big.shift_right(total_z_count);
                 // Tally the zeros from rhs
-                while(rhs.digit(idx) == 0){
+                while(Helper::digit(rhs, idx) == 0){
                     ++total_z_count;
                     ++idx;
                 }
@@ -308,7 +312,7 @@ namespace Precision{
                 // integers, which can take up a lot of space.
                 //  multiply_gathering() does not store more than one extra
                 // number at a time but is slower.
-                if(rhs.count_digits() < Arith_Helper::acc_sw_min)
+                if(Helper::int_size(rhs) < Arith_Helper::acc_sw_min)
                     Arith_Helper::multiply_accumulation(lhs, rhs, big, idx);
                 else
                     Arith_Helper::multiply_gathering(lhs, rhs, big, idx);
@@ -320,18 +324,20 @@ namespace Precision{
 
             namespace Arith_Helper{
                 template <typename Size, typename Catalyst, typename IntType>
-                Size fast_div_count(const IntType& mod, const IntType& rhs){
+                Size fast_div_count( Size start_idx,
+                                     const IntType& mod, const IntType& rhs
+                ){
                     Catalyst rhs_lead = 0, mod_lead = 0;
 
                     // Calculate leading digits for rhs and mod
                     Catalyst ten_mult = 1;
-                    for( Size i = min_index;
+                    for( Size i = start_idx;
                          i < Helper::int_size(mod);
-                         ++i, ten_mult *= mod.base()
+                         ++i, ten_mult *= Helper::base(mod)
                     ){
                         if(i < Helper::int_size(rhs))
-                            rhs_lead += ten_mult * rhs.digit(i);
-                        mod_lead += ten_mult * mod.digit(i);
+                            rhs_lead += ten_mult * Helper::digit(rhs, i);
+                        mod_lead += ten_mult * Helper::digit(mod, i);
                     }
 
                     Catalyst rhs_lead_copy = rhs_lead;
@@ -345,24 +351,26 @@ namespace Precision{
                 }
 
                 template <typename Size, typename IntType>
-                Size slow_div_count(const IntType& mod, const IntType& rhs){
+                Size slow_div_count( Size start_idx,
+                                     const IntType& mod, const IntType& rhs
+                ){
                     IntType rhs_lead(Helper::make_zero_temp(mod)),
                             mod_lead(Helper::make_zero_temp(mod))
                             ;
 
                     // Calculate leading digits for rhs and mod
-                    for(Size i = min_index; i < Helper::int_size(mod); ++i){
-                        if(i < rhs.count_digits())
-                            rhs_lead.append(rhs.digit(i));
-                        mod_lead.append(mod.digit(i));
+                    for(Size i = start_idx; i < Helper::int_size(mod); ++i){
+                        if(i < Helper::int_size(rhs))
+                            rhs_lead.append(Helper::digit(rhs, i));
+                        mod_lead.append(Helper::digit(mod, i));
                     }
 
                     IntType rhs_lead_copy = rhs_lead;
 
                     Size toreturn = 0;
                     while( !(compare_lists( mod_lead.digit_list(),
-                                          rhs_lead.digit_list()
-                                          ) < 0)
+                                            rhs_lead.digit_list()
+                                            ) < 0)
                     ){
                         ++toreturn;
                         add(rhs_lead, rhs_lead_copy);
@@ -380,11 +388,9 @@ namespace Precision{
                     // than mod.
 
                     // rhs is already larger --> no subtract needed
-                    if(rhs.count_digits() > mod.count_digits()) return 0;
+                    if(Helper::int_size(rhs) > Helper::int_size(mod)) return 0;
 
                     using size_type = typename IntType::size_type;
-
-                    size_type subtraction_count = 0;
 
                     // Max propogation refers to the maximum number of
                     // digits the act of carrying can propogate when one
@@ -394,65 +400,31 @@ namespace Precision{
                     //                      [base 10]
                     // Notice that carrying propogates until 0 is reached,
                     // when it is impossible to have another carry.
-                    size_type max_propogation = mod.base();
-                    size_type min_index = (rhs.count_digits() > max_propogation)
-                                        ? (rhs.count_digits()-max_propogation-1)
-                                        : 0
-                                        ;
+                    // Therefore, the maximum propogation is equal to base.
+                    const size_type max_prop = Helper::base(mod);
+                    size_type min_idx = (Helper::int_size(rhs) > max_prop)
+                                      ? (Helper::int_size(rhs)-max_prop-1)
+                                      : 0
+                                      ;
+
+                    size_type sub_count = 0;
 
                 #ifndef USE_SLOW_DIV_CORE
                     //Algorithm depending on the precision of IntType::catalyst_type
-                    using ld = typename IntType::catalyst_type;
-
-                    ld rhs_lead = 0, mod_lead = 0;
-
-                    // Calculate leading digits for rhs and mod
-                    ld ten_mult = 1;
-                    for( size_type i = min_index;
-                         i < mod.count_digits();
-                         ++i, ten_mult *= mod.base()
-                    ){
-                        if(i < rhs.count_digits())
-                            rhs_lead += ten_mult * rhs.digit(i);
-                        mod_lead += ten_mult * mod.digit(i);
-                    }
-
-                    ld rhs_lead_copy = rhs_lead;
-
-                    while(!(mod_lead < rhs_lead)){
-                        ++subtraction_count;
-                        rhs_lead += rhs_lead_copy;
-                    }
+                    sub_count = fast_div_count
+                        <size_type, typename IntType::catalyst_type>
+                        (min_idx, mod, rhs);
                 #else
-                    IntType rhs_lead(Helper::make_zero_temp(mod)),
-                            mod_lead(Helper::make_zero_temp(mod))
-                            ;
-
-                    // Calculate leading digits for rhs and mod
-                    for(size_type i = min_index; i < mod.count_digits(); ++i){
-                        if(i < rhs.count_digits())
-                            rhs_lead.append(rhs.digit(i));
-                        mod_lead.append(mod.digit(i));
-                    }
-
-                    IntType rhs_lead_copy = rhs_lead;
-
-                    while( !(compare_lists( mod_lead.digit_list(),
-                                          rhs_lead.digit_list()
-                                          ) < 0)
-                    ){
-                        ++subtraction_count;
-                        add(rhs_lead, rhs_lead_copy);
-                    }
+                    sub_count = slow_div_count<size_type>(min_idx, mod, rhs);
                 #endif
 
                     // Update modulus
                     IntType rhs_mult(rhs);
-                    multiply_factor(rhs_mult, subtraction_count);
+                    multiply_factor(rhs_mult, sub_count);
                     rhs_mult.sign(-1);
                     add(mod, rhs_mult);
 
-                    return subtraction_count;
+                    return sub_count;
                 }
 
                 // Accumulate or gather
@@ -475,12 +447,12 @@ namespace Precision{
                         IntType addend(Helper::make_one_temp(modulus));
                         addend.shift_left(counter);
 
-                        size_type subtraction_count = div_core(modulus, shifter);
+                        size_type sub_count = div_core(modulus, shifter);
 
                         // Leverage multiply_factor() to avoid
                         // reduce number of additions.
-                        multiply_factor(addend, subtraction_count);
-                        if(acc) bucket.push_back(addend);
+                        multiply_factor(addend, sub_count);
+                        if(acc) bucket.emplace_back(addend);
                         else    add(quotient, addend);
 
                         shifter.shift_right(1);
@@ -525,7 +497,7 @@ namespace Precision{
 
                 typedef typename IntType::size_type size_type;
 
-                size_type t_counter(modulus.count_digits()-rhs.count_digits());
+                size_type t_counter(Helper::int_size(modulus)-Helper::int_size(rhs));
 
                 // Perform division by subtracting rhs_shift at a time and
                 //  counting how many subtractions were performed
@@ -536,7 +508,7 @@ namespace Precision{
                                 // subtractons that happen.
                 Arith_Helper::div_acc_gath( rhs, quotient, modulus,
                                             t_counter,
-                                            modulus.count_digits()
+                                            Helper::int_size(modulus)
                                                 < Arith_Helper::acc_sw_min
                                             );
 

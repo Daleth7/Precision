@@ -93,12 +93,17 @@ namespace Precision{
             {return num.is_even();}
 
         template <typename IntType>
-        typename Int_Type::size_type int_size(const IntType& num)
+        typename IntType::size_type int_size(const IntType& num)
             {return num.count_digits();}
 
         template <typename IntType>
-        typename Int_Type::digit_type base(const IntType& num)
+        typename IntType::digit_type base(const IntType& num)
             {return num.base();}
+
+        template <typename IntType>
+        typename IntType::digit_type digit( const IntType& num,
+                                            typename IntType::size_type idx
+        ){return num.digit(idx);}
 
         template <typename IntType>
         void halve(IntType& num)

@@ -71,8 +71,11 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                void INT_INST_::halve()
-                    {*this /= Int(2);}
+                void INT_INST_::halve(){
+                    Int temp;
+                    temp.make_two();
+                    *this /= temp;
+                }
 
                 INT_TEMP_
                 void INT_INST_::assign( typename dig_container::size_type index,

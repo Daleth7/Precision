@@ -46,6 +46,7 @@ test_and_log_util::result_type test_asgbi_make_one(test_and_log_util::out_type&)
 test_and_log_util::result_type test_asgbi_make_neg_one(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_make_two(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_halve(test_and_log_util::out_type&);
+test_and_log_util::result_type test_asgbi_halve_spec(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_assign(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_force_assign(test_and_log_util::out_type&);
 
@@ -149,25 +150,26 @@ void abstract_static_general_base_int_test(){
     ADD_TEST(test_list, test_asgbi_make_neg_one);
     ADD_TEST(test_list, test_asgbi_make_two);
     ADD_TEST(test_list, test_asgbi_halve);
+    ADD_TEST(test_list, test_asgbi_halve_spec);
     ADD_TEST(test_list, test_asgbi_assign);
     ADD_TEST(test_list, test_asgbi_force_assign);
 
-    ADD_TEST_BOTH(test_list, test_asgbi_add, test_asgbi_add_speed, 10000);
-    ADD_TEST_BOTH(test_list, test_asgbi_sub, test_asgbi_sub_speed, 10000);
+    ADD_TEST_BOTH(test_list, test_asgbi_add, test_asgbi_add_speed,   10000);
+    ADD_TEST_BOTH(test_list, test_asgbi_sub, test_asgbi_sub_speed,   10000);
     ADD_TEST_BOTH(test_list, test_asgbi_mult, test_asgbi_mult_speed, 500);
-    ADD_TEST_BOTH(test_list, test_asgbi_div, test_asgbi_div_speed, 500);
-    ADD_TEST_BOTH(test_list, test_asgbi_mod, test_asgbi_mod_speed, 500);
+    ADD_TEST_BOTH(test_list, test_asgbi_div, test_asgbi_div_speed,   500);
+    ADD_TEST_BOTH(test_list, test_asgbi_mod, test_asgbi_mod_speed,   500);
     ADD_TEST(test_list, test_asgbi_pre_dec);
     ADD_TEST(test_list, test_asgbi_post_dec);
     ADD_TEST(test_list, test_asgbi_pre_inc);
     ADD_TEST(test_list, test_asgbi_post_inc);
-
-    ADD_TEST_BOTH(test_list, test_asgbi_and, test_asgbi_and_speed, 0);
-    ADD_TEST_BOTH(test_list, test_asgbi_or, test_asgbi_or_speed, 0);
-    ADD_TEST_BOTH(test_list, test_asgbi_xor, test_asgbi_xor_speed, 0);
-    ADD_TEST_BOTH(test_list, test_asgbi_compl, test_asgbi_compl_speed, 0);
-    ADD_TEST_BOTH(test_list, test_asgbi_lshift, test_asgbi_lshift_speed, 0);
-    ADD_TEST_BOTH(test_list, test_asgbi_rshift, test_asgbi_rshift_speed, 0);
+    
+    ADD_TEST_BOTH(test_list, test_asgbi_and, test_asgbi_and_speed, 1);
+    ADD_TEST_BOTH(test_list, test_asgbi_or, test_asgbi_or_speed, 1);
+    ADD_TEST_BOTH(test_list, test_asgbi_xor, test_asgbi_xor_speed, 1);
+    ADD_TEST_BOTH(test_list, test_asgbi_compl, test_asgbi_compl_speed, 1);
+    ADD_TEST_BOTH(test_list, test_asgbi_lshift, test_asgbi_lshift_speed, 10);
+    ADD_TEST_BOTH(test_list, test_asgbi_rshift, test_asgbi_rshift_speed, 10);
 
     ADD_TEST_BOTH(test_list, test_asgbi_log_and, test_asgbi_log_and_speed, 10000);
     ADD_TEST_BOTH(test_list, test_asgbi_log_or, test_asgbi_log_or_speed, 10000);
@@ -611,6 +613,18 @@ test_and_log_util::result_type test_asgbi_halve(test_and_log_util::out_type&){
 
     test_and_log_util::result_type res;
     res.expected = "+4466376";
+    res.actual = to_str(testee);
+
+    return res;
+}
+
+test_and_log_util::result_type test_asgbi_halve_spec(test_and_log_util::out_type&){
+    ASGB_Int testee({0, 1, 2, 3, 4, 0, 6, 7, 8, 9}, -1);
+
+    testee.halve();
+
+    test_and_log_util::result_type res;
+    res.expected = "-4938021605";
     res.actual = to_str(testee);
 
     return res;

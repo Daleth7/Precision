@@ -5,8 +5,6 @@
 
 #include <type_traits>
 
-#include <fstream>
-
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
@@ -52,31 +50,6 @@ namespace Precision{
                         break;
                 }
 
-static bool log_open = false;
-std::ofstream log("bitwise_log.txt", log_open ? std::ios_base::app : std::ios_base::trunc);
-log_open = true;
-std::size_t i = 0;
-log << (lhs.is_positive() ? '+' : '-');
-i = lhs.count_digits();
-while(i-- > 0) log << static_cast<int>(lhs.digit(i));
-switch(op){
-    case 0: // COMPL
-        log << " ~ ";
-        break;
-    case 1: // AND
-        log << " & ";
-        break;
-    case 2: // OR
-        log << " | ";
-        break;
-    case 3: // XOR
-        log << " ^ ";
-        break;
-}
-log << (rhs.is_positive() ? '+' : '-');
-i = rhs.count_digits();
-while(i-- > 0) log << static_cast<int>(rhs.digit(i));
-log << '\n';
                 // Create a constant for two in radix IntType::base
                 // and 
                 const IntType two = Helper::make_two_temp(lhs),
@@ -107,58 +80,22 @@ log << '\n';
                             break;
                     }
 
-log << "\t[counter = ";
-log << (counter.is_positive() ? '+' : '-');
-i = counter.count_digits();
-while(i-- > 0) log << static_cast<int>(counter.digit(i));
-log << " lhs = ";
-log << (lhs.is_positive() ? '+' : '-');
-i = lhs.count_digits();
-while(i-- > 0) log << static_cast<int>(lhs.digit(i));
-log << " rhs_copy = ";
-log << (rhs_copy.is_positive() ? '+' : '-');
-i = rhs_copy.count_digits();
-while(i-- > 0) log << static_cast<int>(rhs_copy.digit(i));
-log << "] ";
-log << "bit = " << Helper::is_odd(lhs);
-switch(op){
-    case 0: // COMPL
-        log << " ~ ";
-        break;
-    case 1: // AND
-        log << " & ";
-        break;
-    case 2: // OR
-        log << " | ";
-        break;
-    case 3: // XOR
-        log << " ^ ";
-        break;
-}
-log << Helper::is_odd(rhs_copy) << " = " << bit;
                     // Convert the bit to the equivalent number of IntType::base
                     if(bit){
                         IntType bit_int = two;
                         exponentiate(bit_int, counter);
-log << " --> Added to bucket: ";
-log << (bit_int.is_positive() ? '+' : '-');
-i = bit_int.count_digits();
-while(i-- > 0) log << static_cast<int>(bit_int.digit(i));
 
                         bucket.emplace_back(bit_int);
                     }
-log << '\n';
 
                     add(counter, increment);
                     Helper::halve(lhs);
                     Helper::halve(rhs_copy);
                 }
-                lhs = Helper::make_one_temp(lhs);
+                lhs = Helper::make_zero_temp(lhs);
                 Arith_Helper::accumulate(lhs, bucket);
 
                 lhs.sign(signhold);
-log << "Done\n\n";
-log.close();
             }
 
             template <typename IntType>

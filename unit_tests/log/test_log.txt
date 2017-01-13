@@ -1,3 +1,94 @@
+Precision::execption [exception_test.cpp]:
+	test_type_return         	: Passed
+	test_src_return          	: Passed
+	test_what_return         	: Passed
+
+Precision::SignClass [signclass_test.cpp]:
+	test_value_positive      	: Passed ; Average execution time: 0 s
+	test_value_negative      	: Passed
+	test_is_positive         	: Passed
+	test_is_negative         	: Passed
+	test_cast                	: Passed
+	test_flip                	: Passed
+	test_assign              	: Passed
+	test_make_positive       	: Passed
+	test_make_negative       	: Passed
+
+Precision::Volatile::Int_Operations::Img [int_operations_img_test.cpp]:
+	test_str_zero            	: Passed
+	test_str                 	: Passed ; Average execution time: 1.4514e-006 s
+	test_sci_note_e0         	: Passed
+	test_sci_note_all        	: Passed ; Average execution time: 1.5014e-006 s
+	test_sci_note_lim        	: Passed ; Average execution time: 2.4022e-006 s
+	test_sci_note_w_spaces   	: Passed ; Average execution time: 1.8518e-006 s
+	test_parse_typos         	: Passed
+	test_parse               	: Passed ; Average execution time: 1.9018e-006 s
+
+Precision::Volatile::Int_Operations [int_operations_test.cpp]:
+	test_complists_eq        	: Passed
+	test_complists_gr        	: Passed
+	test_complists_le        	: Passed
+	test_complists_dig_gr    	: Passed
+	test_complists_dig_le    	: Passed
+	test_complists_eq2       	: Passed
+	test_compare_eq          	: Passed
+	test_compare_sign_gr     	: Passed
+	test_compare_sign_le     	: Passed
+	test_compare_gr          	: Passed
+	test_compare_le          	: Passed
+	test_compare_eq2         	: Passed
+	test_compare_eq2         	: Passed ; Average execution time: 3.6035e-006 s
+	test_add_list2_eq0       	: Passed
+	test_add_list1_eq0       	: Passed
+	test_add_le              	: Passed
+	test_add_le2             	: Passed
+	test_add                 	: Passed ; Average execution time: 5.205e-006 s
+	test_sub_gr              	: Passed
+	test_sub_neg             	: Passed
+	test_sub_neg2            	: Passed
+	test_sub                 	: Passed ; Average execution time: 5.1549e-006 s
+	test_mult_list_1         	: Passed
+	test_mult_list_3         	: Passed
+	test_mult_list_7         	: Passed ; Average execution time: 4.7545e-006 s
+	test_mult_list2_eq0      	: Passed
+	test_mult_list1_eq0      	: Passed
+	test_mult_list2_eq1      	: Passed
+	test_mult_list1_eq1      	: Passed
+	test_mult_list2_eqN1     	: Passed
+	test_mult_list1_eqN1     	: Passed
+	test_mult_zeros          	: Passed
+	test_mult                	: Passed ; Average execution time: 0.00075623 s
+	test_div0                	: Passed
+	test_div_list2_eq1       	: Passed
+	test_div_eq              	: Passed
+	test_div_gr              	: Passed
+	test_div_list1_neg       	: Passed
+	test_div_list2_neg       	: Passed
+	test_div_ones            	: Passed
+	test_div_dig_gr          	: Passed
+	test_div_2_by_100        	: Passed
+	test_div_half            	: Passed
+	test_div                 	: Passed ; Average execution time: 0.000705177 s
+	test_exp_ind             	: Passed
+	test_exp_e0              	: Passed
+	test_exp_e1              	: Passed
+	test_exp_eN1             	: Passed
+	test_exp_odd_power       	: Passed
+	test_exp                 	: Passed ; Average execution time: 0.0379764 s
+	test_bit_comp_inf        	: Passed
+	test_bit_comp            	: Passed ; Average execution time: 0.259248 s
+	test_bit_and_spec_eq     	: Passed
+	test_bit_and_eq          	: Passed
+	test_bit_or_eq           	: Passed
+	test_bit_xor_eq          	: Passed ; Average execution time: 0.259248 s
+	test_bit_lshift          	: Passed ; Average execution time: 0.965925 s
+	test_bit_rshift          	: Passed ; Average execution time: 0.790258 s
+	test_log_comp            	: Passed ; Average execution time: 3.4032e-006 s
+	test_log_and_eq          	: Passed
+	test_log_or_eq           	: Passed
+	test_log_xor_eq          	: Passed ; Average execution time: 6.0058e-006 s
+	test_log_xor_rev_eq      	: Passed ; Average execution time: 3.15803e-005 s
+
 Precision::General_Base::Static::Abstract::Int_Operations [abstract_static_general_base_int_test.cpp]:
 	test_asgbi_default       	: Passed
 	test_asgbi_signed_size   	: Passed
@@ -31,27 +122,28 @@ Precision::General_Base::Static::Abstract::Int_Operations [abstract_static_gener
 	test_asgbi_make_neg_one  	: Passed
 	test_asgbi_make_two      	: Passed
 	test_asgbi_halve         	: Passed
+	test_asgbi_halve_spec    	: Passed
 	test_asgbi_assign        	: Passed
 	test_asgbi_force_assign  	: Passed
-	test_asgbi_add           	: Passed ; Average execution time: 9.5089e-006 s
-	test_asgbi_sub           	: Passed ; Average execution time: 5.7054e-006 s
-	test_asgbi_mult          	: Passed ; Average execution time: 0.000820788 s
-	test_asgbi_div           	: Passed ; Average execution time: 0.0007327 s
-	test_asgbi_mod           	: Passed ; Average execution time: 0.0007297 s
+	test_asgbi_add           	: Passed ; Average execution time: 6.0558e-006 s
+	test_asgbi_sub           	: Passed ; Average execution time: 6.4561e-006 s
+	test_asgbi_mult          	: Passed ; Average execution time: 0.00091688 s
+	test_asgbi_div           	: Passed ; Average execution time: 0.00082579 s
+	test_asgbi_mod           	: Passed ; Average execution time: 0.000829796 s
 	test_asgbi_pre_dec       	: Passed
 	test_asgbi_post_dec      	: Passed
 	test_asgbi_pre_inc       	: Passed
 	test_asgbi_post_inc      	: Passed
-	test_asgbi_and           	: Failed (Expected: +68158464 Got: +144)
-	test_asgbi_or            	: Failed (Expected: +9931841535 Got: +428175)
-	test_asgbi_xor           	: Failed (Expected: +9863683071 Got: +42831)
-	test_asgbi_compl         	: Failed (Expected: -7303325973 Got: -611521)
-	test_asgbi_lshift        	: Failed (Expected: +2528395061760 Got: +252839561760)
-	test_asgbi_rshift        	: Failed (Expected: +38580246 Got: +3858246)
-	test_asgbi_log_and       	: Passed ; Average execution time: 6.1559e-006 s
-	test_asgbi_log_or        	: Passed ; Average execution time: 1.046e-005 s
-	test_asgbi_log_xor       	: Passed ; Average execution time: 6.1059e-006 s
-	test_asgbi_log_compl     	: Passed ; Average execution time: 3.7536e-006 s
+	test_asgbi_and           	: Passed ; Average execution time: 0.231221 s
+	test_asgbi_or            	: Passed ; Average execution time: 0.308296 s
+	test_asgbi_xor           	: Passed ; Average execution time: 0.288277 s
+	test_asgbi_compl         	: Passed ; Average execution time: 0.269759 s
+	test_asgbi_lshift        	: Passed ; Average execution time: 0.0002002 s
+	test_asgbi_rshift        	: Passed ; Average execution time: 0.0008507 s
+	test_asgbi_log_and       	: Passed ; Average execution time: 6.306e-006 s
+	test_asgbi_log_or        	: Passed ; Average execution time: 1.06101e-005 s
+	test_asgbi_log_xor       	: Passed ; Average execution time: 6.306e-006 s
+	test_asgbi_log_compl     	: Passed ; Average execution time: 3.7535e-006 s
 	test_asgbi_log_lshift    	: Passed
 	test_asgbi_log_rshift    	: Passed
 	test_asgbi_log_shift     	: Passed

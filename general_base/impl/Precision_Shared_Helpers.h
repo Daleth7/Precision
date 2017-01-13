@@ -137,7 +137,7 @@ namespace Precision{
          * \return The number of digits in num.
          */
         template <typename IntType>
-        inline typename Int_Type::size_type int_size(const IntType& num);
+        inline typename IntType::size_type int_size(const IntType& num);
 
         /** Decoupled check to return the number base
          *
@@ -148,7 +148,21 @@ namespace Precision{
          * \return The number base
          */
         template <typename IntType>
-        inline typename Int_Type::digit_type base(const IntType& num);
+        inline typename IntType::digit_type base(const IntType& num);
+
+        /** Decoupled check to retrieve a specific digit
+         *
+         * \tparam IntType The type of the number under test 
+         *
+         * \param num Number to test. 
+         * \param idx Position of the digit to retrieve
+         *
+         * \return The specified digit
+         */
+        template <typename IntType>
+        inline typename IntType::digit_type digit( const IntType& num,
+                                                   typename IntType::size_type idx
+                                                   );
 
         /** Decoupled modifier to divide a number by 2.
          *

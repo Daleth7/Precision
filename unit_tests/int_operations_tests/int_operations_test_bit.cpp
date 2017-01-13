@@ -2,7 +2,9 @@
 
 #include "int_operations_test_fake_int.h" // For Core_Int
 
-static Core_Int all_digs_int, all_digs_rev, power_int, power_int2, zero_list_int;
+static Core_Int all_digs_int, all_digs_rev, rev_int2,
+                power_int, power_int2, zero_list_int
+                ;
 static Core_Int speed_bit_int, speed_bit_rev, speed_exp_pow;
 
 
@@ -11,6 +13,7 @@ static Core_Int speed_bit_int, speed_bit_rev, speed_exp_pow;
 test_and_log_util::result_type test_bit_comp_inf(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_comp(test_and_log_util::out_type&);
 void test_bit_comp_speed(test_and_log_util::out_type&);
+test_and_log_util::result_type test_bit_and_spec_eq(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_and_eq(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_or_eq(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_xor_eq(test_and_log_util::out_type&);
@@ -32,6 +35,9 @@ void setup_bitwise_variables(){
         if(i < 9) all_digs_rev.m_number.push_back(10 - 1 - (i % 10));
         else      all_digs_rev.m_number.push_back(1);
     }
+
+    rev_int2.m_number = Core_Int::diglist_type({9, 8, 7, 6, 5, 4, 3, 2, 1});
+    rev_int2.make_positive();
 
     power_int.m_number.push_back(0);
     power_int.m_number.push_back(5);
@@ -66,6 +72,7 @@ void add_bitwise_tests(test_and_log_util& dest){
                    test_bit_comp, test_bit_comp_speed,
                    1
                    );
+    ADD_TEST(dest, test_bit_and_spec_eq);
     ADD_TEST(dest, test_bit_and_eq);
     ADD_TEST(dest, test_bit_or_eq);
     ADD_TEST_BOTH( dest,
@@ -86,6 +93,7 @@ void add_bitwise_tests(test_and_log_util& dest){
 void bitwise_test_cleanup(){
     all_digs_int.m_number.clear();
     all_digs_rev.m_number.clear();
+    rev_int2.m_number.clear();
     power_int.m_number.clear();
     power_int2.m_number.clear();
     zero_list_int.m_number.clear();
@@ -129,6 +137,18 @@ void test_bit_comp_speed(test_and_log_util::out_type&){
     Core_Int bit_copy = speed_bit_int;
 
     Precision::Volatile::Int_Operations::bitwise_complement(bit_copy);
+}
+
+test_and_log_util::result_type test_bit_and_spec_eq(test_and_log_util::out_type&){
+    Core_Int bit_copy = all_digs_int;
+
+    Precision::Volatile::Int_Operations::bitwise_and_eq(bit_copy, rev_int2);
+
+    test_and_log_util::result_type res;
+    res.expected = "+68158464";
+    res.actual = to_str(bit_copy);
+
+    return res;
 }
 
 test_and_log_util::result_type test_bit_and_eq(test_and_log_util::out_type&){
