@@ -99,8 +99,11 @@ namespace Precision{
                     }
 
                     // Store calculated sum into first digit list
+                    lhs.force_assign(fit, catalyst);
+                    /*
                     if(fend) lhs.append(catalyst);
                     else     lhs.assign(fit, catalyst);
+                    */
 
                     // Update iterators as needed
                     if(!fend) ++fit;
