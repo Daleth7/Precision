@@ -134,6 +134,124 @@ namespace Precision{
                         new_list = typename IntType::diglist_type(1, 0);
                     }
                 }
+
+                template <typename IntType, typename ISIType>
+                typename ISIType::str_type str( const IntType& num,
+                                                const ISIType& img_set
+                ){
+                    typedef typename IntType::size_type size_type;
+                    typedef typename ISIType::str_type str_type;
+
+                    if(num.is_zero()){
+                        return str_type(1, img_set.plus())
+                             + str_type(1, img_set.digit_image(0));
+                    }
+                    str_type toreturn(num.count_digits() + 1, img_set.digit_image(0));
+                    toreturn[0] = (num.is_positive() ? img_set.plus() : img_set.minus());
+                    for(
+                        size_type i(1);
+                        i <= num.count_digits();
+                        ++i
+                    ){
+                        toreturn[toreturn.size()-i] = img_set.digit_image(num.digit(i-1));
+                    }
+                    return toreturn;
+                }
+
+                //Set the precision through parameter
+                template <typename IntType, typename ISIType>
+                typename ISIType::str_type sci_note( const IntType& num,
+                                                     typename IntType::size_type prec,
+                                                     const ISIType& img_set
+                ){
+                    typedef typename ISIType::str_type str_type;
+
+                    if(num.is_zero()){
+                        return str_type(1, img_set.plus())
+                             + str_type(1, img_set.digit(0));
+                    }
+
+                    //Display +#E0
+                    if(num.count_digits() < 2)
+                        return str<str_type>(num, img_set)
+                                + str_type(1, img_set.exponent())
+                                + str_type(1, img_set.digit(0));
+
+                    // Start with the basic stringification of the number
+                    str_type toreturn(str<str_type>(num, img_set));
+
+                    // Calculate exponent number
+                    typename IntType::size_type exp(toreturn.size() - 2);
+
+                    // Insert the point symbol
+                    toreturn.insert(2, 1, img_set.point());
+
+                    // Remove glyphs according to specified precision
+                    if(prec < exp)
+                        toreturn.erase(3+prec);
+                    if(toreturn.back() == img_set.point())
+                        toreturn.pop_back();
+
+                    // Append the exponent symbol to base
+                    toreturn += str_type(1, img_set.exponent());
+
+                    // Convert the exponent number to a string and append
+                    str_type exp_str;
+                    do{
+                        exp_str.insert( exp_str.begin(),
+                                        img_set.digit(exp % num.base())
+                                        );
+
+                        exp /= num.base();
+                    }while(exp > 0);
+                    toreturn += exp_str;
+
+                    return toreturn;
+                }
+
+                template <typename IntType, typename ISIType>
+                typename ISIType::str_type
+                    sci_note_w_spaces( const IntType& num,
+                                       typename IntType::size_type prec,
+                                       const ISIType& img_set
+                ){
+                    typedef typename ISIType::str_type str_type;
+
+                    str_type toreturn(sci_note<str_type>(num, prec, digs, syms));
+                    if(toreturn == str_type(1, img_set.digit(0))) return toreturn;
+
+                    toreturn.insert(1, 1, img_set.space());//Insert space after the sign
+
+                    // Insert spaces befor and after the exponent symbol
+                    toreturn.insert(toreturn.find(img_set.exponent()), 1, img_set.space());
+                    toreturn.insert(toreturn.find(img_set.exponent())+1, 1, img_set.space());
+                    return toreturn;
+                }
+
+                template <typename IntType, typename ISIType, typename SearchPolicy>
+                void parse( const typename ISIType::str_type& src,
+                            typename IntType::diglist_type& new_list,
+                            typename IntType::digit_type base,
+                            const ISIType& img_set
+                ){
+                    typedef typename IntType::digit_type digit_type;
+                    typedef typename IntType::size_type size_type;
+                    new_list.resize(src.size());
+                    if(src.size() > 0){
+                        auto iter(new_list.begin());
+                        size_type i(src.size());
+                        while(i-- > 0){
+                            digit_type hold = img_set.get_index<SearchPolicy>(src[i], base);
+
+                            *iter = (hold == base ? 0 : hold);
+
+                            ++iter;
+                        }
+
+                        while(new_list.size() > 1 && new_list.back() == 0)
+                            new_list.pop_back();
+                    }
+                }
             }
         }
     }
