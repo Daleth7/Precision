@@ -357,7 +357,7 @@ namespace Precision{
              *  \param rhs     The second integer
              */
             template <typename IntType>
-            void logical_xor_rev_eq(IntType& xor_res, const IntType& rhs);
+            void logical_rev_xor_eq(IntType& xor_res, const IntType& rhs);
 
             /** Integer exponentiation function that employs
              *  the exponentiation by squaring algorithm. This

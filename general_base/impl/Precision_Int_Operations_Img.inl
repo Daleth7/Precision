@@ -110,6 +110,7 @@ namespace Precision{
                         while(i-- > 0){
                             CharTIterator ci = dig_glyphs, ci2 = dig_glyphs;
                             std::advance(ci2, base-1);
+                            *iter = 0; // Value if the image is invalid
                             for(
                                 digit_type j(0), k(base-1);
                                 j <= k;
@@ -129,6 +130,8 @@ namespace Precision{
 
                         while(new_list.size() > 1 && new_list.back() == 0)
                             new_list.pop_back();
+                    } else {
+                        new_list = typename IntType::diglist_type(1, 0);
                     }
                 }
             }

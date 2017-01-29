@@ -12,11 +12,17 @@
 
 namespace Precision{
     namespace Default{
-        using byte_type = unsigned char;
+        using byte_type = std::uint_fast8_t;
+        using image_type = char;
         template <typename... TArgs>
             using container_type = std::vector<TArgs...>;
         using sign_type = Precision::SignClass;
         using size_type = std::size_t;
+
+        static constexpr char *const digs = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        static constexpr char *const syms = "+-.e /i";
+
+        static constexpr size_type display_prec = 100;
     }
 }
 

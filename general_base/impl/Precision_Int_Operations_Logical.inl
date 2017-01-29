@@ -1,5 +1,11 @@
 #include <cmath>    // For std::fmod
 
+#define AND_OPER 0
+#define OR_OPER 1
+#define XOR_OPER 2
+#define COMPL_OPER 3
+#define REV_XOR_OPER 4
+
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {
@@ -37,19 +43,19 @@ namespace Precision{
                        ;
 
                     switch(oper){
-                        case 1:
+                        case AND_OPER:
                             new_dig = and_oper(lhs_dig, rhs_dig);
                             break;
-                        case 2:
+                        case OR_OPER:
                             new_dig = or_oper(lhs_dig, rhs_dig);
                             break;
-                        case 3:
+                        case XOR_OPER:
                             new_dig = xor_oper(lhs_dig, rhs_dig);
                             break;
-                        case 4:
+                        case COMPL_OPER:
                             new_dig = compl_oper(lhs_dig);
                             break;
-                        case 5:
+                        case REV_XOR_OPER:
                             new_dig = xor_oper(lhs_dig, rhs_dig);
                             for(digit_type i = 1; i < base-1; ++i)
                                 new_dig = xor_oper(new_dig, rhs_dig);
@@ -67,23 +73,23 @@ namespace Precision{
 
                 // Calculate the new sign
                 switch(oper){
-                    case 1:
+                    case AND_OPER:
                         lhs.sign( 1-(Helper::is_negative(lhs)
                                   & Helper::is_negative(rhs))*2
                                   );
                         break;
-                    case 2:
+                    case OR_OPER:
                         lhs.sign( 1-(Helper::is_negative(lhs)
                                   | Helper::is_negative(rhs))*2
                                   );
                         break;
-                    case 3:
-                    case 5:
+                    case XOR_OPER:
+                    case REV_XOR_OPER:
                         lhs.sign( 1-(Helper::is_negative(lhs)
                                   ^ Helper::is_negative(rhs))*2
                                   );
                         break;
-                    case 4:
+                    case COMPL_OPER:
                         Helper::negate(lhs);
                         break;
                     default:
@@ -96,29 +102,35 @@ namespace Precision{
                                  const typename std::remove_const<IntType>::type&
                                     rhs
                                  )
-                {logical_operation<IntType>(lhs, rhs, 1);}
+                {logical_operation<IntType>(lhs, rhs, AND_OPER);}
 
             template <typename IntType>
             void logical_or_eq( IntType& lhs,
                                  const typename std::remove_const<IntType>::type&
                                     rhs
                                  )
-                {logical_operation<IntType>(lhs, rhs, 2);}
+                {logical_operation<IntType>(lhs, rhs, OR_OPER);}
 
             template <typename IntType>
             void logical_xor_eq( IntType& lhs,
                                  const typename std::remove_const<IntType>::type&
                                     rhs
                                  )
-                {logical_operation<IntType>(lhs, rhs, 3);}
+                {logical_operation<IntType>(lhs, rhs, XOR_OPER);}
 
             template <typename IntType>
             void logical_complement_eq(IntType& lhs)
-                {logical_operation<IntType>(lhs, lhs, 4);}
+                {logical_operation<IntType>(lhs, lhs, COMPL_OPER);}
 
             template <typename IntType>
-            void logical_xor_rev_eq(IntType& xor_res, const IntType& rhs)
-                {logical_operation<IntType>(xor_res, rhs, 5);}
+            void logical_rev_xor_eq(IntType& xor_res, const IntType& rhs)
+                {logical_operation<IntType>(xor_res, rhs, REV_XOR_OPER);}
         }
     }
 }
+
+#undef AND_OPER
+#undef OR_OPER
+#undef XOR_OPER
+#undef COMPL_OPER
+#undef REV_XOR_OPER

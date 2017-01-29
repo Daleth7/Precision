@@ -243,6 +243,15 @@ namespace Precision{
                 }
 
                 INT_TEMP_
+                INT_INST_ INT_INST_::logical_rev_xor(const INT_INST_& rhs)const{
+                    Int toreturn(*this);
+
+                    Volatile::Int_Operations::logical_rev_xor_eq(toreturn, rhs);
+
+                    return toreturn;
+                }
+
+                INT_TEMP_
                 INT_INST_ INT_INST_::logical_complement()const{
                     Int toreturn(*this);
 

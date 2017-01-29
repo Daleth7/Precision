@@ -22,50 +22,47 @@ namespace Precision{
                   * supports arithmetic to bitwise operations as well direct
                   * digit manipulation.
                   *
-                  * \tparam ByteType     - The type used for the computer representation of each
-                  *                     digit. This type also sets the maximum base that may
-                  *                     be used and affects the dynamic storage size. Defaulted
-                  *                     to Precision::byte_type, which is guaranteed to allow a
-                  *                     base up to 255 and is guaranteed to be at least
-                  *                     one byte in size. It is recommended to use
-                  *                     Precision::byte_type for small bases.
-                  * \tparam Base         - The base N the class shall represent. Defaulted to 10.
-                  * \tparam Container    - The container template used to store indices to the array.
-                  *                     Most STL containers will work. This shall be instantiated
-                  *                     as Container<digit_type>.
-                  *                     * Must support the following:
-                  *                         * Container::Container(size_type, digit_type)
-                  *                         * Container::Container(const Container&)
-                  *                         * Container& Container::operator=(const Container&)
-                  *                         * Bidirectional iterators
-                  *                         * Container::begin()
-                  *                         * Container::end()
-                  *                         * Container::crbegin()
-                  *                         * Container::crend()
-                  *                         * Container::push_back()
-                  *                         * Container::size()
-                  *                         * Container::insert(iterator, size_type, digit_type)
-                  *                         * Container::erase(iterator, size_type)
-                  *                         * Container::erase(iterator)
-                  *                     Defaulted to Precision::default_container_type.
-                  * \tparam SignType     - The type used to represent the sign of the number, i.e.
-                  *                     whether it is is_positive or is_negative. Must support the
-                  *                     following:
-                  *                         * signed_integral_type SignType::value()const
-                  *                         * bool SignType::is_positive()const
-                  *                         * bool SignType::is_negative()const
-                  *                         * void SignType::negate()
-                  *                         * void SignType::make_positive()
-                  *                         * void SignType::make_negative()
-                  *                         * SignType::SignType(sign_integral_type)
-                  *                     By convention, all number types in the Precision namespace
-                  *                     shall abide by the following rules:
-                  *                         * signed short(1) == is_positive
-                  *                         * signed short(-1) == is_negative
-                  *                     Defaulted to Precision::SignClass.
+                  * \tparam ByteType  The type used for the computer representation
+                  *                   of each digit. This type also sets the
+                  *                   maximum base that may be used and affects the
+                  *                   dynamic storage size. Defaulted to unsigned
+                  *                   char, which is guaranteed to allow a base up
+                  *                   to 255 and is guaranteed to be at least one
+                  *                   byte in size. It is recommended to use
+                  *                   unsigned char for small bases.
+                  * \tparam Base      The base N the class shall represent.
+                  *                   Defaulted to 10.
+                  * \tparam Container The container template used to store indices
+                  *                   to the array.
+                  *                   Most STL containers will work. This shall be
+                  *                   instantiated as Container<digit_type>.
+                  *                   See Digit_Container for more information.
+                  *                   Defaulted to std::vector.
+                  * \tparam SignType  The type used to represent the sign of the
+                  *                   number, i.e. whether it is positive or
+                  *                   negative. See Signed_Interface for more
+                  *                   information.
+                  *                   Defaulted to Precision::SignClass.
                   * 
-                  * Example Instantiation:
-                  *     using Int = Precision::General_Base::Int<int, 25>;
+                  * Example Instantiations:
+                  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                  *     using namespace Precision::General_Base;
+                  *
+                  *     // Create an integer using int's for digits
+                  *     // and is base 25.
+                  *     using Int = Static::Abstract::Int<int, 25>;
+                  *
+                  *     // Create an integer with a custom container that
+                  *     // handles memory differently than std::vector.
+                  *     template <typename value_type>
+                  *     using my_container = Custom_Container<value_type>;
+                  *     using MemInt = Static::Abstract::Int
+                  *                      <int, 17, my_container>;
+                  *
+                  *     MemInt num1(12345), num2({9, 0, 1, 1, 16, 14, 10}, -1);
+                  *     MemInt result = num2 % num1;
+                  *     
+                  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                   */
                 template < typename ByteType = Default::byte_type,
                            ByteType Base = 10,
@@ -391,6 +388,18 @@ namespace Precision{
                           * \return The result of the logical operation.
                           */
                         Int logical_xor(const Int& rhs)const;
+
+                        /** Logical, base dependent reverse XOR operator.
+                          * Unlike with a binary base, performing an XOR
+                          * operation twice does not return a previous key.
+                          * This function will return a previous key if this
+                          * object was the result of a prior XOR operation.
+                          * 
+                          * \param rhs Right hand side number.
+                          * 
+                          * \return The result of the logical operation.
+                          */
+                        Int logical_rev_xor(const Int& rhs)const;
 
                         /** Logical, base dependent COMPLEMENT operator
                           *
