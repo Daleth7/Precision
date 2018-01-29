@@ -132,7 +132,7 @@ test_and_log_util::result_type test_log_xor_rev_eq(test_and_log_util::out_type&)
 
     Precision::Volatile::Int_Operations::logical_xor_eq(log_copy, all_digs_rev);
 
-    Precision::Volatile::Int_Operations::logical_xor_rev_eq(log_copy, all_digs_rev);
+    Precision::Volatile::Int_Operations::logical_rev_xor_eq(log_copy, all_digs_rev);
 
     test_and_log_util::result_type res;
     res.expected = "-9876543210";
@@ -144,5 +144,5 @@ test_and_log_util::result_type test_log_xor_rev_eq(test_and_log_util::out_type&)
 void test_log_xor_rev_oper_speed(test_and_log_util::out_type&){
     Core_Int log_copy = speed_log_int;
 
-    Precision::Volatile::Int_Operations::logical_xor_rev_eq(log_copy, speed_log_rev);
+    Precision::Volatile::Int_Operations::logical_rev_xor_eq(log_copy, speed_log_rev);
 }

@@ -19,8 +19,8 @@ namespace Precision{
         using sign_type = Precision::SignClass;
         using size_type = std::size_t;
 
-        static constexpr char *const digs = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        static constexpr char *const syms = "+-.e /i";
+        static constexpr char const *const digs = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        static constexpr char const *const syms = "+-.e /i";
 
         static constexpr size_type display_prec = 100;
     }

@@ -1,8 +1,8 @@
 /** \file Precision_Image_Set_Interface.h
   * This file contains the image interface that deals with
   * converting an "abstract" integer to a printable string.
-  * This interface is designed to be inerited to make child
-  * number classes easier and faster to implement.
+  * This interface is designed to make child number classes
+  * easier and faster to implement.
   */
 
 #ifndef PRECISION_IMAGE_INTERFACE_INGHERITABBBL5
@@ -51,7 +51,7 @@ namespace Precision {
             using iterator_type   = CharTIterator;
 
             /** Alias for size representation */
-            using size_type       = typename str_type::size_type
+            using size_type       = typename str_type::size_type;
 
             /** Alias for abstract digits to convert to printable glyphs */
             using digit_type      = ByteType;
@@ -89,6 +89,32 @@ namespace Precision {
             template <typename SearchPolicy = ImgSearchPolicy::Binary>
             digit_type get_index(const_reference img, digit_type base)const
                 {return this->img_to_dig<SearchPolicy>(img, base);}
+
+            /** Convert a given image to its associated digit using the
+              * normal search algorithm.
+              *
+              * \param img The image to look for.
+              * \param base The number base to expect the image to be
+              *             confined within.
+              *
+              * \return The corresponding, "abstract" digit. If the returned
+              *         value is equal to base, no match was found.
+              */
+            digit_type get_index_norm(const_reference img, digit_type base)const
+                {return this->img_to_dig<ImgSearchPolicy::Normal>(img, base);}
+
+            /** Convert a given image to its associated digit using the
+              * binary search algorithm.
+              *
+              * \param img The image to look for.
+              * \param base The number base to expect the image to be
+              *             confined within.
+              *
+              * \return The corresponding, "abstract" digit. If the returned
+              *         value is equal to base, no match was found.
+              */
+            digit_type get_index_bin(const_reference img, digit_type base)const
+                {return this->img_to_dig<ImgSearchPolicy::Binary>(img, base);}
 
             /** Convert an abstract digit to its associated glyph.
               *
@@ -213,7 +239,97 @@ namespace Precision {
 
 
 
+            //Constructors and destructor
+            /**
+              * \param dig_set A pointer to the first digit in an array
+              *                containing the images of each digit. The array
+              *                must have external linkage.
+              *                Important note: It is the responsibility of the
+              *                instantiator to ensure this is a valid parameter
+              *                and that the array pointed to contains the
+              *                appropriate images.
+              *                dig_set is defaulted to Constant::symbols which
+              *                points to an array containing images of type
+              *                const char:
+              *                "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+              * \param sym_set A pointer to the first symbol in an array with
+              *                external linkage and that contains the images
+              *                of each symbol.
+              *                Each symbol is further defined below in the
+              *                order it should appear in the array.
+              *                * plus      An image depicting the plus sign to
+              *                            indicate a positive number as in
+              *                            "+123".
+              *                * minus     An image depicting the minus sign to
+              *                            indicate a negative number as in
+              *                            "-123".
+              *                * point     An image depicting the decimal point
+              *                            to indicate a separation between a
+              *                            number's whole part and decimal part
+              *                            as in "123.456".
+              *                * exponent  An image depicting the exponential
+              *                            sign to represent a power of Base
+              *                            as in "1.23 e 456" which is
+              *                            equivalent to writing "1.23 x 10^456".
+              *                * space     An image depicting an empty space
+              *                            between two other images as in
+              *                            "+ 1234".
+              *                The above five symbols are the minimum.
+              *                Depending on what the number type is, there may
+              *                be additional symbols needed:
+              *                * slash     An image depicting the slash sign to
+              *                            indicate a fractional number as in
+              *                            "12/345". Required for Fraction
+              *                            number types.
+              *                * imaginary An image depicting the imaginary
+              *                            number to indicate a complex number
+              *                            as in "a + bi". Required for Complex
+              *                            number types.
+              *                Important note: It is the responsibility of the
+              *                instantiator to ensure this is a valid parameter
+              *                and that the array pointed to contains the
+              *                appropriate symbols.
+              *                sym_set is defaulted to Constant::symbols which
+              *                points to an array containing images of type
+              *                const char:
+              *                    * plus symbol:      '+'
+              *                    * minus symbol:     '-'
+              *                    * point symbol:     '.'
+              *                    * exponent symbol:  'e'
+              *                    * space symbol:     ' '
+              *                    * slash symbol:     '/'
+              *                    * imaginary symbol: 'i'
+              */
+            Image_Set_Interface(iterator_type dig_set, iterator_type sym_set)
+                : m_0(dig_set)
+                , m_syms(sym_set)
+            {}
+
+            /** Compiler generated default constructor */
+            Image_Set_Interface()                                      = default;
+
+            /** Compiler generated copy constructor */
+            Image_Set_Interface(const Image_Set_Interface&)            = default;
+
+            /** Compiler generated copy assignment operator */
+            Image_Set_Interface& operator=(const Image_Set_Interface&) = default;
+
+            /** Compiler generated move constructor */
+            Image_Set_Interface(Image_Set_Interface&&)                 = default;
+
+            /** Compiler generated move assignment operator */
+            Image_Set_Interface& operator=(Image_Set_Interface&&)      = default;
+
+            /** Compiler generated destructor */
+            ~Image_Set_Interface()                                     = default;
+
+
+
         protected:
+            /** Helper structure for template specialization */
+            template <typename SearchPolicyType>
+            struct spt_type {};
+
             /** Helper function to convert a given image to its associated digit.
               *
               * \tparam SearchPolicy The type of search algorithm to use
@@ -225,7 +341,59 @@ namespace Precision {
               * \return The corresponding, "abstract" digit.
               */
             template <typename SearchPolicy>
-            digit_type img_to_dig(const_reference img, digit_type base)const;
+            digit_type img_to_dig(const_reference img, digit_type base)const
+                {return this->img_to_dig(img, base, spt_type<SearchPolicy>());}
+
+            /** Helper function to convert a given image to its associated digit.
+              *
+              * \tparam SearchPolicy The type of search algorithm to use
+              *
+              * \param img The image to look for.
+              * \param base The number base to expect the image to be
+              *             confined within.
+              *
+              * \return The corresponding, "abstract" digit.
+              */
+            template <typename SearchPolicy>
+            digit_type img_to_dig(  const_reference img,
+                                    digit_type base,
+                                    spt_type<SearchPolicy>
+                                    )const;
+
+            digit_type img_to_dig(  const_reference img,
+                                    digit_type base,
+                                    spt_type<ImgSearchPolicy::Normal>
+                                    )const
+            {
+                digit_type i = base;
+                while(i-- > 0)
+                    if(img == this->digit(i)) return i;
+                return base;
+            }
+
+
+            digit_type img_to_dig(  const_reference img,
+                                    digit_type base,
+                                    spt_type<ImgSearchPolicy::Binary>
+                                    )const
+            {
+                iterator_type end = m_0;
+                std::advance(end, base-1);
+
+                // Check if the image belongs in the image set.
+                // This can be done since it is assumed the image set
+                // is ordered. This does, however, not help for invalid
+                // images whose value falls within the range.
+                if(img < *m_0 || img > *(end)) return base;
+
+                std::advance(end, 1);
+
+                // This algorithm assumes the glyphs of type
+                //  CharT are continuous and consecutive
+                return std::distance(m_0, std::lower_bound(m_0, end, img));
+                
+            }
+
 
             /** Retrieve a glyph from an image set.
               *
@@ -235,7 +403,7 @@ namespace Precision {
               * \return The corresponding, printable glyph.
               *
               */
-            const_reference retrieve_img(iterator_type beg, size_type pos)const{
+            const_reference retrieve_glyph(iterator_type beg, size_type pos)const{
                 iterator_type it = beg;
                 std::advance(it, pos);
                 return *it;
@@ -254,39 +422,5 @@ namespace Precision {
     };
 }
 
-namespace Precision {
-#define IMG_TEMP_ template < typename CharT,         \
-                             typename CharTIterator, \
-                             typename ByteType       \
-                             >
-#define IMG_INST_ Image_Set_Interface<CharT, CharTIterator, ByteType>
-
-    IMG_TEMP_
-    template <>
-    auto IMG_INST_::img_to_dig<ImgSearchPolicy::Normal>
-        (const_reference img, digit_type base)
-    const -> digit_type {
-        digit_type i = base;
-        while(i-- > 0)
-            if(img == this->digit(i)) return i;
-        return base;
-    }
-
-    IMG_TEMP_
-    template <>
-    auto IMG_INST_::img_to_dig<ImgSearchPolicy::Binary>
-        (const_reference img, digit_type base)
-    const -> digit_type {
-        iterator_type end = m_0;
-        std::advance(end, base);
-
-        // This algorithm assumes the glyphs of type
-        //  CharT are continuous and consecutive
-        return std::lower_bound(m_0, end, img) - m_0;
-    }
-
-#undef IMG_TEMP_
-#undef IMG_INST_
-}
 
 #endif

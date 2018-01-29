@@ -5,11 +5,25 @@
 #include <string>
 #include <vector>
 
+
+struct Fake_Sign{
+    bool& sign_ref;
+
+    void assign(int new_sign){
+        sign_ref = !(new_sign < 0);
+    }
+
+    Fake_Sign(bool& new_ref)
+        : sign_ref(new_ref)
+    {}
+};
+
 struct Fake_Int{
     using str_type     = std::string;
     using size_type    = std::size_t;
     using digit_type   = std::uint_fast8_t;
     using diglist_type = std::vector<digit_type>;
+    using sign_type    = Fake_Sign;
 
     bool is_zero()const
         {return number.size() == 1 && number.front() == 0;}
@@ -29,14 +43,19 @@ struct Fake_Int{
     bool positivity;
 };
 
+using Img_Set_Type = Precision::Image_Set_Interface<char, char const *, Fake_Int::digit_type>;
+
 static char const * const digs = "0123456789";
 static char const * const syms = "+-.e /i";
 
+static Img_Set_Type img_set(digs, syms);
+
 static Fake_Int func_variable;
 static Fake_Int speed_variable;
-static Fake_Int::str_type speed_string;
+static Fake_Int::str_type speed_string, speed_string_sign, speed_string_exp;
 
 void setup_speed_variables();
+void clean_up_speed_variables();
 
 test_and_log_util::result_type test_str_zero(test_and_log_util::out_type&);
 test_and_log_util::result_type test_str(test_and_log_util::out_type&);
@@ -51,6 +70,12 @@ void test_sci_note_w_spaces_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&);
 test_and_log_util::result_type test_parse(test_and_log_util::out_type&);
 void test_parse_speed(test_and_log_util::out_type&);
+test_and_log_util::result_type test_parse_w_sign_typos(test_and_log_util::out_type&);
+test_and_log_util::result_type test_parse_w_sign(test_and_log_util::out_type&);
+void test_parse_w_sign_speed(test_and_log_util::out_type&);
+test_and_log_util::result_type test_parse_w_exp_typos(test_and_log_util::out_type&);
+test_and_log_util::result_type test_parse_w_exp(test_and_log_util::out_type&);
+void test_parse_w_exp_speed(test_and_log_util::out_type&);
 
 void image_operations_test(){
     test_and_log_util test_list("Precision::Volatile::Int_Operations::Img", __FILE__);
@@ -85,6 +110,8 @@ void image_operations_test(){
     setup_speed_variables();
 
     test_list.execute_tests();
+
+    clean_up_speed_variables();
 }
 
 void setup_speed_variables(){
@@ -100,10 +127,23 @@ void setup_speed_variables(){
 
     for(unsigned i = 0; i < 100; ++i)
         speed_string.push_back((i % 10) + '0');
+
+    speed_string_sign = speed_string;
+    speed_string_sign.insert(0, 1, '-');
+
+    speed_string_exp = speed_string_sign;
+    speed_string_exp += "e123";
+}
+
+void clean_up_speed_variables(){
+    func_variable.number.clear();
+    speed_variable.number.clear();
+    speed_string.clear();
+    speed_string_sign.clear();
+    speed_string_exp.clear();
 }
 
 test_and_log_util::result_type test_str_zero(test_and_log_util::out_type&){
-
     Fake_Int integer;
     integer.positivity = false;
     integer.number.push_back(0);
@@ -111,7 +151,7 @@ test_and_log_util::result_type test_str_zero(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+0";
     res.actual = Precision::Volatile::Int_Operations::Img::str
-                 <Fake_Int::str_type, Fake_Int, char const*>(integer, digs, syms);
+                 <Fake_Int, Img_Set_Type>(integer, img_set);
 
     return res;
 }
@@ -120,16 +160,15 @@ test_and_log_util::result_type test_str(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+98765432109876543210";
     res.actual = Precision::Volatile::Int_Operations::Img::str
-                 <Fake_Int::str_type>
-                 (func_variable, digs, syms);
+                 <Fake_Int, Img_Set_Type>(func_variable, img_set);
 
     return res;
 }
 
 void test_str_speed(test_and_log_util::out_type&){
     volatile Fake_Int::str_type res = Precision::Volatile::Int_Operations::Img::str
-                                      <Fake_Int::str_type>
-                                      (speed_variable, digs, syms);
+                                      <Fake_Int, Img_Set_Type>
+                                      (speed_variable, img_set);
 }
 
 test_and_log_util::result_type test_sci_note_e0(test_and_log_util::out_type&){
@@ -140,8 +179,7 @@ test_and_log_util::result_type test_sci_note_e0(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "-7e0";
     res.actual = Precision::Volatile::Int_Operations::Img::sci_note
-                 <Fake_Int::str_type>
-                 (integer, 100, digs, syms);
+                 <Fake_Int, Img_Set_Type>(integer, 100, img_set);
 
     return res;
 }
@@ -150,8 +188,7 @@ test_and_log_util::result_type test_sci_note_all(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+9.8765432109876543210e19";
     res.actual = Precision::Volatile::Int_Operations::Img::sci_note
-                 <Fake_Int::str_type>
-                 (func_variable, 100, digs, syms);
+                 <Fake_Int, Img_Set_Type>(func_variable, 100, img_set);
 
     return res;
 }
@@ -159,16 +196,14 @@ test_and_log_util::result_type test_sci_note_all(test_and_log_util::out_type&){
 void test_sci_note_speed(test_and_log_util::out_type&){
     volatile Fake_Int::str_type res = 
         Precision::Volatile::Int_Operations::Img::sci_note
-            <Fake_Int::str_type>
-            (speed_variable, 1000, digs, syms);
+            <Fake_Int, Img_Set_Type>(speed_variable, 1000, img_set);
 }
 
 test_and_log_util::result_type test_sci_note_lim(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+9.8765432e19";
     res.actual = Precision::Volatile::Int_Operations::Img::sci_note
-                 <Fake_Int::str_type>
-                 (func_variable, 7, digs, syms);
+                 <Fake_Int, Img_Set_Type>(func_variable, 7, img_set);
 
     return res;
 }
@@ -176,16 +211,14 @@ test_and_log_util::result_type test_sci_note_lim(test_and_log_util::out_type&){
 void test_sci_note_lim_speed(test_and_log_util::out_type&){
     volatile Fake_Int::str_type res = 
         Precision::Volatile::Int_Operations::Img::sci_note
-            <Fake_Int::str_type>
-            (speed_variable, 50, digs, syms);
+            <Fake_Int, Img_Set_Type>(speed_variable, 50, img_set);
 }
 
 test_and_log_util::result_type test_sci_note_w_spaces(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+ 9.87654 e 19";
     res.actual = Precision::Volatile::Int_Operations::Img::sci_note_w_spaces
-                 <Fake_Int::str_type>
-                 (func_variable, 5, digs, syms);
+                 <Fake_Int, Img_Set_Type>(func_variable, 5, img_set);
 
     return res;
 }
@@ -193,42 +226,44 @@ test_and_log_util::result_type test_sci_note_w_spaces(test_and_log_util::out_typ
 void test_sci_note_w_spaces_speed(test_and_log_util::out_type&){
     volatile Fake_Int::str_type res = 
         Precision::Volatile::Int_Operations::Img::sci_note_w_spaces
-            <Fake_Int::str_type>
-            (speed_variable, 1000, digs, syms);
+            <Fake_Int, Img_Set_Type>(speed_variable, 1000, img_set);
 }
 
 test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&){
-    Fake_Int::str_type image = "-1230a45b 607n890";
+    Img_Set_Type::str_type image = "-1230a45b 607n890";
     Fake_Int storage;
     storage.positivity = true;
-    Precision::Volatile::Int_Operations::Img::parse<Fake_Int::str_type, Fake_Int>
-        (image, storage.number, Fake_Int::base(), digs);
+    Fake_Sign sign(storage.positivity);
+    Precision::Volatile::Int_Operations::Img::parse<Fake_Int, Img_Set_Type>
+        (image, storage.number, sign, Fake_Int::base(), img_set);
 
     test_and_log_util::result_type res;
-    res.expected = "+1230045006070890";
+    res.expected = "-1230045006070890";
     res.actual = Precision::Volatile::Int_Operations::Img::str
-                 <Fake_Int::str_type>(storage, digs, syms);
+                 <Fake_Int, Img_Set_Type>(storage, img_set);
 
     return res;
 }
 
 test_and_log_util::result_type test_parse(test_and_log_util::out_type&){
-    Fake_Int::str_type image = "123045607890";
+    Img_Set_Type::str_type image = "123045607890";
     Fake_Int storage;
     storage.positivity = true;
-    Precision::Volatile::Int_Operations::Img::parse<Fake_Int::str_type, Fake_Int>
-        (image, storage.number, Fake_Int::base(), digs);
+    Fake_Sign sign(storage.positivity);
+    Precision::Volatile::Int_Operations::Img::parse<Fake_Int, Img_Set_Type>
+        (image, storage.number, sign, Fake_Int::base(), img_set);
 
     test_and_log_util::result_type res;
     res.expected = "+123045607890";
     res.actual = Precision::Volatile::Int_Operations::Img::str
-                 <Fake_Int::str_type>(storage, digs, syms);
+                 <Fake_Int, Img_Set_Type>(storage, img_set);
 
     return res;
 }
 
 void test_parse_speed(test_and_log_util::out_type&){
     Fake_Int storage;
-    Precision::Volatile::Int_Operations::Img::parse<Fake_Int::str_type, Fake_Int>
-        (speed_string, storage.number, Fake_Int::base(), digs);
+    Fake_Sign sign(storage.positivity);
+    Precision::Volatile::Int_Operations::Img::parse<Fake_Int, Img_Set_Type>
+        (speed_string, storage.number, sign, Fake_Int::base(), img_set);
 }

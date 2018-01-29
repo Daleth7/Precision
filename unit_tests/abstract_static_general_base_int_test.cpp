@@ -110,7 +110,7 @@ static ASGB_Int speed_100digs, rev_100digs, hun_int, quart_hun_int;
 
 void abstract_static_general_base_int_test(){
     test_and_log_util test_list( "Precision::General_Base::Static::"
-                                 "Abstract::Int_Operations", __FILE__);
+                                 "Abstract::Int", __FILE__);
         test_list.set_log_output(test_log);
         test_list.set_console_output(test_console);
         test_list.set_assert(false);
@@ -914,23 +914,25 @@ test_and_log_util::result_type test_asgbi_log_shift(test_and_log_util::out_type&
     return res;
 }
 
+static char const *const digs = "0123456789";
+static char const *const syms = "+-.e /i";
+
+using Img_Set_Type = Precision::Image_Set_Interface<char, char const *, ASGB_Int::digit_type>;
+
+static const Img_Set_Type img_set(digs, syms);
 
 test_and_log_util::str_type to_str(const ASGB_Int& num){
-    static char const *const digs = "0123456789";
-    static char const *const syms = "+-.e /i";
-
     return Precision::Volatile::Int_Operations::Img::str
-           <test_and_log_util::str_type, ASGB_Int>(num, digs, syms);
+           <ASGB_Int, Img_Set_Type>(num, img_set);
 }
 
 ASGB_Int to_asgbi(const test_and_log_util::str_type& src){
-    static char const *const digs = "0123456789";
-
     ASGB_Int::diglist_type toreturn;
+    ASGB_Int::sign_type sign;
 
     Precision::Volatile::Int_Operations::Img::parse
-           <test_and_log_util::str_type, ASGB_Int>
-           (src, toreturn, ASGB_Int::base(), digs);
+           <ASGB_Int, Img_Set_Type>
+           (src, toreturn, sign, ASGB_Int::base(), img_set);
 
     return ASGB_Int(toreturn, 1);
 }

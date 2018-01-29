@@ -7,14 +7,14 @@
 #include "Debug_Switches.h"
 
 std::ostream& test_console = std::clog;
-std::ofstream test_log("log/test_log.txt");
+std::ofstream test_log("../log/test_log.txt");
 
 int main(){
     test_console << '\n';
 
     if(!test_log.is_open()){
         std::cerr << "Could not open/create test_log.txt to save test data."
-                     " Logging to default stream."
+                     " Logging to default stream.\n"
                      ;
     }
 
@@ -34,6 +34,11 @@ int main(){
     signclass_test();
     #endif
 
+    #ifdef TEST_IMG_SET_INTERFACE
+    extern void image_set_interface_test();
+    image_set_interface_test();
+    #endif
+
     #ifdef TEST_IMG_OPERATIONS
     extern void image_operations_test();
     image_operations_test();
@@ -47,6 +52,11 @@ int main(){
     #ifdef TEST_ABSTRACT_STATIC_GENERAL_BASE_INT_CLASS
     extern void abstract_static_general_base_int_test();
     abstract_static_general_base_int_test();
+    #endif
+
+    #ifdef TEST_STATIC_GENERAL_BASE_INT_CLASS
+    extern void static_general_base_int_test();
+    static_general_base_int_test();
     #endif
 
 

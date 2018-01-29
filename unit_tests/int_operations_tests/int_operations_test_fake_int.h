@@ -151,18 +151,24 @@ template <typename IntType>
 test_and_log_util::str_type to_str(const IntType& num){
     static char const *const digs = "0123456789";
     static char const *const syms = "+-.e /i";
+    using isi_type = Precision::Image_Set_Interface
+        <char, char const *, typename IntType::digit_type>;
+    static const isi_type img_set(digs, syms);
 
     return Precision::Volatile::Int_Operations::Img::str
-           <test_and_log_util::str_type, IntType>(num, digs, syms);
+           <IntType, isi_type>(num, img_set);
 }
 
 template <typename IntType>
 test_and_log_util::str_type to_sci_note_str(const IntType& num, std::size_t prec){
     static char const *const digs = "0123456789";
     static char const *const syms = "+-.e /i";
+    using isi_type = Precision::Image_Set_Interface
+        <char, char const *, typename IntType::digit_type>;
+    static const isi_type img_set(digs, syms);
 
     return Precision::Volatile::Int_Operations::Img::sci_note
-           <test_and_log_util::str_type, IntType>(num, prec, digs, syms);
+           <IntType, isi_type>(num, prec, img_set);
 }
 
 #endif

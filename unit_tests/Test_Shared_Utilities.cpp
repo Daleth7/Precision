@@ -98,10 +98,10 @@ void test_and_log_util::execute_tests(){
         }
 
         // Format to print: Test #N (File = src.cpp | Line = L): [Passed/Failed]
-        console << '\t' << std::setw(25) << std::left << cit->func_name
+        console << '\t' << std::setw(35) << std::left << cit->func_name
                 << ": " << (result_matched ? "Passed" : "Failed")
                 ;
-        log << '\t' << std::setw(25) << std::left << cit->func_name << '\t'
+        log << '\t' << std::setw(35) << std::left << cit->func_name << '\t'
             << ": " << (result_matched ? "Passed" : "Failed")
             ;
         // If failed, also print: (Expected: result1 Got: result2)
