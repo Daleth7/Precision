@@ -6,23 +6,23 @@ namespace Precision{
             namespace Img{
                 template <typename IntType, typename ISIType>
                 typename ISIType::str_type str( const IntType& num,
-                                                const ISIType& img_set
+                                                const ISIType& isi
                 ){
                     typedef typename IntType::size_type size_type;
                     typedef typename ISIType::str_type str_type;
 
                     if(num.is_zero()){
-                        return str_type(1, img_set.plus())
-                             + str_type(1, img_set.digit(0));
+                        return str_type(1, isi.plus())
+                             + str_type(1, isi.digit(0));
                     }
-                    str_type toreturn(num.count_digits() + 1, img_set.digit(0));
-                    toreturn[0] = (num.is_positive() ? img_set.plus() : img_set.minus());
+                    str_type toreturn(num.count_digits() + 1, isi.digit(0));
+                    toreturn[0] = (num.is_positive() ? isi.plus() : isi.minus());
                     for(
                         size_type i(1);
                         i <= num.count_digits();
                         ++i
                     ){
-                        toreturn[toreturn.size()-i] = img_set.digit(num.digit(i-1));
+                        toreturn[toreturn.size()-i] = isi.digit(num.digit(i-1));
                     }
                     return toreturn;
                 }
@@ -31,44 +31,44 @@ namespace Precision{
                 template <typename IntType, typename ISIType>
                 typename ISIType::str_type sci_note( const IntType& num,
                                                      typename IntType::size_type prec,
-                                                     const ISIType& img_set
+                                                     const ISIType& isi
                 ){
                     typedef typename ISIType::str_type str_type;
 
                     if(num.is_zero()){
-                        return str_type(1, img_set.plus())
-                             + str_type(1, img_set.digit(0));
+                        return str_type(1, isi.plus())
+                             + str_type(1, isi.digit(0));
                     }
 
                     //Display +#E0
                     if(num.count_digits() < 2)
-                        return str<IntType, ISIType>(num, img_set)
-                                + str_type(1, img_set.exponent())
-                                + str_type(1, img_set.digit(0));
+                        return str<IntType, ISIType>(num, isi)
+                                + str_type(1, isi.exponent())
+                                + str_type(1, isi.digit(0));
 
                     // Start with the basic stringification of the number
-                    str_type toreturn(str<IntType, ISIType>(num, img_set));
+                    str_type toreturn(str<IntType, ISIType>(num, isi));
 
                     // Calculate exponent number
                     typename IntType::size_type exp(toreturn.size() - 2);
 
                     // Insert the point symbol
-                    toreturn.insert(2, 1, img_set.point());
+                    toreturn.insert(2, 1, isi.point());
 
                     // Remove glyphs according to specified precision
                     if(prec < exp)
                         toreturn.erase(3+prec);
-                    if(toreturn.back() == img_set.point())
+                    if(toreturn.back() == isi.point())
                         toreturn.pop_back();
 
                     // Append the exponent symbol to base
-                    toreturn += str_type(1, img_set.exponent());
+                    toreturn += str_type(1, isi.exponent());
 
                     // Convert the exponent number to a string and append
                     str_type exp_str;
                     do{
                         exp_str.insert( exp_str.begin(),
-                                        img_set.digit(exp % num.base())
+                                        isi.digit(exp % num.base())
                                         );
 
                         exp /= num.base();
@@ -82,18 +82,18 @@ namespace Precision{
                 typename ISIType::str_type
                     sci_note_w_spaces( const IntType& num,
                                        typename IntType::size_type prec,
-                                       const ISIType& img_set
+                                       const ISIType& isi
                 ){
                     typedef typename ISIType::str_type str_type;
 
-                    str_type toreturn(sci_note<IntType, ISIType>(num, prec, img_set));
-                    if(toreturn == str_type(1, img_set.digit(0))) return toreturn;
+                    str_type toreturn(sci_note<IntType, ISIType>(num, prec, isi));
+                    if(toreturn == str_type(1, isi.digit(0))) return toreturn;
 
-                    toreturn.insert(1, 1, img_set.space());//Insert space after the sign
+                    toreturn.insert(1, 1, isi.space());//Insert space after the sign
 
                     // Insert spaces befor and after the exponent symbol
-                    toreturn.insert(toreturn.find(img_set.exponent()), 1, img_set.space());
-                    toreturn.insert(toreturn.find(img_set.exponent())+1, 1, img_set.space());
+                    toreturn.insert(toreturn.find(isi.exponent()), 1, isi.space());
+                    toreturn.insert(toreturn.find(isi.exponent())+1, 1, isi.space());
                     return toreturn;
                 }
 
@@ -129,7 +129,7 @@ namespace Precision{
                 void basic_parse( const typename ISIType::str_type& src,
                             typename IntType::diglist_type& new_list,
                             typename IntType::digit_type base,
-                            const ISIType& img_set
+                            const ISIType& isi
                 ){
                     typedef typename IntType::digit_type digit_type;
                     typedef typename IntType::size_type size_type;
@@ -139,7 +139,7 @@ namespace Precision{
                         size_type i(src.size());
                         while(i-- > 0){
                             digit_type hold = ___img_oper_helper<ISIType, SearchPolicy>
-                                            :: get_index(img_set, src[i], base);
+                                            :: get_index(isi, src[i], base);
 
                             *iter = (hold == base ? 0 : hold);
 
@@ -156,17 +156,17 @@ namespace Precision{
                                    typename IntType::diglist_type& dest,
                                    typename IntType::sign_type& sign_dest,
                                    typename IntType::digit_type base,
-                                   const ISIType& img_set
+                                   const ISIType& isi
                 ){
                     if(src.size() > 0){
                         // Determine the sign, if any
                         typename ISIType::str_type::size_type start_idx =
-                            ( (src.front() == img_set.plus()) || (src.front() == img_set.minus()) );
-                        sign_dest.assign(-(src.front() == img_set.minus()));
+                            ( (src.front() == isi.plus()) || (src.front() == isi.minus()) );
+                        sign_dest.assign(-(src.front() == isi.minus()));
 
                         basic_parse<IntType, ISIType, SearchPolicy>
                           ( src.substr(start_idx, src.size()),
-                            dest, base, img_set
+                            dest, base, isi
                             );
                     }
                 }
@@ -176,25 +176,41 @@ namespace Precision{
                                   typename IntType::diglist_type& dest,
                                   typename IntType::sign_type& sign_dest,
                                   typename IntType::digit_type base,
-                                  const ISIType& img_set
+                                  const ISIType& isi
                 ){
+                    using sz_type = typename ISIType::str_type::size_type;
                     if(src.size() > 0){
                         // Determine the exponent, if any
-                        typename ISIType::str_type::size_type e_idx = src.find(img_set.exponent());
+                        sz_type e_idx = src.find(isi.exponent());
 
                         parse_w_sign<IntType, ISIType, SearchPolicy>
-                          ( src.substr(0, (e_idx == ISIType::str_type::npos) ? src.size() : (e_idx+1)),
-                            dest, sign_dest, base, img_set
+                          ( src.substr(0, (e_idx == ISIType::str_type::npos) ? src.size() : (e_idx)),
+                            dest, sign_dest, base, isi
                             );
 
                         // Apply the exponent
                         if(e_idx != ISIType::str_type::npos){
-                            const typename ISIType::str_type::size_type len = src.size()-e_idx;
+                            // Check for negative exponent
+                            const sz_type neg_e = src.find(isi.minus(), e_idx);
+                            sz_type len = src.size()-e_idx-1;
+                            if(neg_e != ISIType::str_type::npos)
+                                --len;
+
+                            // Convert the rest of the string to
+                            // an exponent number
                             typename IntType::size_type exp = 0, pow = 1, i = len;
                             for(; i > 0; --i, pow *= base)
                                 exp += ___img_oper_helper<ISIType, SearchPolicy>
-                                    :: get_index(img_set, src[i-1+e_idx], base) * pow;
-                            dest.insert(dest.begin(), exp, 0);
+                                    :: get_index(isi, src[src.size()-i], base) * pow;
+
+                            // Add or remove 0's based on exponent
+                            if(neg_e == ISIType::str_type::npos)
+                                dest.insert(dest.begin(), exp, 0);
+                            else{
+                                auto end = dest.begin();
+                                std::advance(end, exp);
+                                dest.erase(dest.begin(), end);
+                            }
                         }
                     }
                 }

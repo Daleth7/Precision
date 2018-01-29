@@ -20,33 +20,34 @@ namespace Precision{
               * supports arithmetic to bitwise operations as well direct
               * digit manipulation.
               *
-              * \tparam CharT     The type of character or image used to represent
-              *                   each digit in Base N. Must be compatible as a
-              *                   template parameter to std::basic_string<T>. The
-              *                   string type (str_type) of the class shall be
-              *                   instantiated as std::basic_string<CharT>.
-              * \tparam CharIter  Type of iterators pointing to image set.
-              * \tparam ByteType  The type used for the computer representation
-              *                   of each digit. This type also sets the
-              *                   maximum base that may be used and affects the
-              *                   dynamic storage size. Defaulted to unsigned
-              *                   char, which is guaranteed to allow a base up
-              *                   to 255 and is guaranteed to be at least one
-              *                   byte in size. It is recommended to use
-              *                   unsigned char for small bases.
-              * \tparam Base      The base N the class shall represent.
-              *                   Defaulted to 10.
-              * \tparam Container The container template used to store indices
-              *                   to the array.
-              *                   Most STL containers will work. This shall be
-              *                   instantiated as Container<digit_type>.
-              *                   See Digit_Container for more information.
-              *                   Defaulted to std::vector.
-              * \tparam SignType  The type used to represent the sign of the
-              *                   number, i.e. whether it is positive or
-              *                   negative. See Signed_Interface for more
-              *                   information.
-              *                   Defaulted to Precision::SignClass.
+              * \tparam CharT           The type of character or image used to represent
+              *                         each digit in Base N. Must be compatible as a
+              *                         template parameter to std::basic_string<T>. The
+              *                         string type (str_type) of the class shall be
+              *                         instantiated as std::basic_string<CharT>.
+              * \tparam CharIter        Type of iterators pointing to image set.
+              * \tparam ByteType        The type used for the computer representation
+              *                         of each digit. This type also sets the
+              *                         maximum base that may be used and affects the
+              *                         dynamic storage size. Defaulted to unsigned
+              *                         char, which is guaranteed to allow a base up
+              *                         to 255 and is guaranteed to be at least one
+              *                         byte in size. It is recommended to use
+              *                         unsigned char for small bases.
+              * \tparam Base            The base N the class shall represent.
+              *                         Defaulted to 10.
+              * \tparam Container       The container template used to store indices
+              *                         to the array.
+              *                         Most STL containers will work. This shall be
+              *                         instantiated as Container<digit_type>.
+              *                         See Digit_Container for more information.
+              *                         Defaulted to std::vector.
+              * \tparam SignType        The type used to represent the sign of the
+              *                         number, i.e. whether it is positive or
+              *                         negative. See Signed_Interface for more
+              *                         information.
+              *                         Defaulted to Precision::SignClass.
+              * \tparam SearchPolicy    The search policy for image-based operations.
               * 
               * Example Instantiations:
               * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,7 +94,8 @@ namespace Precision{
                        typename ByteType = Default::byte_type, ByteType Base = 10,
                        template <typename...>
                            class Container = Default::container_type,
-                       typename SignType = Default::sign_type
+                       typename SignType = Default::sign_type,
+                       typename SearchPolicy = ImgSearchPolicy::Binary
                        >
             class Int : public Abstract::Int<ByteType, Base, Container, SignType> {
                 public:
@@ -685,17 +687,16 @@ namespace Precision{
                          image_iter_type new_dig_img_set = Default::digs,
                          image_iter_type new_sym_img_set = Default::syms
                          )
-                        : m_abs(0)
+                        : m_abs()
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {
                         diglist_type new_num(1, 0);
                         sign_type new_sign;
                         Volatile::Int_Operations::Img::parse
-                        <Int, image_set_type>
-                          ( img_str,
-                            new_num, new_sign,
-                            this->base(), m_img_set
-                            );
+                              <Int, image_set_type, SearchPolicy>
+                              ( img_str, new_num, new_sign,
+                                this->base(), m_img_set
+                                );
                         m_abs = abstract_type(new_num, new_sign);
                     }
 
@@ -792,9 +793,9 @@ namespace Precision{
 #define PASTE_TEMPL_ template < typename CharT, typename CharIter,      \
                                 typename ByteType, ByteType Base,       \
                                 template <typename...> class Container, \
-                                typename SignType                       \
+                                typename SignType, typename SearchPolicy\
                                 >
-#define PASTE_INST_ Int <CharT, CharIter, ByteType, Base, Container, SignType>
+#define PASTE_INST_ Int <CharT, CharIter, ByteType, Base, Container, SignType, SearchPolicy>
 
                 #include "impl/paste/Precision_Operator.paste"
 

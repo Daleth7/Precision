@@ -7,6 +7,9 @@ test_and_log_util::result_type test_sgbi_default(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_signed_size(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_diglist(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_iterators(test_and_log_util::out_type&);
+test_and_log_util::result_type test_sgbi_str_unsigned(test_and_log_util::out_type&);
+test_and_log_util::result_type test_sgbi_str_signed(test_and_log_util::out_type&);
+test_and_log_util::result_type test_sgbi_str_exp(test_and_log_util::out_type&);
 
 // Digit Container tests
 test_and_log_util::result_type test_sgbi_is_zero(test_and_log_util::out_type&);
@@ -123,7 +126,9 @@ void static_general_base_int_test(){
     ADD_TEST(test_list, test_sgbi_signed_size);
     ADD_TEST(test_list, test_sgbi_diglist);
     ADD_TEST(test_list, test_sgbi_iterators);
-    ADD_TEST(test_list, test_sgbi_str);
+    ADD_TEST(test_list, test_sgbi_str_unsigned);
+    ADD_TEST(test_list, test_sgbi_str_signed);
+    ADD_TEST(test_list, test_sgbi_str_exp);
 
     ADD_TEST(test_list, test_sgbi_is_zero);
     ADD_TEST(test_list, test_sgbi_is_mag_one);
@@ -189,7 +194,7 @@ void static_general_base_int_test(){
     ADD_TEST(test_list, test_sgbi_log_shift);
 
     ADD_TEST(test_list, test_sgbi_custom_image_int);
-//    ADD_TEST(test_list, test_sgbi_custom_image_str);
+    ADD_TEST(test_list, test_sgbi_custom_image_str);
     ADD_TEST(test_list, test_sgbi_custom_image_mult);
 
     setup_sgbi_variables();
@@ -259,6 +264,36 @@ test_and_log_util::result_type test_sgbi_iterators(test_and_log_util::out_type&)
     test_and_log_util::result_type res;
     res.expected = "+1017059034100";
     res.actual = testee.str();
+
+    return res;
+}
+
+test_and_log_util::result_type test_sgbi_str_unsigned(test_and_log_util::out_type&){
+    SGB_Int testee("23092354");
+
+    test_and_log_util::result_type res;
+    res.expected = "+23092354";
+    res.actual = testee.str();
+
+    return res;
+}
+
+test_and_log_util::result_type test_sgbi_str_signed(test_and_log_util::out_type&){
+    SGB_Int testee("-23092354"), testee2("+23092354");
+
+    test_and_log_util::result_type res;
+    res.expected = "-23092354+23092354";
+    res.actual = testee.str() + testee2.str();
+
+    return res;
+}
+
+test_and_log_util::result_type test_sgbi_str_exp(test_and_log_util::out_type&){
+    SGB_Int testee("238e4"), testee2("-239874e-4");
+
+    test_and_log_util::result_type res;
+    res.expected = "+2380000-23";
+    res.actual = testee.str() + testee2.str();
 
     return res;
 }
@@ -978,13 +1013,18 @@ test_and_log_util::result_type test_sgbi_custom_image_str(test_and_log_util::out
     char const *const new_digs = ")!@#$%^&*(",
                *const new_syms = "=_>3\t?1"
                ;
+    using Shift_Int = Precision::General_Base::Static::Int
+                    <char, char const *, Precision::Default::byte_type, 10,
+                    std::vector, Precision::Default::sign_type,
+                    Precision::ImgSearchPolicy::Normal
+                    >;
 
-    SGB_Int::str_type bad_str("_!)@819307 24k32v23");
+    Shift_Int::str_type bad_str("_!)df @@#*(@f hg@*#(*erg)# @$3@");
 
-    SGB_Int testee(bad_str, new_digs, new_syms);
+    Shift_Int testee(bad_str, new_digs, new_syms);
 
     test_and_log_util::result_type res;
-    res.expected = "_!)@)))))))))))))))";
+    res.expected = "_!))))@@#*(@))))@*#(*))))#)@$))";
     res.actual = testee.str();
 
     return res;
