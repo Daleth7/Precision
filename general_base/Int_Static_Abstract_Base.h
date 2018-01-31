@@ -169,6 +169,14 @@ namespace Precision{
                           */
                         static constexpr typename dig_container::digit_type base();
 
+                        /** Return the image set. Since this number type is abstract,
+                          * i.e. has no visual representation, this function always
+                          * returns a 0. This function is needed for certain algorithms.
+                          *
+                          * \return The image set.
+                          */
+                        static constexpr int image_set(){return 0;}
+
 
 
                         //Modifiers
@@ -233,7 +241,17 @@ namespace Precision{
                           * \param new_base The base to change to.
                           *
                           */
-                        void set_base(typename dig_container::digit_type new_base){}
+                        void base(typename dig_container::digit_type new_base){}
+
+                        /** Change the image set. Since this is an abstract number, i.e.
+                          * has no visual representation, this function does nothing. This
+                          * is required for certain algorithms.
+                          *
+                          * \param new_set The new image set to use.
+                          *
+                          */
+                        template <typename Dummy>
+                        void image_set(const Dummy& new_set){}
 
 
 

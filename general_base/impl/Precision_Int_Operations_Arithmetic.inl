@@ -133,7 +133,9 @@ namespace Precision{
 
                 const typename IntType::digit_type base = Helper::base(num);
 
-                fac %= base; // Make sure factor is limited
+                //fac %= base; // Make sure factor is limited
+                               // (Note: Whether this is needed is not clear,
+                               // so comment out for now)
 
                 using ld_type = typename IntType::catalyst_type;
                 using size_type = typename IntType::size_type;

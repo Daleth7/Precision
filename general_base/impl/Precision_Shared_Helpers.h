@@ -205,6 +205,21 @@ namespace Precision{
         template <typename IntType, typename Number_Type2>
         inline void match_base(IntType& num, const Number_Type2& ref);
 
+        /** Modifier to copy the image set from an
+         *  object of type Number_Type2 to an object of type
+         *  IntType.
+         *  Whether or not the set is actually copied
+         *  depends on IntType.
+         *
+         * \tparam IntType The type of the number being changed 
+         * \tparam Number_Type2 The type of the reference number 
+         *
+         * \param num Number to copy the set to.  
+         * \param ref Number to extract set information from. 
+         */
+        template <typename IntType, typename Number_Type2>
+        inline void copy_image_set(IntType& num, const Number_Type2& ref);
+
         /** Decoupled modifier to assign 0 to a number.
          *
          * \tparam IntType The type of the number being changed 

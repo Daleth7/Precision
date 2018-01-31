@@ -59,6 +59,11 @@ int main(){
     static_general_base_int_test();
     #endif
 
+    #ifdef TEST_INTERBASE_OPERATIONS
+    extern void interbase_operations_test();
+    interbase_operations_test();
+    #endif
+
 
 
     clock::time_point fin = clock::now();

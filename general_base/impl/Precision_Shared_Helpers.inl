@@ -119,23 +119,30 @@ namespace Precision{
 
         template <typename IntType, typename Number_Type2>
         void match_base(IntType& num, const Number_Type2& ref)
-            {num.set_base(ref.base());}
+            {num.base(ref.base());}
+
+        template <typename IntType, typename Number_Type2>
+        void copy_image_set(IntType& num, const Number_Type2& ref)
+            {num.image_set(ref.image_set());}
 
         template <typename IntType, typename Number_Type2>
         void make_zero(IntType& num, const Number_Type2& ref){
             match_base(num, ref);
+            copy_image_set(num, ref);
             num.make_zero();
         }
 
         template <typename IntType, typename Number_Type2>
         void make_one(IntType& num, const Number_Type2& ref){
             match_base(num, ref);
+            copy_image_set(num, ref);
             num.make_one();
         }
 
         template <typename IntType, typename Number_Type2>
         void make_two(IntType& num, const Number_Type2& ref){
             match_base(num, ref);
+            copy_image_set(num, ref);
             num.make_two();
         }
 
