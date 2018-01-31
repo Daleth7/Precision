@@ -42,8 +42,8 @@ Modules to implement:
 |                   | Image Set         | compile-time              |           |
 |                   | Operations        |                           |           |
 ---------------------------------------------------------------------------------
-| Base Converter    |                   | A utility for converting  | Not       |
-|                   |                   | among number bases        | Started   |
+| Base Converter    |                   | A utility for converting  | In        |
+|                   |                   | among number bases        | Progress  |
 ---------------------------------------------------------------------------------
 | Abstract Dynamic  | Integer           | A class representing an   | Not       |
 | General Base      | Operations        | "abstract", or without    | Started   |

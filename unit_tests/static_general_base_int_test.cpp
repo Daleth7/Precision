@@ -57,15 +57,10 @@ test_and_log_util::result_type test_sgbi_force_assign(test_and_log_util::out_typ
 
 // Arithmetic tests
 test_and_log_util::result_type test_sgbi_add(test_and_log_util::out_type&);
-void test_sgbi_add_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_sub(test_and_log_util::out_type&);
-void test_sgbi_sub_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_mult(test_and_log_util::out_type&);
-void test_sgbi_mult_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_div(test_and_log_util::out_type&);
-void test_sgbi_div_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_mod(test_and_log_util::out_type&);
-void test_sgbi_mod_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_pre_dec(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_post_dec(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_pre_inc(test_and_log_util::out_type&);
@@ -73,27 +68,17 @@ test_and_log_util::result_type test_sgbi_post_inc(test_and_log_util::out_type&);
 
 // Bitwise tests
 test_and_log_util::result_type test_sgbi_and(test_and_log_util::out_type&);
-void test_sgbi_and_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_or(test_and_log_util::out_type&);
-void test_sgbi_or_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_xor(test_and_log_util::out_type&);
-void test_sgbi_xor_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_compl(test_and_log_util::out_type&);
-void test_sgbi_compl_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_lshift(test_and_log_util::out_type&);
-void test_sgbi_lshift_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_rshift(test_and_log_util::out_type&);
-void test_sgbi_rshift_speed(test_and_log_util::out_type&);
 
 // Logical tests
 test_and_log_util::result_type test_sgbi_log_and(test_and_log_util::out_type&);
-void test_sgbi_log_and_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_log_or(test_and_log_util::out_type&);
-void test_sgbi_log_or_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_log_xor(test_and_log_util::out_type&);
-void test_sgbi_log_xor_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_log_compl(test_and_log_util::out_type&);
-void test_sgbi_log_compl_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_log_lshift(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_log_rshift(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_log_shift(test_and_log_util::out_type&);
@@ -112,9 +97,6 @@ using SGB_Int = Precision::General_Base::Static::Int<>;
 
 // Variables for functionality tests
 static SGB_Int all_digs_int, rev_digs_int, two_int, eight_int;
-
-// Variables for speed tests
-static SGB_Int speed_100digs, rev_100digs, hun_int, quart_hun_int;
 
 void static_general_base_int_test(){
     test_and_log_util test_list("Precision::General_Base::Static::Int", __FILE__);
@@ -209,18 +191,11 @@ void setup_sgbi_variables(){
     rev_digs_int = SGB_Int("123456789");
     two_int.make_two();
     eight_int = SGB_Int(8);
-
-    speed_100digs = SGB_Int(SGB_Int::digstr_type(100, 7), 1);
-    rev_100digs = SGB_Int(SGB_Int::digstr_type(100, 9), -1);
-    hun_int = SGB_Int(100);
-    quart_hun_int = SGB_Int(25);
 }
 
 void cleanup_sgbi(){
     all_digs_int.make_zero();
     rev_digs_int.make_zero();
-    speed_100digs.make_zero();
-    rev_100digs.make_zero();
 }
 
 // Constructor tests
@@ -745,20 +720,12 @@ test_and_log_util::result_type test_sgbi_add(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_add_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs + rev_100digs;
-}
-
 test_and_log_util::result_type test_sgbi_sub(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+9753086421";
     res.actual = (all_digs_int - rev_digs_int).str();
 
     return res;
-}
-
-void test_sgbi_sub_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs - rev_100digs;
 }
 
 test_and_log_util::result_type test_sgbi_mult(test_and_log_util::out_type&){
@@ -769,10 +736,6 @@ test_and_log_util::result_type test_sgbi_mult(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_mult_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs * rev_100digs;
-}
-
 test_and_log_util::result_type test_sgbi_div(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+80";
@@ -781,20 +744,12 @@ test_and_log_util::result_type test_sgbi_div(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_div_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs / two_int;
-}
-
 test_and_log_util::result_type test_sgbi_mod(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+0";
     res.actual = (all_digs_int % two_int).str();
 
     return res;
-}
-
-void test_sgbi_mod_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs % two_int;
 }
 
 test_and_log_util::result_type test_sgbi_pre_dec(test_and_log_util::out_type&){
@@ -848,20 +803,12 @@ test_and_log_util::result_type test_sgbi_and(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_and_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs & rev_100digs;
-}
-
 test_and_log_util::result_type test_sgbi_or(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+9931841535";
     res.actual = (all_digs_int | rev_digs_int).str();
 
     return res;
-}
-
-void test_sgbi_or_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs | rev_100digs;
 }
 
 test_and_log_util::result_type test_sgbi_xor(test_and_log_util::out_type&){
@@ -872,20 +819,12 @@ test_and_log_util::result_type test_sgbi_xor(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_xor_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs ^ rev_100digs;
-}
-
 test_and_log_util::result_type test_sgbi_compl(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "-7303325973";
     res.actual = (~all_digs_int).str();
 
     return res;
-}
-
-void test_sgbi_compl_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = ~speed_100digs;
 }
 
 test_and_log_util::result_type test_sgbi_lshift(test_and_log_util::out_type&){
@@ -896,20 +835,12 @@ test_and_log_util::result_type test_sgbi_lshift(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_lshift_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs << hun_int;
-}
-
 test_and_log_util::result_type test_sgbi_rshift(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+38580246";
     res.actual = (all_digs_int >> eight_int).str();
 
     return res;
-}
-
-void test_sgbi_rshift_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs >> quart_hun_int;
 }
 
 
@@ -922,20 +853,12 @@ test_and_log_util::result_type test_sgbi_log_and(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_log_and_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs.logical_and(rev_100digs);
-}
-
 test_and_log_util::result_type test_sgbi_log_or(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+9151991519";
     res.actual = (all_digs_int.logical_or(rev_digs_int)).str();
 
     return res;
-}
-
-void test_sgbi_log_or_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs.logical_or(rev_100digs);
 }
 
 test_and_log_util::result_type test_sgbi_log_xor(test_and_log_util::out_type&){
@@ -946,20 +869,12 @@ test_and_log_util::result_type test_sgbi_log_xor(test_and_log_util::out_type&){
     return res;
 }
 
-void test_sgbi_log_xor_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs.logical_xor(rev_100digs);
-}
-
 test_and_log_util::result_type test_sgbi_log_compl(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "-123456789";
     res.actual = (all_digs_int.logical_complement()).str();
 
     return res;
-}
-
-void test_sgbi_log_compl_speed(test_and_log_util::out_type&){
-    volatile SGB_Int res = speed_100digs.logical_complement();
 }
 
 test_and_log_util::result_type test_sgbi_log_lshift(test_and_log_util::out_type&){

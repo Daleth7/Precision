@@ -14,6 +14,7 @@ namespace Precision{
     namespace Default{
         using byte_type = std::uint_fast8_t;
         using image_type = char;
+        using image_iter_type = char const *;
         template <typename... TArgs>
             using container_type = std::vector<TArgs...>;
         using sign_type = Precision::SignClass;

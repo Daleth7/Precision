@@ -78,11 +78,11 @@ namespace Precision{
               *     // Create an integer with a custom image representation
               *     const char digs* = ")!@#$%^&*(", *syms = "=_>3\t?1";
               *
-              *     using ShiftInt = Static::Int< char, char const *,
-              *                                 digs, syms
-              *                                 >;
+              *     using ShiftInt = Static::Int<char, char const *>;
               *
-              *     ShiftInt num1(12345), num2("-@#$(&)@#*$#@&%");
+              *     ShiftInt num1(12345, digs, syms),
+              *              num2("-@#$(&)@#*$#@&%", digs, syms)
+              *              ;
               *     ShiftInt result = num2 * num1;
               *
               *     std::cout << result.str() << '\n';
@@ -280,6 +280,13 @@ namespace Precision{
                     static constexpr digit_type base()
                         {return abstract_type::base();}
 
+                    /** Return the image set.
+                      *
+                      * \return The image set.
+                      */
+                    const image_set_type& image_set()const
+                        {return m_img_set;}
+
                     /** Convert this integer to a string of glyphs/symbols.
                       *
                       *  \return The converted string of glyphs, or the "image." 
@@ -427,7 +434,15 @@ namespace Precision{
                       * \param new_base The base to change to.
                       *
                       */
-                    void set_base(digit_type new_base){}
+                    void base(digit_type new_base){}
+
+                    /** Set a new image set.
+                      *
+                      * \param new_set The new image set to use.
+                      *
+                      */
+                    void image_set(const image_set_type& new_set)
+                        {m_img_set = new_set;}
 
 
 

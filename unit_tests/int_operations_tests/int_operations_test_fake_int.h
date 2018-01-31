@@ -65,9 +65,16 @@ struct Core_Int {
     static digit_type base()
         {return 10;}
 
+    static int image_set()
+        {return 0;}
 
 
-    void set_base(digit_type)
+
+    void base(digit_type)
+        {/* Do nothing */}
+
+    template <typename Dummy>
+    void image_set(const Dummy&)
         {/* Do nothing */}
 
     void make_zero()
