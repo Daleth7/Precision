@@ -205,6 +205,20 @@ namespace Precision{
         template <typename IntType, typename Number_Type2>
         inline void match_base(IntType& num, const Number_Type2& ref);
 
+        /** Modifier to change the number base of a IntType
+         *  object to a specified number base.
+         *  Whether or not the base is actually changed depends
+         *  on IntType.
+         *
+         * \tparam IntType The type of the number being changed 
+         * \tparam Number_Type2 The type of the base 
+         *
+         * \param num Number to change the base of.  
+         * \param base New number base to change to. 
+         */
+        template <typename IntType, typename Number_Type2>
+        inline void match_base_raw(IntType& num, const Number_Type2& base);
+
         /** Modifier to copy the image set from an
          *  object of type Number_Type2 to an object of type
          *  IntType.

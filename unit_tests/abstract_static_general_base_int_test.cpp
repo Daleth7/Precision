@@ -3,6 +3,8 @@
 #include "general_base/Int_Static_Abstract_Base.h"
 #include "general_base/impl/Precision_Int_Operations_Img.h"
 
+#include <list>
+
 // Constructor tests
 test_and_log_util::result_type test_asgbi_default(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_signed_size(test_and_log_util::out_type&);
@@ -93,20 +95,59 @@ test_and_log_util::result_type test_asgbi_log_lshift(test_and_log_util::out_type
 test_and_log_util::result_type test_asgbi_log_rshift(test_and_log_util::out_type&);
 test_and_log_util::result_type test_asgbi_log_shift(test_and_log_util::out_type&);
 
+// Customer template parameter tests
+test_and_log_util::result_type test_asgbi_cust_dig(test_and_log_util::out_type&);
+test_and_log_util::result_type test_asgbi_cust_base(test_and_log_util::out_type&);
+test_and_log_util::result_type test_asgbi_cust_contain(test_and_log_util::out_type&);
+void test_asgbi_cust_contain_speed(test_and_log_util::out_type&);
+
 void setup_asgbi_variables();
 // Cleanup function to free memory
 void cleanup_asgbi();
 
 using ASGB_Int = Precision::General_Base::Static::Abstract::Int<>;
+template <typename Data_Type>
+struct dumb_container : public std::list<Data_Type>{
+    using list_type = std::list<Data_Type>;
 
-test_and_log_util::str_type to_str(const ASGB_Int& num);
-ASGB_Int to_asgbi(const test_and_log_util::str_type& src);
+    using typename list_type::const_reference;
+    using typename list_type::reference;
+    using typename list_type::size_type;
+    using typename list_type::const_iterator;
+    using typename list_type::iterator;
+    using typename list_type::value_type;
+
+    const_reference operator[](size_type idx)const{
+        const_iterator cit = this->cbegin();
+        std::advance(cit, idx);
+        return *cit;
+    }
+
+    reference operator[](size_type idx){
+        iterator it = this->begin();
+        std::advance(it, idx);
+        return *it;
+    }
+
+    dumb_container() = default;
+    dumb_container(size_type sz, value_type val)
+        : list_type(sz, val)
+    {}
+};
+using list_Int = Precision::General_Base::Static::Abstract::Int
+    <Precision::Default::byte_type, 10, dumb_container>;
+
+template <class ABS_Int_Type>
+test_and_log_util::str_type to_str(const ABS_Int_Type& num);
+template <class ABS_Int_Type>
+ABS_Int_Type to_asgbi(const test_and_log_util::str_type& src);
 
 // Variables for functionality tests
 static ASGB_Int all_digs_int, rev_digs_int, two_int, eight_int;
 
 // Variables for speed tests
 static ASGB_Int speed_100digs, rev_100digs, hun_int, quart_hun_int;
+static list_Int speed_list_100digs, rev_list_100digs;
 
 void abstract_static_general_base_int_test(){
     test_and_log_util test_list( "Precision::General_Base::Static::"
@@ -179,6 +220,10 @@ void abstract_static_general_base_int_test(){
     ADD_TEST(test_list, test_asgbi_log_rshift);
     ADD_TEST(test_list, test_asgbi_log_shift);
 
+    ADD_TEST(test_list, test_asgbi_cust_dig);
+    ADD_TEST(test_list, test_asgbi_cust_base);
+    ADD_TEST_BOTH(test_list, test_asgbi_cust_contain, test_asgbi_cust_contain_speed, 10000);
+
     setup_asgbi_variables();
 
     test_list.execute_tests();
@@ -187,8 +232,8 @@ void abstract_static_general_base_int_test(){
 }
 
 void setup_asgbi_variables(){
-    all_digs_int = to_asgbi("9876543210");
-    rev_digs_int = to_asgbi("123456789");
+    all_digs_int = to_asgbi<ASGB_Int>("9876543210");
+    rev_digs_int = to_asgbi<ASGB_Int>("123456789");
     two_int.make_two();
     eight_int = ASGB_Int(8);
 
@@ -196,6 +241,8 @@ void setup_asgbi_variables(){
     rev_100digs = ASGB_Int(ASGB_Int::diglist_type(100, 9), -1);
     hun_int = ASGB_Int(100);
     quart_hun_int = ASGB_Int(25);
+    speed_list_100digs = list_Int(list_Int::diglist_type(100, 7), 1);
+    rev_list_100digs = list_Int(list_Int::diglist_type(100, 9), -1);
 }
 
 void cleanup_asgbi(){
@@ -203,6 +250,8 @@ void cleanup_asgbi(){
     rev_digs_int.make_zero();
     speed_100digs.make_zero();
     rev_100digs.make_zero();
+    speed_list_100digs.make_zero();
+    rev_list_100digs.make_zero();
 }
 
 // Constructor tests
@@ -914,6 +963,52 @@ test_and_log_util::result_type test_asgbi_log_shift(test_and_log_util::out_type&
     return res;
 }
 
+// Customer template parameter tests
+test_and_log_util::result_type test_asgbi_cust_dig(test_and_log_util::out_type&){
+    using byte_Int = Precision::General_Base::Static::Abstract::Int<std::uint8_t>;
+
+    byte_Int byt(0x3445), bit(7);
+
+    test_and_log_util::result_type res;
+    res.expected = "+1911";
+    res.actual = to_str(byt / bit);
+
+    return res;
+}
+
+test_and_log_util::result_type test_asgbi_cust_base(test_and_log_util::out_type&){
+    using sept_Int = Precision::General_Base::Static::Abstract::Int
+        <Precision::Default::byte_type, 7>;
+
+    sept_Int sept(77), sept2(-43);
+
+    test_and_log_util::result_type res;
+    res.expected = "+140-61-12440";
+    res.actual = to_str(sept) + to_str(sept2) + to_str(sept*sept2);
+
+    return res;
+}
+
+test_and_log_util::result_type test_asgbi_cust_contain(test_and_log_util::out_type&){
+    list_Int::diglist_type all_list(10, 0);
+    list_Int::digit_type count = 0;
+    for(auto& dig : all_list) dig = count++;
+
+    list_Int alll(all_list, 1), revl(to_asgbi<list_Int>("123456789"));
+
+    test_and_log_util::result_type res;
+    res.expected = "+9999999999";
+    res.actual = to_str(alll + revl);
+
+    return res;
+}
+
+void test_asgbi_cust_contain_speed(test_and_log_util::out_type&){
+    volatile list_Int res = speed_list_100digs + rev_list_100digs;
+}
+
+
+
 static char const *const digs = "0123456789";
 static char const *const syms = "+-.e /i";
 
@@ -921,18 +1016,20 @@ using Img_Set_Type = Precision::Image_Set_Interface<char, char const *, ASGB_Int
 
 static const Img_Set_Type img_set(digs, syms);
 
-test_and_log_util::str_type to_str(const ASGB_Int& num){
+template <class ABS_Int_Type>
+test_and_log_util::str_type to_str(const ABS_Int_Type& num){
     return Precision::Volatile::Int_Operations::Img::str
-           <ASGB_Int, Img_Set_Type>(num, img_set);
+           <ABS_Int_Type, Img_Set_Type>(num, img_set);
 }
 
-ASGB_Int to_asgbi(const test_and_log_util::str_type& src){
-    ASGB_Int::diglist_type toreturn;
-    ASGB_Int::sign_type sign;
+template <class ABS_Int_Type>
+ABS_Int_Type to_asgbi(const test_and_log_util::str_type& src){
+    typename ABS_Int_Type::diglist_type toreturn;
+    typename ABS_Int_Type::sign_type sign;
 
     Precision::Volatile::Int_Operations::Img::parse
-           <ASGB_Int, Img_Set_Type>
-           (src, toreturn, sign, ASGB_Int::base(), img_set);
+           <ABS_Int_Type, Img_Set_Type>
+           (src, toreturn, sign, ABS_Int_Type::base(), img_set);
 
-    return ASGB_Int(toreturn, 1);
+    return ABS_Int_Type(toreturn, 1);
 }

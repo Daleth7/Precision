@@ -3,60 +3,68 @@
 namespace Precision{
     namespace Convert_Helper{
         template <typename IntType1, typename IntType2>
-        IntType2 convert_base_accumulation( const IntType1& lhs,
-                                            const IntType2& rhs
+        IntType2 convert_base_accumulation( const IntType1& orig,
+                                            const IntType2& ref
         ){
             // To help speed up calculation, store addends in a bucket
             // and calculate the total sum later.
             Volatile::Int_Operations::Arith_Helper::bucket_type<IntType2> bucket;
-            IntType2 factor(Helper::make_one_temp(rhs));
-            for(typename IntType2::size_type i = 0; i < Helper::int_size(lhs); ++i){
+            IntType2 factor(Helper::make_one_temp(ref));
+            for(typename IntType2::size_type i = 0; i < Helper::int_size(orig); ++i){
                 IntType2 addend(factor);
-                Volatile::Int_Operations::multiply_factor(addend, Helper::digit(lhs, i));
+                Volatile::Int_Operations::multiply_factor(addend, Helper::digit(orig, i));
 
                 bucket.emplace_back(addend);
 
                 // Shift factor by one digit place based on original base
-                Volatile::Int_Operations::multiply_factor(factor, Helper::base(lhs));
+                Volatile::Int_Operations::multiply_factor(factor, Helper::base(orig));
             }
 
-            IntType2 toreturn(Helper::make_zero_temp(rhs));
+            IntType2 toreturn(Helper::make_zero_temp(ref));
             Volatile::Int_Operations::Arith_Helper::accumulate(toreturn, bucket);
 
-            toreturn.sign(lhs.sign());
+            toreturn.sign(orig.sign());
 
             return toreturn;
         }
 
         template <typename IntType1, typename IntType2>
-        IntType2 convert_base_gathering( const IntType1& lhs,
-                                         const IntType2& rhs
+        IntType2 convert_base_gathering( const IntType1& orig,
+                                         const IntType2& ref
         ){
             // To help speed up calculation, store addends in a bucket
             // and calculate the total sum later.
-            IntType2 factor(Helper::make_one_temp(rhs)),
-                     toreturn(Helper::make_zero_temp(rhs))
+            IntType2 factor(Helper::make_one_temp(ref)),
+                     toreturn(Helper::make_zero_temp(ref))
                      ;
-            for(typename IntType2::size_type i = 0; i < Helper::int_size(lhs); ++i){
+            for(typename IntType2::size_type i = 0; i < Helper::int_size(orig); ++i){
                 IntType2 addend(factor);
-                Volatile::Int_Operations::multiply_factor(addend, Helper::digit(lhs, i));
+                Volatile::Int_Operations::multiply_factor(addend, Helper::digit(orig, i));
 
                 Volatile::Int_Operations::add(toreturn, addend);
 
                 // Shift factor by one digit place based on original base
-                Volatile::Int_Operations::multiply_factor(factor, Helper::base(lhs));
+                Volatile::Int_Operations::multiply_factor(factor, Helper::base(orig));
             }
 
-            toreturn.sign(lhs.sign());
+            toreturn.sign(orig.sign());
 
             return toreturn;
         }
     }
+
+    template <typename IntType2, typename IntType1, typename Digit_Type>
+    IntType2 convert_base(const IntType1& orig, Digit_Type base){
+        IntType2 ref;
+        Helper::match_base_raw(ref, base);
+        return convert_base_copy(orig, ref);
+    }
+
     template <typename IntType1, typename IntType2>
-    IntType2 convert_base(const IntType1& lhs, const IntType2& rhs){
-        if(Helper::int_size(lhs) < 2){
-            IntType2 toreturn = Helper::make_one_temp(rhs);
-            Volatile::Int_Operations::multiply_factor(toreturn, Helper::digit(lhs,0));
+    IntType2 convert_base_copy(const IntType1& orig, const IntType2& ref){
+        if(Helper::int_size(orig) < 2){
+            IntType2 toreturn = Helper::make_one_temp(ref);
+            Volatile::Int_Operations::multiply_factor(toreturn, Helper::digit(orig,0));
             return toreturn;
         }
 
@@ -74,9 +82,9 @@ namespace Precision{
         // --> 42 = 0x04*0x0A + 0x02*0x01
         // --> 42 = 0x28 + 0x02
         // --> 42 = 0x2A
-        if(Helper::int_size(lhs) < Volatile::Int_Operations::Arith_Helper::acc_sw_min)
-            return Convert_Helper::convert_base_accumulation(lhs, rhs);
+        if(Helper::int_size(orig) < Volatile::Int_Operations::Arith_Helper::acc_sw_min)
+            return Convert_Helper::convert_base_accumulation(orig, ref);
         else
-            return Convert_Helper::convert_base_gathering(lhs, rhs);
+            return Convert_Helper::convert_base_gathering(orig, ref);
     }
 }

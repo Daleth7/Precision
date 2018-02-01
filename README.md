@@ -87,11 +87,15 @@ Modules to implement:
 |                   | Fraction          |                           |           |
 |                   | Operations        |                           |           |
 ---------------------------------------------------------------------------------
-| Complex           |                   | Classes representing      | Not       |
-| - Abstract Static |                   | complex numbers. The      | Started   |
-| - Static          |                   | scalar numbers may be     |           |
-| - Abstract Dynamic|                   | represented by any other  |           |
-| - Dynamic         |                   | number type.              |           |
+| Complex           | exception         | A set of functions and/or | Not       |
+| Operations        |                   | operations for dealing    | Started   |
+|                   |                   | with complex-based data   |           |
+---------------------------------------------------------------------------------
+| Complex           | Complex           | Classes representing      | Not       |
+| Polar             | Operations        | complex numbers. The      | Started   |
+|                   |                   | scalar numbers may be     |           |
+|                   |                   | represented by any other  |           |
+|                   |                   | number type.              |           |
 ---------------------------------------------------------------------------------
 | PRNG              |                   | Basic proof-of-concept    | Not       |
 |                   |                   | PRNG that supports        | Started   |

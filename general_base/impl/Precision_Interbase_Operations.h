@@ -13,31 +13,29 @@
 
 namespace Precision{
     /** A simple number conversion function to convert among bases.
-     * 
-     *  \tparam IntType Number type from which type and base
-     *                  information is extracted. This function
-     *                  assumes IntType has the public members:
-     *                  * Type IntType::diglist_type
-     *                  * Type IntType::sign_type
-     *                  * Type IntType::size_type
-     *                  * Type IntType::digit_type
-     *                  * Type IntType::catalyst_type
-     *                  * Method bool IntType::is_zero()
-     *                  * Method digit_type IntType::digit(size_type)
-     *                  * Method diglist_type IntType::digit_list()
-     *                  * Method size_type IntType::count_digits()
-     *                  * Method sign_type IntType::sign()
-     *                  * Method digit_type IntType::base()
-     *                  * Method void IntType::append()
-     *                  * Method void IntType::detach(digit_type)
-     *                  * Method void IntType::digit(size_type, digit_type)
-     *                  * Method sign_type IntType::sign(sign_type)
      *
-     *  \param lhs The number to convert
-     *  \param rhs The second number to extract type information from
+     *  \tparam IntType1 The type of the original number.
+     *  \tparam IntType1 The type of the number to convert to.
+     *  \tparam Digit_Type The type of the number base.
+     *
+     *  \param orig The number to convert
+     *  \param base The number base to convert to.
+     */
+    template <typename IntType2, typename IntType1, typename Digit_Type>
+    IntType2 convert_base(const IntType1& orig, Digit_Type base);
+
+    /** A simple number conversion function to convert among bases.
+     *  This function also copies over attributes based on the
+     *  reference number given.
+     * 
+     *  \tparam IntType1 The type of the original number.
+     *  \tparam IntType1 The type of the number to convert to.
+     *
+     *  \param orig The number to convert
+     *  \param ref The second number to extract type information from
      */
     template <typename IntType1, typename IntType2>
-    IntType2 convert_base(const IntType1& lhs, const IntType2& rhs);
+    IntType2 convert_base_copy(const IntType1& orig, const IntType2& ref);
 }
 
 #include "Precision_Interbase_Operations.inl"

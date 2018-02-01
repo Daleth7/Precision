@@ -276,7 +276,9 @@ namespace Precision{
               */
             void force_single_digit(digit_type new_dig){
                 m_number.front() = new_dig;
-                m_number.erase(m_number.begin()+1, m_number.end());
+                auto beg = m_number.begin();
+                std::advance(beg, 1);
+                m_number.erase(beg, m_number.end());
             }
 
             diglist_type m_number;
