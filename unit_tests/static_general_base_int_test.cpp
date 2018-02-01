@@ -87,6 +87,7 @@ test_and_log_util::result_type test_sgbi_log_shift(test_and_log_util::out_type&)
 test_and_log_util::result_type test_sgbi_custom_image_int(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_custom_image_str(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_custom_image_mult(test_and_log_util::out_type&);
+test_and_log_util::result_type test_sgbi_custom_iter(test_and_log_util::out_type&);
 
 void setup_sgbi_variables();
 // Cleanup function to free memory
@@ -178,6 +179,7 @@ void static_general_base_int_test(){
     ADD_TEST(test_list, test_sgbi_custom_image_int);
     ADD_TEST(test_list, test_sgbi_custom_image_str);
     ADD_TEST(test_list, test_sgbi_custom_image_mult);
+    ADD_TEST(test_list, test_sgbi_custom_iter);
 
     setup_sgbi_variables();
 
@@ -955,6 +957,39 @@ test_and_log_util::result_type test_sgbi_custom_image_mult(test_and_log_util::ou
     test_and_log_util::result_type res;
     res.expected = "=*!@*";
     res.actual = (testee1 * testee2).str();
+
+    return res;
+}
+
+#include <sstream>
+
+template <typename Iterator>
+test_and_log_util::str_type num_str_to_str(Iterator beg, Iterator end){
+    test_and_log_util::str_type toreturn;
+    for(; beg != end; ++beg){
+        std::stringstream ss;
+        ss << *beg;
+        toreturn += ss.str();
+    }
+    return toreturn;
+}
+
+test_and_log_util::result_type test_sgbi_custom_iter(test_and_log_util::out_type&){
+    using img_type = int;
+    using int_str = std::vector<img_type>;
+    int_str new_digs({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}),
+            new_syms({100, 200, 300, 400, 500, 600, 700})
+            ;
+    using num_Int = Precision::General_Base::Static::Int
+                    <img_type, int_str::const_iterator>;
+
+    num_Int testee(-72348, new_digs.cbegin(), new_syms.cbegin());
+
+    num_Int::str_type num_str = testee.sci_note_w_spaces();
+
+    test_and_log_util::result_type res;
+    res.expected = "200500730023485004005004";
+    res.actual = num_str_to_str(num_str.cbegin(), num_str.cend());
 
     return res;
 }

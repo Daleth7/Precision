@@ -122,6 +122,10 @@ namespace Precision{
             {num.base(ref.base());}
 
         template <typename IntType, typename Number_Type2>
+        void match_base_raw(IntType& num, const Number_Type2& base)
+            {num.base(base);}
+
+        template <typename IntType, typename Number_Type2>
         void copy_image_set(IntType& num, const Number_Type2& ref)
             {num.image_set(ref.image_set());}
 

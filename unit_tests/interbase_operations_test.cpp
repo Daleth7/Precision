@@ -3,17 +3,18 @@
 #include "general_base/Int_Static_Base.h"
 #include "general_base/impl/Precision_Interbase_Operations.h"
 
-test_and_log_util::result_type test_convert_abstract(test_and_log_util::out_type&);
-void test_convert_speed_tens(test_and_log_util::out_type&);
-test_and_log_util::result_type test_convert_static(test_and_log_util::out_type&);
-void test_convert_speed_same_digs(test_and_log_util::out_type&);
-test_and_log_util::result_type test_convert_static_abstract(test_and_log_util::out_type&);
-void test_convert_speed_mixed(test_and_log_util::out_type&);
-test_and_log_util::result_type test_convert_one_dig(test_and_log_util::out_type&);
-test_and_log_util::result_type test_convert_static_img_set(test_and_log_util::out_type&);
-test_and_log_util::result_type test_convert_static_abstract_img(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_copy_abstract(test_and_log_util::out_type&);
+void test_convert_copy_speed_tens(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_copy_static(test_and_log_util::out_type&);
+void test_convert_copy_speed_same_digs(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_copy_static_abs(test_and_log_util::out_type&);
+void test_convert_copy_speed_mixed(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_copy_one_dig(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_copy_static_img_set(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_copy_static_abs_img(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert(test_and_log_util::out_type&);
 
-void setup_convert_variables();
+void setup_convert_copy_variables();
 // Cleanup function to free memory
 void cleanup_convert();
 
@@ -40,26 +41,27 @@ static const speed_SGB_Int speed_ref;
 static SGB_Int speed_100digs_tens, speed_100digs, speed_100digs_mixed;
 
 void interbase_operations_test(){
-    test_and_log_util test_list("Precision::convert_base", __FILE__);
+    test_and_log_util test_list("Precision::convert_base_copy", __FILE__);
         test_list.set_log_output(test_log);
         test_list.set_console_output(test_console);
         test_list.set_assert(true);
 
-    ADD_TEST_BOTH(test_list, test_convert_abstract, test_convert_speed_tens, 1000);
-    ADD_TEST_BOTH(test_list, test_convert_static, test_convert_speed_same_digs, 1000);
-    ADD_TEST_BOTH(test_list, test_convert_static_abstract, test_convert_speed_mixed, 1000);
-    ADD_TEST(test_list, test_convert_one_dig);
-    ADD_TEST(test_list, test_convert_static_img_set);
-    ADD_TEST(test_list, test_convert_static_abstract_img);
+    ADD_TEST_BOTH(test_list, test_convert_copy_abstract, test_convert_copy_speed_tens, 1000);
+    ADD_TEST_BOTH(test_list, test_convert_copy_static, test_convert_copy_speed_same_digs, 1000);
+    ADD_TEST_BOTH(test_list, test_convert_copy_static_abs, test_convert_copy_speed_mixed, 1000);
+    ADD_TEST(test_list, test_convert_copy_one_dig);
+    ADD_TEST(test_list, test_convert_copy_static_img_set);
+    ADD_TEST(test_list, test_convert_copy_static_abs_img);
+    ADD_TEST(test_list, test_convert);
 
-    setup_convert_variables();
+    setup_convert_copy_variables();
 
     test_list.execute_tests();
 
     cleanup_convert();
 }
 
-void setup_convert_variables(){
+void setup_convert_copy_variables(){
     all_digs_int = SGB_Int("9876543210");
     rev_digs_int = SGB_Int("123456789");
 
@@ -90,9 +92,9 @@ void cleanup_convert(){
     speed_100digs_mixed.make_zero();
 }
 
-test_and_log_util::result_type test_convert_abstract(test_and_log_util::out_type&){
+test_and_log_util::result_type test_convert_copy_abstract(test_and_log_util::out_type&){
     hex_ASGB_Int ref;
-    hex_ASGB_Int testee = Precision::convert_base(all_digs_abs_int, ref);
+    hex_ASGB_Int testee = Precision::convert_base_copy(all_digs_abs_int, ref);
 
     test_and_log_util::result_type res;
     res.expected = "-24CB016EA";
@@ -101,13 +103,13 @@ test_and_log_util::result_type test_convert_abstract(test_and_log_util::out_type
     return res;
 }
 
-void test_convert_speed_tens(test_and_log_util::out_type&){
-    volatile speed_SGB_Int res = Precision::convert_base(speed_100digs_tens, speed_ref);
+void test_convert_copy_speed_tens(test_and_log_util::out_type&){
+    volatile speed_SGB_Int res = Precision::convert_base_copy(speed_100digs_tens, speed_ref);
 }
 
-test_and_log_util::result_type test_convert_static(test_and_log_util::out_type&){
+test_and_log_util::result_type test_convert_copy_static(test_and_log_util::out_type&){
     hex_SGB_Int ref;
-    hex_SGB_Int testee = Precision::convert_base(all_digs_int, ref);
+    hex_SGB_Int testee = Precision::convert_base_copy(all_digs_int, ref);
 
     test_and_log_util::result_type res;
     res.expected = "+24CB016EA";
@@ -116,13 +118,13 @@ test_and_log_util::result_type test_convert_static(test_and_log_util::out_type&)
     return res;
 }
 
-void test_convert_speed_same_digs(test_and_log_util::out_type&){
-    volatile speed_SGB_Int res = Precision::convert_base(speed_100digs, speed_ref);
+void test_convert_copy_speed_same_digs(test_and_log_util::out_type&){
+    volatile speed_SGB_Int res = Precision::convert_base_copy(speed_100digs, speed_ref);
 }
 
-test_and_log_util::result_type test_convert_static_abstract(test_and_log_util::out_type&){
+test_and_log_util::result_type test_convert_copy_static_abs(test_and_log_util::out_type&){
     hex_ASGB_Int ref;
-    hex_ASGB_Int testee = Precision::convert_base(rev_digs_int, ref);
+    hex_ASGB_Int testee = Precision::convert_base_copy(rev_digs_int, ref);
 
     test_and_log_util::result_type res;
     res.expected = "+75BCD15";
@@ -131,13 +133,13 @@ test_and_log_util::result_type test_convert_static_abstract(test_and_log_util::o
     return res;
 }
 
-void test_convert_speed_mixed(test_and_log_util::out_type&){
-    volatile speed_SGB_Int res = Precision::convert_base(speed_100digs_mixed, speed_ref);
+void test_convert_copy_speed_mixed(test_and_log_util::out_type&){
+    volatile speed_SGB_Int res = Precision::convert_base_copy(speed_100digs_mixed, speed_ref);
 }
 
-test_and_log_util::result_type test_convert_one_dig(test_and_log_util::out_type&){
+test_and_log_util::result_type test_convert_copy_one_dig(test_and_log_util::out_type&){
     hex_SGB_Int hex_testee(0xD);
-    SGB_Int testee = Precision::convert_base(hex_testee, all_digs_int);
+    SGB_Int testee = Precision::convert_base_copy(hex_testee, all_digs_int);
 
     test_and_log_util::result_type res;
     res.expected = "+13";
@@ -146,12 +148,12 @@ test_and_log_util::result_type test_convert_one_dig(test_and_log_util::out_type&
     return res;
 }
 
-test_and_log_util::result_type test_convert_static_img_set(test_and_log_util::out_type&){
+test_and_log_util::result_type test_convert_copy_static_img_set(test_and_log_util::out_type&){
     //                             0123456789ABCDEF
     char const * const new_digs = "zyxwvutsrqponmlk";
 
     hex_SGB_Int ref(0, new_digs, Precision::Default::syms);
-    hex_SGB_Int testee = Precision::convert_base(all_digs_int, ref);
+    hex_SGB_Int testee = Precision::convert_base_copy(all_digs_int, ref);
 
     test_and_log_util::result_type res;
     res.expected = "+xvnozytlp";
@@ -160,16 +162,31 @@ test_and_log_util::result_type test_convert_static_img_set(test_and_log_util::ou
     return res;
 }
 
-test_and_log_util::result_type test_convert_static_abstract_img(test_and_log_util::out_type&){
+test_and_log_util::result_type test_convert_copy_static_abs_img(test_and_log_util::out_type&){
     //                             0123456789ABCDEF
     char const * const new_digs = "zyxwvutsrqponmlk";
 
     hex_SGB_Int ref(0, new_digs, Precision::Default::syms);
-    hex_SGB_Int testee = Precision::convert_base(all_digs_abs_int, ref);
+    hex_SGB_Int testee = Precision::convert_base_copy(all_digs_abs_int, ref);
 
     test_and_log_util::result_type res;
     res.expected = "-xvnozytlp";
     res.actual = testee.str();
+
+    return res;
+}
+
+test_and_log_util::result_type test_convert(test_and_log_util::out_type&){
+    hex_SGB_Int testee = Precision::convert_base<hex_SGB_Int>(rev_digs_int, 16);
+
+    //                             0123456789ABCDEF
+    char const * const new_digs = "zyxwvutsrqponmlk";
+    SGB_Int cpy(all_digs_abs_int, new_digs, Precision::Default::syms);
+    hex_SGB_Int testee2 = Precision::convert_base<hex_SGB_Int>(cpy, 16);
+
+    test_and_log_util::result_type res;
+    res.expected = "+75BCD15-24CB016EA";
+    res.actual = testee.str() + testee2.str();
 
     return res;
 }
