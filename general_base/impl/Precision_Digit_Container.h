@@ -7,6 +7,7 @@
 #define CONTAIN23ER_NUMBER_HOL978DING_DIGIT22222____HHHH
 
 #include "Precision_Defaults.h"
+#include "Precision_Shared_Helpers.h"
 
 #include <initializer_list>
 
@@ -174,6 +175,9 @@ namespace Precision{
 
             /** Insert a new digit at the end of the string. */
             void append(digit_type new_dig){
+                // Do not append 0's since it is already assumed
+                // all digits to the left of the left-most digit
+                // will be 0.
                 if(new_dig > 0) m_number.push_back(new_dig);
             }
 
@@ -279,6 +283,42 @@ namespace Precision{
                 auto beg = m_number.begin();
                 std::advance(beg, 1);
                 m_number.erase(beg, m_number.end());
+            }
+
+            /** Help split a number into its digits and store in digit list.
+              *
+              * \param val The number to split into digits.
+              * \param base The base the interpret the number as.
+              */
+            void split_number_store(signed_size_type val, digit_type base){
+                m_number.front() = val % base;
+                val /= base;
+
+                while(val > 0){
+                    m_number.push_back(val % base);
+                    val /= base;
+                }
+
+                if(this->count_digits() == 0)
+                    m_number.push_back(0);
+            }
+
+            /** Check each digit if it falls within the number range
+              * dictated by the number base, i.e. does dig belong to
+              * the range [0, base)?
+              * Also make sure the list isn't empty and that the list
+              * contains no leading 0's.
+              *
+              * \param base The base the interpret the digits as.
+              */
+            void verify_diglist(digit_type base){
+                if(m_number.size() == 0)
+                    m_number.push_back(0);
+                for( auto it = m_number.begin();
+                     it != m_number.end();
+                     ++it
+                ) if(*it >= base || *it < 0) *it = 0;
+                Helper::remove_excess_zeros(*this);
             }
 
             diglist_type m_number;

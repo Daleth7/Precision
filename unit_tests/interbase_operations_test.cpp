@@ -13,6 +13,7 @@ test_and_log_util::result_type test_convert_copy_one_dig(test_and_log_util::out_
 test_and_log_util::result_type test_convert_copy_static_img_set(test_and_log_util::out_type&);
 test_and_log_util::result_type test_convert_copy_static_abs_img(test_and_log_util::out_type&);
 test_and_log_util::result_type test_convert(test_and_log_util::out_type&);
+test_and_log_util::result_type test_convert_same_base(test_and_log_util::out_type&);
 
 void setup_convert_copy_variables();
 // Cleanup function to free memory
@@ -53,6 +54,7 @@ void interbase_operations_test(){
     ADD_TEST(test_list, test_convert_copy_static_img_set);
     ADD_TEST(test_list, test_convert_copy_static_abs_img);
     ADD_TEST(test_list, test_convert);
+    ADD_TEST(test_list, test_convert_same_base);
 
     setup_convert_copy_variables();
 
@@ -186,6 +188,18 @@ test_and_log_util::result_type test_convert(test_and_log_util::out_type&){
 
     test_and_log_util::result_type res;
     res.expected = "+75BCD15-24CB016EA";
+    res.actual = testee.str() + testee2.str();
+
+    return res;
+}
+
+test_and_log_util::result_type test_convert_same_base(test_and_log_util::out_type&){
+    SGB_Int testee = Precision::convert_base_copy(rev_digs_int, all_digs_int),
+            testee2 = Precision::convert_base_copy(-rev_digs_int, all_digs_abs_int)
+            ;
+
+    test_and_log_util::result_type res;
+    res.expected = "+123456789-123456789";
     res.actual = testee.str() + testee2.str();
 
     return res;

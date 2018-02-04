@@ -84,8 +84,12 @@ void test_and_log_util::execute_tests(){
         }catch(const std::exception& err){
             // Do not attempt running further tests that may depend on this
             // failed test
-            console << "\nExperienced unexpected error: " << err.what() << '\n';
-            log << "\nExperienced unexpected error: " << err.what() << '\n';
+            console << "\nExperienced error: " << err.what() << '\n';
+            log << "\nExperienced error: " << err.what() << '\n';
+            break;
+        }catch(...){
+            console << "\nExperienced unexpected error..." << '\n';
+            log << "\nExperienced unexpected error..." << '\n';
             break;
         }
         bool result_matched = test_result.expected == test_result.actual;
@@ -95,6 +99,10 @@ void test_and_log_util::execute_tests(){
             // If an exception is thrown, do not attempt to run other tests
             console << err.what();
             return;
+        }catch(...){
+            console << "\nExperienced unexpected error..." << '\n';
+            log << "\nExperienced unexpected error..." << '\n';
+            break;
         }
 
         // Format to print: Test #N (File = src.cpp | Line = L): [Passed/Failed]
@@ -115,7 +123,7 @@ void test_and_log_util::execute_tests(){
         }
 
         // Perform speed tests
-        if(cit->max_repeats > 0 && cit->speed_test){
+        if(result_matched && cit->max_repeats > 0 && cit->speed_test){
             size_type test_repeat_counter = cit->max_repeats;
             double average_time = 0.0;
             bool err_encountered = false;

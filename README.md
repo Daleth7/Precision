@@ -42,11 +42,11 @@ Modules to implement:
 |                   | Image Set         | compile-time              |           |
 |                   | Operations        |                           |           |
 ---------------------------------------------------------------------------------
-| Base Converter    |                   | A utility for converting  | In        |
-|                   |                   | among number bases        | Progress  |
+| Base Converter    |                   | A utility for converting  | Done      |
+|                   |                   | among number bases        |           |
 ---------------------------------------------------------------------------------
-| Abstract Dynamic  | Integer           | A class representing an   | Not       |
-| General Base      | Operations        | "abstract", or without    | Started   |
+| Abstract Dynamic  | Integer           | A class representing an   | Done      |
+| General Base      | Operations        | "abstract", or without    |           |
 | Integer           |                   | visual representation,    |           |
 |                   | Signed Interface  | integer with a number     |           |
 |                   |                   | radix mutable at          |           |
@@ -110,13 +110,13 @@ Modules to implement:
 |                   | Fraction          |                           |           |
 |                   | Operations        |                           |           |
 ---------------------------------------------------------------------------------
-| Iterator          |                   | An interface in all       | Not       |
-| Interface         |                   | types to make them STL-   | Started   |
-|                   |                   | container-like            |           |
+| Iterator          |                   | An interface in all       | In        |
+| Interface         |                   | types to make them STL-   | Consider- |
+|                   |                   | container-like            | ation     |
 ---------------------------------------------------------------------------------
-| Conservative      |                   | A digit string manager    | Not       |
-| Digit Container   |                   | that stuffs data into     | Started   |
-|                   |                   | the most compact form     |           |
+| Conservative      |                   | A digit string manager    | In        |
+| Digit Container   |                   | that stuffs data into     | Consider- |
+|                   |                   | the most compact form     | ation     |
 |                   |                   | possible                  |           |
 ---------------------------------------------------------------------------------
 | Documentation     |                   | Web-based documentation   | In        |
