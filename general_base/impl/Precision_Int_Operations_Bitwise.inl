@@ -2,7 +2,6 @@
 #include "Precision_Exception.h"
 
 #include <utility>  // For std::move
-
 #include <type_traits>
 
 namespace Precision{
@@ -52,11 +51,10 @@ namespace Precision{
 
                 // Create a constant for two in radix IntType::base
                 // and 
-                const IntType two = Helper::make_two_temp(lhs),
-                              increment = Helper::make_one_temp(lhs)
-                              ;
+                const IntType increment = Helper::make_one_temp(lhs);
                 IntType counter = Helper::make_zero_temp(lhs),
-                        rhs_copy = rhs
+                        rhs_copy = rhs,
+                        two = Helper::make_one_temp(lhs)
                         ;
                 Arith_Helper::bucket_type<IntType> bucket;
                 while(!Helper::is_zero(lhs) || !Helper::is_zero(rhs_copy)){
@@ -82,15 +80,14 @@ namespace Precision{
 
                     // Convert the bit to the equivalent number of IntType::base
                     if(bit){
-                        IntType bit_int = two;
-                        exponentiate(bit_int, counter);
-
-                        bucket.emplace_back(bit_int);
+                        bucket.push_back(two);
                     }
-
                     add(counter, increment);
                     Helper::halve(lhs);
                     Helper::halve(rhs_copy);
+
+                    // Update the binary factor
+                    multiply_factor(two, 2);
                 }
                 lhs = Helper::make_zero_temp(lhs);
                 Arith_Helper::accumulate(lhs, bucket);

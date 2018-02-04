@@ -14,16 +14,6 @@ Precision::SignClass [signclass_test.cpp]:
 	test_make_positive                 	: Passed
 	test_make_negative                 	: Passed
 
-Precision::Digit_Container_View [digit_container_view_test.cpp]:
-	test_digstr_view_iteriter          	: Passed
-	test_digstr_view_itersize          	: Passed
-	test_digstr_view_diglistoffsize    	: Passed
-	test_digstr_view_is_zero           	: Passed
-	test_digstr_view_is_mag_one        	: Passed
-	test_digstr_view_is_even           	: Passed
-	test_digstr_view_is_odd            	: Passed
-	test_digstr_view_digit             	: Passed
-
 Precision::Image_Set_Interface [image_set_interface_test.cpp]:
 	test_is_valid                      	: Passed
 	test_get_index                     	: Passed ; Average execution time: 0 s
@@ -126,7 +116,7 @@ Precision::General_Base::Static::Abstract::Int [abstract_static_general_base_int
 	test_asgbi_is_mag_one              	: Passed
 	test_asgbi_is_even                 	: Passed
 	test_asgbi_is_odd                  	: Passed
-	test_asgbi_digit_string            	: Passed
+	test_asgbi_digit_list              	: Passed
 	test_asgbi_count_digits            	: Passed
 	test_asgbi_shift_left              	: Passed
 	test_asgbi_shift_right             	: Passed
@@ -191,7 +181,7 @@ Precision::General_Base::Static::Int [static_general_base_int_test.cpp]:
 	test_sgbi_is_mag_one               	: Passed
 	test_sgbi_is_even                  	: Passed
 	test_sgbi_is_odd                   	: Passed
-	test_sgbi_digit_string             	: Passed
+	test_sgbi_digit_list               	: Passed
 	test_sgbi_count_digits             	: Passed
 	test_sgbi_shift_left               	: Passed
 	test_sgbi_shift_right              	: Passed

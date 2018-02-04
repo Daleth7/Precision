@@ -62,6 +62,25 @@ namespace Precision{
 
     template <typename IntType1, typename IntType2>
     IntType2 convert_base_copy(const IntType1& orig, const IntType2& ref){
+        if(Helper::base(orig) == Helper::base(ref)){
+            // Simply copy the digits over since
+            // digit lists cannot be directly copied
+            // without verifying against a default base.
+            IntType2 toreturn = Helper::make_one_temp(ref);
+            Helper::match_base(toreturn, orig);
+
+            // Count down to force container to allocate all memory
+            // on first iteration instead of allocating every few
+            // iterations.
+            typename IntType1::size_type i = Helper::int_size(orig);
+            while(i-- > 0)
+                toreturn.force_assign(i, Helper::digit(orig, i));
+
+            toreturn.sign(orig.sign());
+
+            return toreturn;
+        }
+
         if(Helper::int_size(orig) < 2){
             IntType2 toreturn = Helper::make_one_temp(ref);
             Volatile::Int_Operations::multiply_factor(toreturn, Helper::digit(orig,0));

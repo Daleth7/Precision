@@ -15,6 +15,7 @@ test_and_log_util::result_type test_bit_comp(test_and_log_util::out_type&);
 void test_bit_comp_speed(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_and_spec_eq(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_and_eq(test_and_log_util::out_type&);
+test_and_log_util::result_type test_bit_and_eq_zero(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_or_eq(test_and_log_util::out_type&);
 test_and_log_util::result_type test_bit_xor_eq(test_and_log_util::out_type&);
 void test_bit_oper_speed(test_and_log_util::out_type&);
@@ -74,6 +75,7 @@ void add_bitwise_tests(test_and_log_util& dest){
                    );
     ADD_TEST(dest, test_bit_and_spec_eq);
     ADD_TEST(dest, test_bit_and_eq);
+    ADD_TEST(dest, test_bit_and_eq_zero);
     ADD_TEST(dest, test_bit_or_eq);
     ADD_TEST_BOTH( dest,
                    test_bit_xor_eq, test_bit_oper_speed,
@@ -159,6 +161,21 @@ test_and_log_util::result_type test_bit_and_eq(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+1085281792";
     res.actual = to_str(bit_copy);
+
+    return res;
+}
+
+test_and_log_util::result_type test_bit_and_eq_zero(test_and_log_util::out_type&){
+    Core_Int bit_copy = all_digs_int, zero_core;
+    zero_core.m_number = Core_Int::diglist_type({0});
+    zero_core.make_positive();
+
+    Precision::Volatile::Int_Operations::bitwise_and_eq(zero_core, bit_copy);
+    Precision::Volatile::Int_Operations::bitwise_and_eq(bit_copy, zero_core);
+
+    test_and_log_util::result_type res;
+    res.expected = "+0+0";
+    res.actual = to_str(bit_copy) + to_str(zero_core);
 
     return res;
 }

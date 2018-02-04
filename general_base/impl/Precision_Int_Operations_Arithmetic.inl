@@ -163,7 +163,7 @@ namespace Precision{
                 // Deal with overflow
                 typename IntType::digit_type carry_int = carry;
                 while(carry_int > 0){
-                    num.append(carry_int % base);
+                    num.force_assign(Helper::int_size(num), carry_int % base);
                     carry_int /= base;
                 }
 
@@ -177,13 +177,16 @@ namespace Precision{
                 template <typename IntType>
                 using bucket_type = std::vector<IntType>;
 
+                // Helper function to deal with the summation of multiple
+                // integers stored in a bucket. The numbers are assumed to
+                // all be positive.
                 template<typename IntType>
                 void accumulate(IntType& dest, const bucket_type<IntType>& bucket){
                     using ld_type = typename IntType::catalyst_type;
                     using size_type = typename IntType::size_type;
 
                     // Find the length of the longest integer
-                    size_type max_len = Helper::int_size(bucket.back());
+                    size_type max_len = 0;
                     for(const auto& num : bucket){
                         if(Helper::int_size(num) > max_len)
                             max_len = Helper::int_size(num);
@@ -215,7 +218,9 @@ namespace Precision{
 
                     // Deal with overflow
                     while(carry > 0){
-                        dest.append(std::fmod(carry, Helper::base(dest)));
+                        dest.force_assign( Helper::int_size(dest),
+                                           std::fmod(carry, Helper::base(dest))
+                                           );
                         carry /= Helper::base(dest);
                     }
 

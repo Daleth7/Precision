@@ -1,13 +1,15 @@
-/** \file Int_Static_Abstract_Base.h
+/** \file Int_Dynamic_Abstract_Base.h
   * 
-  * Precision::General_Base::Static::Abstract::Int provides an image-less
+  * Precision::General_Base::Dynamic::Abstract::Int provides an image-less
   * precision integer with basic integer operations from arithmetic to
   * sign manipulation. This class will also serve as the core to all
-  * static (i.e. fixed radix) number types in the Precision namespace.
+  * dynamic (i.e. mutable radix) number types in the Precision namespace.
+  * Results of operations involving multiple integers will share the base
+  * of the left hand side value.
   */
 
-#ifndef HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_STATIC_ABSTRACT_BASE_H
-#define HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_STATIC_ABSTRACT_BASE_H
+#ifndef HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_DYN77_NAMEIC_ABSTRACT_BASE_H
+#define HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_DYN77_NAMEIC_ABSTRACT_BASE_H
 
 #include "impl/Precision_Signed_Interface.h"
 #include "impl/Precision_Digit_Container.h"
@@ -15,12 +17,14 @@
 
 namespace Precision{
     namespace General_Base{
-        namespace Static{
+        namespace Dynamic{
             namespace Abstract{
-                /** A basic integer implementation with a fixed number base
-                  * that is specified as a template parameter. This  integer
+                /** A basic integer implementation with a mutable number base
+                  * that is specified as a constructor parameter. This integer
                   * supports arithmetic to bitwise operations as well direct
                   * digit manipulation.
+                  * Results of operations involving multiple integers will
+                  * share the base of the left hand side value.
                   *
                   * \tparam ByteType  The type used for the computer representation
                   *                   of each digit. This type also sets the
@@ -30,8 +34,6 @@ namespace Precision{
                   *                   to 255 and is guaranteed to be at least one
                   *                   byte in size. It is recommended to use
                   *                   unsigned char for small bases.
-                  * \tparam Base      The base N the class shall represent.
-                  *                   Defaulted to 10.
                   * \tparam Container The container template used to store indices
                   *                   to the array.
                   *                   Most STL containers will work. This shall be
@@ -48,24 +50,29 @@ namespace Precision{
                   * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                   *     using namespace Precision::General_Base;
                   *
-                  *     // Create an integer type using int's for digits
-                  *     // and is base 25.
-                  *     using Int = Static::Abstract::Int<int, 25>;
+                  *     // Create an integer type using int's for digits.
+                  *     using Int = Dynamic::Abstract::Int<int>;
+                  *
+                  *     // Create an integer object with base 25 and initialized
+                  *     // to a value of 420.
+                  *     Dynamic::Abstract::Int<> dynamic(420, 25)
                   *
                   *     // Create an integer with a custom container that
-                  *     // handles memory differently than std::vector.
+                  *     // handles memory differently than std::vector. Also
+                  *     // create objects of bases 17 and 33.
                   *     template <typename value_type>
                   *     using my_container = Custom_Container<value_type>;
-                  *     using MemInt = Static::Abstract::Int
-                  *                      <int, 17, my_container>;
+                  *     using MemInt = Dynamic::Abstract::Int<int, my_container>;
                   *
-                  *     MemInt num1(12345), num2({9, 0, 1, 1, 16, 14, 10}, -1);
-                  *     MemInt result = num2 % num1;
+                  *     MemInt num1(12345, 17),
+                  *            num2({9, 0, 1, 1, 16, 14, 10}, -1, 33)
+                  *            ;
+                  *     MemInt result = num2 % num1; // result is base 33
+                  *                                  // (left hand side)
                   *     
                   * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                   */
                 template < typename ByteType = Default::byte_type,
-                           ByteType Base = 10,
                            template <typename...>
                                class Container = Default::container_type,
                            typename SignType = Default::sign_type
@@ -90,7 +97,7 @@ namespace Precision{
                         /* Inherited from Digit_Container
 
                         using digit_type;
-                        using digstr_type;
+                        using diglist_type;
                         using size_type;
                         using signed_size_type;
 
@@ -112,7 +119,7 @@ namespace Precision{
                         bool is_mag_one()const;
                         bool is_even()const;
                         bool is_odd()const;
-                        const digstr_type& digit_string()const;
+                        const diglist_type& digit_list()const;
                         size_type count_digits()const;
                         digit_type digit(size_type index)const;
 
@@ -167,7 +174,7 @@ namespace Precision{
                           *
                           * \return The number base.
                           */
-                        static constexpr typename dig_container::digit_type base();
+                        typename dig_container::digit_type base()const;
 
                         /** Return the image set. Since this number type is abstract,
                           * i.e. has no visual representation, this function always
@@ -234,14 +241,12 @@ namespace Precision{
                                            typename dig_container::digit_type new_dig
                                            );
 
-                        /** Change the base. Since this is a static number, i.e.
-                          * has a fixed base, this function does nothing. This
-                          * is required for certain algorithms.
+                        /** Change the base.
                           *
                           * \param new_base The base to change to.
                           *
                           */
-                        void base(typename dig_container::digit_type new_base){}
+                        void base(typename dig_container::digit_type new_base);
 
                         /** Change the image set. Since this is an abstract number, i.e.
                           * has no visual representation, this function does nothing. This
@@ -466,17 +471,24 @@ namespace Precision{
                           * integer value.
                           *
                           * \param val The signed integer number to start with.
+                          * \param new_base The number base this number is
+                          *                 represented as.
                           */
-                        Int(typename dig_container::signed_size_type val=0);
+                        Int( typename dig_container::signed_size_type val=0,
+                             typename dig_container::digit_type new_base = 10
+                             );
 
                         /** Construct the number starting with a string of
                           * digits and a numerical sign.
                           *
                           * \param new_diglist A string of digits to start with.
                           * \param new_sign A numerical sign to start with.
+                          * \param new_base The number base this number is
+                          *                 represented as.
                           */
-                        Int( const typename dig_container::digstr_type& new_diglist,
-                             typename signed_interface::sign_type new_sign
+                        Int( const typename dig_container::diglist_type& new_diglist,
+                             typename signed_interface::sign_type new_sign,
+                             typename dig_container::digit_type new_base = 10
                              );
 
                         /** Construct the number using a string of digits pointed
@@ -487,10 +499,13 @@ namespace Precision{
                           * \param pbeg Start of the digit string.
                           * \param pend End of the digit string.
                           * \param new_sign A numerical sign to start with.
+                          * \param new_base The number base this number is
+                          *                 represented as.
                           */
                         template <typename Iterator>
                         Int( const Iterator& pbeg, const Iterator& pend,
-                             typename signed_interface::sign_type new_sign
+                             typename signed_interface::sign_type new_sign,
+                             typename dig_container::digit_type new_base = 10
                              );
 
                         /** Compiler generated copy constructor. */
@@ -509,7 +524,7 @@ namespace Precision{
                     protected:
                         /* Inherited from Digit_Container
 
-                        digstr_type m_number;
+                        diglist_type m_number;
 
                         */
 
@@ -519,6 +534,8 @@ namespace Precision{
 
                         */
 
+                        typename dig_container::digit_type m_base;
+
 
 
                     private:
@@ -527,14 +544,15 @@ namespace Precision{
                             using std::swap;
                             swap(f.m_number, s.m_number);
                             swap(f.m_sign, s.m_sign);
+                            swap(f.m_base, s.m_base);
                         }
                 };
 
-#define PASTE_TEMPL_ template < typename ByteType, ByteType Base,       \
+#define PASTE_TEMPL_ template < typename ByteType,                      \
                                 template <typename...> class Container, \
                                 typename SignType                       \
                                 >
-#define PASTE_INST_ Int <ByteType, Base, Container, SignType>
+#define PASTE_INST_ Int <ByteType, Container, SignType>
 
                 #include "impl/paste/Precision_Operator.paste"
 
@@ -545,6 +563,6 @@ namespace Precision{
     }
 }
 
-#include "impl/Int_Static_Abstract_Base.inl"
+#include "impl/Int_Dynamic_Abstract_Base.inl"
 
 #endif  //Include guard
