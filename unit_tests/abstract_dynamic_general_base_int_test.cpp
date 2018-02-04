@@ -7,6 +7,7 @@
 
 // Constructor tests
 test_and_log_util::result_type test_adgbi_default(test_and_log_util::out_type&);
+test_and_log_util::result_type test_adgbi_new_base(test_and_log_util::out_type&);
 test_and_log_util::result_type test_adgbi_signed_size(test_and_log_util::out_type&);
 test_and_log_util::result_type test_adgbi_diglist(test_and_log_util::out_type&);
 test_and_log_util::result_type test_adgbi_iterators(test_and_log_util::out_type&);
@@ -157,6 +158,7 @@ void abstract_dynamic_general_base_int_test(){
         test_list.set_assert(true);
 
     ADD_TEST(test_list, test_adgbi_default);
+    ADD_TEST(test_list, test_adgbi_new_base);
     ADD_TEST(test_list, test_adgbi_signed_size);
     ADD_TEST(test_list, test_adgbi_diglist);
     ADD_TEST(test_list, test_adgbi_iterators);
@@ -266,6 +268,16 @@ test_and_log_util::result_type test_adgbi_default(test_and_log_util::out_type&){
     test_and_log_util::result_type res;
     res.expected = "+0";
     res.actual = to_str(testee);
+
+    return res;
+}
+
+test_and_log_util::result_type test_adgbi_new_base(test_and_log_util::out_type&){
+    ADGB_Int testee(0, 7);
+
+    test_and_log_util::result_type res;
+    res.expected = "+0777";
+    res.actual = to_str(testee) + test_and_log_util::str_type(3, testee.base() + '0');
 
     return res;
 }
@@ -553,13 +565,16 @@ test_and_log_util::result_type test_adgbi_magnitude(test_and_log_util::out_type&
 }
 
 test_and_log_util::result_type test_adgbi_compare(test_and_log_util::out_type&){
-    ADGB_Int testee(-8932753, 4), testee2;
+    ADGB_Int testee1(-8932753, 4), testee2, testee3(0xFFFFFFFF, 0x10);
 
     test_and_log_util::result_type res;
-    res.expected = "Testee is less.";
-    res.actual = "Testee is ";
-    res.actual += (!(testee.compare(testee2) < 0) ? "not " : "");
-    res.actual += "less.";
+    res.expected = "Testee 1 is less than testee 2. Testee 3 is greater than testee 1.";
+    res.actual = "Testee 1 is ";
+    res.actual += (!(testee1.compare(testee2) < 0) ? "not " : "");
+    res.actual += "less than testee 2.";
+    res.actual += " Testee 3 is ";
+    res.actual += (!(testee3.compare(testee1) > 0) ? "not " : "");
+    res.actual += "greater than testee 1.";
 
     return res;
 }

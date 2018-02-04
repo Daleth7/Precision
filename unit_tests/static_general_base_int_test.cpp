@@ -44,6 +44,7 @@ test_and_log_util::result_type test_sgbi_base(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_str(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_sci_note(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_sci_note_w_spaces(test_and_log_util::out_type&);
+test_and_log_util::result_type test_sgbi_abstract(test_and_log_util::out_type&);
 
 // Int modifier tests
 test_and_log_util::result_type test_sgbi_make_zero(test_and_log_util::out_type&);
@@ -141,6 +142,7 @@ void static_general_base_int_test(){
     ADD_TEST(test_list, test_sgbi_str);
     ADD_TEST(test_list, test_sgbi_sci_note);
     ADD_TEST(test_list, test_sgbi_sci_note_w_spaces);
+    ADD_TEST(test_list, test_sgbi_abstract);
 
     ADD_TEST(test_list, test_sgbi_make_zero);
     ADD_TEST(test_list, test_sgbi_make_one);
@@ -607,6 +609,34 @@ test_and_log_util::result_type test_sgbi_sci_note_w_spaces(test_and_log_util::ou
     test_and_log_util::result_type res;
     res.expected = "+ 9.8765432109876543210 e 19";
     res.actual = testee.sci_note_w_spaces();
+
+    return res;
+}
+
+test_and_log_util::result_type test_sgbi_abstract(test_and_log_util::out_type&){
+    SGB_Int testee("+1337");
+
+    test_and_log_util::result_type res;
+    res.expected = "leet";
+    res.actual.clear();
+
+    SGB_Int::abstract_type abs = testee.abstract();
+    for(SGB_Int::size_type i = 0; i < abs.count_digits(); ++i){
+        switch(abs.digit(i)){
+            case 1:
+                res.actual.push_back('t');
+                break;
+            case 3:
+                res.actual.push_back('e');
+                break;
+            case 7:
+                res.actual.push_back('l');
+                break;
+            default:
+                res.actual.push_back('~');
+                break;
+        }
+    }
 
     return res;
 }

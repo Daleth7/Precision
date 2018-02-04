@@ -74,6 +74,11 @@ int main(){
     abstract_dynamic_general_base_int_test();
     #endif
 
+    #ifdef TEST_DYNAMIC_GENERAL_BASE_INT_CLASS
+    extern void dynamic_general_base_int_test();
+    dynamic_general_base_int_test();
+    #endif
+
 
 
     clock::time_point fin = clock::now();
