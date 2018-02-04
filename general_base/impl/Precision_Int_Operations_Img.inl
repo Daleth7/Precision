@@ -127,9 +127,9 @@ namespace Precision{
 
                 template <typename IntType, typename ISIType, typename SearchPolicy = ImgSearchPolicy::Binary>
                 void basic_parse( const typename ISIType::str_type& src,
-                            typename IntType::diglist_type& new_list,
-                            typename IntType::digit_type base,
-                            const ISIType& isi
+                                  typename IntType::diglist_type& new_list,
+                                  typename IntType::digit_type base,
+                                  const ISIType& isi
                 ){
                     typedef typename IntType::digit_type digit_type;
                     typedef typename IntType::size_type size_type;

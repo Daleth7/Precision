@@ -19,8 +19,10 @@ namespace Precision{
                     {return Int(this->digit_list(), 1, this->base());}
 
                 INT_TEMP_
-                short INT_INST_::compare(const INT_INST_& rhs)const
-                    {return Volatile::Int_Operations::compare(*this, rhs);}
+                short INT_INST_::compare(const INT_INST_& rhs)const{
+                    return Volatile::Int_Operations::compare
+                        (*this, convert_base<Int>(rhs, this->base()));
+                }
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::operator-()const

@@ -54,8 +54,8 @@ Modules to implement:
 |                   |                   |                           |           |
 |                   | Base converter    |                           |           |
 ---------------------------------------------------------------------------------
-| Dynamic           | Abstract Dynamic  | A class representing an   | Not       |
-| General Base      | General Base      | integer with visual       | Started   |
+| Dynamic           | Abstract Dynamic  | A class representing an   | Done      |
+| General Base      | General Base      | integer with visual       |           |
 | Integer           | Integer           | representation and a      |           |
 |                   |                   | number radix mutable at   |           |
 |                   | Image Set         | compile-time              |           |

@@ -1,22 +1,23 @@
-/** \file Int_Static_Base.h
+/** \file Int_Dynamic_Base.h
   * 
-  * Precision::General_Base::Static::Int provides a precision integer
+  * Precision::General_Base::Dynamic::Int provides a precision integer
   * with basic integer operations from arithmetic to sign manipulation.
-  * This class also supports conversion to a printable string.
+  * This class also supports conversion to a printable string and supports.
+  * a runtime mutable base.
   */
-#ifndef HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_STATIC23889_BASE_H
-#define HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_STATIC23889_BASE_H
+#ifndef HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_DYANMIC03920_BASE_H
+#define HHH_HHHHHH_H_PRECISION_INT_BASE_IMPO_DYANMIC03920_BASE_H
 
-#include "Int_Static_Abstract_Base.h"
+#include "Int_Dynamic_Abstract_Base.h"
 #include "impl/Precision_Defaults.h"
 #include "impl/Precision_Image_Set_Interface.h"
 #include "impl/Precision_Int_Operations_Img.h"
 
 namespace Precision{
     namespace General_Base{
-        namespace Static{
-            /** A basic integer implementation with a fixed number base
-              * that is specified as a template parameter. This  integer
+        namespace Dynamic{
+            /** A basic integer implementation with a mutable number base
+              * that is specified as a constructor parameter. This integer
               * supports arithmetic to bitwise operations as well direct
               * digit manipulation.
               *
@@ -36,8 +37,6 @@ namespace Precision{
               *                         to 255 and is guaranteed to be at least one
               *                         byte in size. It is recommended to use
               *                         unsigned char for small bases.
-              * \tparam Base            The base N the class shall represent.
-              *                         Defaulted to 10.
               * \tparam Container       The container template used to store indices
               *                         to the array.
               *                         Most STL containers will work. This shall be
@@ -57,33 +56,40 @@ namespace Precision{
               *
               *     // Create an integer using int's for digits
               *     // and is base 25.
-              *     using Int = Static::Int<int, 25>;
+              *     using Int = Dynamic::Int<int>;
+              *
+              *     // Create an integer object with base 25 and initialized
+              *     // to a value of 420.
+              *     Dynamic::Int<> dynamic(420, 25)
               *
               *     // Create an integer with a custom container that
               *     // handles memory differently than std::vector.
+              *     // Also create objects with the new instantiation
+              *     // of bases 7 and 17.
               *     template <typename value_type>
               *     using my_container = Custom_Container<value_type>;
               *
               *     const char digs* = "0123456789abcdefg";
               *
-              *     using MemInt = Static::Int< char, char const *,
+              *     using MemInt = Dynamic::Int< char, char const *,
               *                                 digs, Precision::Default::syms,
-              *                                 int, 17,
+              *                                 int,
               *                                 my_container
               *                                 >;
               *
-              *     MemInt num1(12345), num2("-3289ddf2550444ac4444e0g");
+              *     MemInt num1(12345, 7), num2("-3289ddf2550444ac4444e0g", 31);
               *     MemInt result = num2.logical_xor(num1);
               *
               *     std::cout << result.str() << '\n';
               *
               *     // Create an integer with a custom image representation
+              *     // Also construct objects of base 10 and 4.
               *     const char digs* = ")!@#$%^&*(", *syms = "=_>3\t?1";
               *
-              *     using ShiftInt = Static::Int<char, char const *>;
+              *     using ShiftInt = Dynamic::Int<char, char const *>;
               *
-              *     ShiftInt num1(12345, digs, syms),
-              *              num2("-@#$(&)@#*$#@&%", digs, syms)
+              *     ShiftInt num1(12345, 10, digs, syms),
+              *              num2("-@#$(&)@#*$#@&%", 4, digs, syms)
               *              ;
               *     ShiftInt result = num2 * num1;
               *
@@ -93,13 +99,13 @@ namespace Precision{
               */
             template < typename CharT = Default::image_type,
                        typename CharIter = CharT const *,
-                       typename ByteType = Default::byte_type, ByteType Base = 10,
+                       typename ByteType = Default::byte_type,
                        template <typename...>
                            class Container = Default::container_type,
                        typename SignType = Default::sign_type,
                        typename SearchPolicy = ImgSearchPolicy::Binary
                        >
-            class Int : public Abstract::Int<ByteType, Base, Container, SignType> {
+            class Int : public Abstract::Int<ByteType, Container, SignType> {
                 public:
                     //Type aliases
 
@@ -119,7 +125,7 @@ namespace Precision{
                     using str_type          = typename image_set_type::str_type;
         
                     /** The type of the abstract type. */
-                    using abstract_type     = Abstract::Int< ByteType, Base,
+                    using abstract_type     = Abstract::Int< ByteType,
                                                              Container, SignType
                                                              >;
 
@@ -279,8 +285,8 @@ namespace Precision{
                       *
                       * \return The number base.
                       */
-                    static constexpr digit_type base()
-                        {return abstract_type::base();}
+                    digit_type base()const
+                        {return m_abs.base();}
 
                     /** Return the image set.
                       *
@@ -329,8 +335,11 @@ namespace Precision{
                       *
                       *  \return Return the abstract version of this integer. 
                       */
-                    abstract_type abstract()const
-                        {return abstract_type(m_abs.digit_list(), m_abs.sign());}
+                    abstract_type abstract()const{
+                        return abstract_type( m_abs.digit_list(), m_abs.sign(),
+                                              this->base()
+                                              );
+                    }
 
 
 
@@ -429,14 +438,13 @@ namespace Precision{
                     void force_assign(size_type index, digit_type new_dig)
                         {m_abs.force_assign(index, new_dig);}
 
-                    /** Change the base. Since this is a static number, i.e.
-                      * has a fixed base, this function does nothing. This
-                      * is required for certain algorithms.
+                    /** Change the base.
                       *
                       * \param new_base The base to change to.
                       *
                       */
-                    void base(digit_type new_base){}
+                    void base(digit_type new_base)
+                        {m_abs.base(new_base);}
 
                     /** Set a new image set.
                       *
@@ -679,32 +687,38 @@ namespace Precision{
                       * integer value.
                       *
                       * \param val The signed integer number to start with.
+                      * \param new_base The number base this number is
+                      *                 represented as.
                       * \param new_dig_img_set Iterator to the start
                       *                        of the digit image set.
                       * \param new_sym_img_set Iterator to the start
                       *                        of the symbol image set.
                       */
                     Int( typename abstract_type::signed_size_type val=0,
+                         typename abstract_type::digit_type new_base=10,
                          image_iter_type new_dig_img_set = Default::digs,
                          image_iter_type new_sym_img_set = Default::syms
                          )
-                        : m_abs(val)
+                        : m_abs(val, new_base)
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {}
 
                     /** Convert a string of glyphs to an integer.
                       *
                       * \param img_str The original image to convert.
+                      * \param new_base The number base this number is
+                      *                 represented as.
                       * \param new_dig_img_set Iterator to the start
                       *                        of the digit image set.
                       * \param new_sym_img_set Iterator to the start
                       *                        of the symbol image set.
                       */
                     Int( const str_type& img_str,
+                         typename abstract_type::digit_type new_base=10,
                          image_iter_type new_dig_img_set = Default::digs,
                          image_iter_type new_sym_img_set = Default::syms
                          )
-                        : m_abs()
+                        : m_abs(0, new_base)
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {
                         diglist_type new_num(1, 0);
@@ -714,7 +728,7 @@ namespace Precision{
                               ( img_str, new_num, new_sign,
                                 this->base(), m_img_set
                                 );
-                        m_abs = abstract_type(new_num, new_sign);
+                        m_abs = abstract_type(new_num, new_sign, new_base);
                     }
 
                     /** Construct the number starting with a string of
@@ -722,6 +736,8 @@ namespace Precision{
                       *
                       * \param new_diglist A string of digits to start with.
                       * \param new_sign A numerical sign to start with.
+                      * \param new_base The number base this number is
+                      *                 represented as.
                       * \param new_dig_img_set Iterator to the start
                       *                        of the digit image set.
                       * \param new_sym_img_set Iterator to the start
@@ -729,10 +745,11 @@ namespace Precision{
                       */
                     Int( const typename abstract_type::diglist_type& new_diglist,
                          typename abstract_type::sign_type new_sign,
+                         typename abstract_type::digit_type new_base=10,
                          image_iter_type new_dig_img_set = Default::digs,
                          image_iter_type new_sym_img_set = Default::syms
                          )
-                        : m_abs(new_diglist, new_sign)
+                        : m_abs(new_diglist, new_sign, new_base)
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {}
 
@@ -744,6 +761,8 @@ namespace Precision{
                       * \param pbeg Start of the digit string.
                       * \param pend End of the digit string.
                       * \param new_sign A numerical sign to start with.
+                      * \param new_base The number base this number is
+                      *                 represented as.
                       * \param new_dig_img_set Iterator to the start
                       *                        of the digit image set.
                       * \param new_sym_img_set Iterator to the start
@@ -752,10 +771,11 @@ namespace Precision{
                     template <typename Iterator>
                     Int( const Iterator& pbeg, const Iterator& pend,
                          typename abstract_type::sign_type new_sign,
+                         typename abstract_type::digit_type new_base=10,
                          image_iter_type new_dig_img_set = Default::digs,
                          image_iter_type new_sym_img_set = Default::syms
                          )
-                        : m_abs(pbeg, pend, new_sign)
+                        : m_abs(pbeg, pend, new_sign, new_base)
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {}
 
@@ -808,11 +828,11 @@ namespace Precision{
             };
 
 #define PASTE_TEMPL_ template < typename CharT, typename CharIter,      \
-                                typename ByteType, ByteType Base,       \
+                                typename ByteType,                      \
                                 template <typename...> class Container, \
                                 typename SignType, typename SearchPolicy\
                                 >
-#define PASTE_INST_ Int <CharT, CharIter, ByteType, Base, Container, SignType, SearchPolicy>
+#define PASTE_INST_ Int <CharT, CharIter, ByteType, Container, SignType, SearchPolicy>
 
                 #include "impl/paste/Precision_Operator.paste"
 

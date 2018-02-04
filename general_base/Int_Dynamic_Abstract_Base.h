@@ -55,7 +55,7 @@ namespace Precision{
                   *
                   *     // Create an integer object with base 25 and initialized
                   *     // to a value of 420.
-                  *     Dynamic::Abstract::Int<> dynamic(420, 25)
+                  *     Dynamic::Abstract::Int<> dynamic(420, 25);
                   *
                   *     // Create an integer with a custom container that
                   *     // handles memory differently than std::vector. Also
@@ -475,7 +475,7 @@ namespace Precision{
                           *                 represented as.
                           */
                         Int( typename dig_container::signed_size_type val=0,
-                             typename dig_container::digit_type new_base = 10
+                             typename dig_container::digit_type new_base=10
                              );
 
                         /** Construct the number starting with a string of
