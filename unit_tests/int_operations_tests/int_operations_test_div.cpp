@@ -55,9 +55,9 @@ void setup_division_variables(){
     hundred_int.make_positive();
 
     div_fac.make_positive();
-    div_fac.m_number = Core_Int::diglist_type(4, 3);
+    div_fac.m_number = Core_Int::digstr_type(4, 3);
 
-    cust_num_int.m_number = Core_Int::diglist_type({4, 9, 3, 8, 2, 7, 1, 6});
+    cust_num_int.m_number = Core_Int::digstr_type({4, 9, 3, 8, 2, 7, 1, 6});
     cust_num_int.make_positive();
 
     speed_add_var1.make_positive();

@@ -36,7 +36,7 @@ void setup_bitwise_variables(){
         else      all_digs_rev.m_number.push_back(1);
     }
 
-    rev_int2.m_number = Core_Int::diglist_type({9, 8, 7, 6, 5, 4, 3, 2, 1});
+    rev_int2.m_number = Core_Int::digstr_type({9, 8, 7, 6, 5, 4, 3, 2, 1});
     rev_int2.make_positive();
 
     power_int.m_number.push_back(0);

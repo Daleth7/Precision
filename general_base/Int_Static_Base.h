@@ -132,9 +132,9 @@ namespace Precision{
                     /** The underlying container storing the string of digits.
                       * See Precision::Digit_Container for more details.
                       */
-                    using diglist_type      = typename abstract_type::diglist_type;
+                    using digstr_type      = typename abstract_type::digstr_type;
 
-                    /** The primitive representing size in diglist_type. */
+                    /** The primitive representing size in digstr_type. */
                     using size_type         = typename abstract_type::size_type;
 
                     /** A primitive type used for dealing with size related
@@ -186,8 +186,8 @@ namespace Precision{
                       *
                       * \return a read-only reference to the underlying container.
                       */
-                    const diglist_type& digit_list()const
-                        {return m_abs.digit_list();}
+                    const digstr_type& digit_string()const
+                        {return m_abs.digit_string();}
 
                     /** Count the number of digits in the string. The value returned
                       * should always be at least one.
@@ -690,7 +690,7 @@ namespace Precision{
                         : m_abs()
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {
-                        diglist_type new_num(1, 0);
+                        digstr_type new_num(1, 0);
                         sign_type new_sign;
                         Volatile::Int_Operations::Img::parse
                               <Int, image_set_type, SearchPolicy>
@@ -710,7 +710,7 @@ namespace Precision{
                       * \param new_sym_img_set Iterator to the start
                       *                        of the symbol image set.
                       */
-                    Int( const typename abstract_type::diglist_type& new_diglist,
+                    Int( const typename abstract_type::digstr_type& new_diglist,
                          typename abstract_type::sign_type new_sign,
                          image_iter_type new_dig_img_set = Default::digs,
                          image_iter_type new_sym_img_set = Default::syms

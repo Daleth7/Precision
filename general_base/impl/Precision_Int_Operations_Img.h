@@ -92,8 +92,8 @@ namespace Precision{
                  *                  str() for more details. In addition to
                  *                  the requirements for str(), IntType must
                  *                  also have the following public members:
-                 *                      * Type IntType::diglist_type
-                 *                      * Type IntType::diglist_type::insert
+                 *                      * Type IntType::digstr_type
+                 *                      * Type IntType::digstr_type::insert
                  *                      * Type IntType::digit_type
                  *                      * Type IntType::sign_type::assign
                  *  \tparam ISIType Image Set Interface Type containing
@@ -116,7 +116,7 @@ namespace Precision{
                            typename SearchPolicy = ImgSearchPolicy::Binary
                            >
                 void parse( const typename ISIType::str_type& src,
-                            typename IntType::diglist_type& dest,
+                            typename IntType::digstr_type& dest,
                             typename IntType::sign_type& sign_dest,
                             typename IntType::digit_type base,
                             const ISIType& img_set

@@ -16,7 +16,7 @@ test_and_log_util::result_type test_sgbi_is_zero(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_is_mag_one(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_is_even(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_is_odd(test_and_log_util::out_type&);
-test_and_log_util::result_type test_sgbi_digit_list(test_and_log_util::out_type&);
+test_and_log_util::result_type test_sgbi_digit_string(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_count_digits(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_digit(test_and_log_util::out_type&);
 test_and_log_util::result_type test_sgbi_shift(test_and_log_util::out_type&);
@@ -134,7 +134,7 @@ void static_general_base_int_test(){
     ADD_TEST(test_list, test_sgbi_is_mag_one);
     ADD_TEST(test_list, test_sgbi_is_even);
     ADD_TEST(test_list, test_sgbi_is_odd);
-    ADD_TEST(test_list, test_sgbi_digit_list);
+    ADD_TEST(test_list, test_sgbi_digit_string);
     ADD_TEST(test_list, test_sgbi_count_digits);
     ADD_TEST(test_list, test_sgbi_shift_left);
     ADD_TEST(test_list, test_sgbi_shift_right);
@@ -210,8 +210,8 @@ void setup_sgbi_variables(){
     two_int.make_two();
     eight_int = SGB_Int(8);
 
-    speed_100digs = SGB_Int(SGB_Int::diglist_type(100, 7), 1);
-    rev_100digs = SGB_Int(SGB_Int::diglist_type(100, 9), -1);
+    speed_100digs = SGB_Int(SGB_Int::digstr_type(100, 7), 1);
+    rev_100digs = SGB_Int(SGB_Int::digstr_type(100, 9), -1);
     hun_int = SGB_Int(100);
     quart_hun_int = SGB_Int(25);
 }
@@ -245,7 +245,7 @@ test_and_log_util::result_type test_sgbi_signed_size(test_and_log_util::out_type
 }
 
 test_and_log_util::result_type test_sgbi_diglist(test_and_log_util::out_type&){
-    SGB_Int::diglist_type diglist({1, 3, 2, 0, 8, 9, 77, 4, 0, 0});
+    SGB_Int::digstr_type diglist({1, 3, 2, 0, 8, 9, 77, 4, 0, 0});
 
     SGB_Int testee(diglist, 1);
 
@@ -347,20 +347,20 @@ test_and_log_util::result_type test_sgbi_is_odd(test_and_log_util::out_type&){
     return res;
 }
 
-test_and_log_util::result_type test_sgbi_digit_list(test_and_log_util::out_type&){
+test_and_log_util::result_type test_sgbi_digit_string(test_and_log_util::out_type&){
     SGB_Int testee(-123654879);
 
     test_and_log_util::result_type res;
     res.expected = "978456321";
 
-    for(auto it = testee.digit_list().begin(); it != testee.digit_list().end(); ++it)
+    for(auto it = testee.digit_string().begin(); it != testee.digit_string().end(); ++it)
         res.actual.push_back(*it + '0');
 
     return res;
 }
 
 test_and_log_util::result_type test_sgbi_count_digits(test_and_log_util::out_type&){
-    SGB_Int testee(SGB_Int::diglist_type(1000, 7), 1);
+    SGB_Int testee(SGB_Int::digstr_type(1000, 7), 1);
 
     test_and_log_util::result_type res;
     res.expected = "Testee is 1000 digits.";

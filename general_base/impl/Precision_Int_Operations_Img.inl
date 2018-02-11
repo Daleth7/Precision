@@ -127,7 +127,7 @@ namespace Precision{
 
                 template <typename IntType, typename ISIType, typename SearchPolicy = ImgSearchPolicy::Binary>
                 void basic_parse( const typename ISIType::str_type& src,
-                            typename IntType::diglist_type& new_list,
+                            typename IntType::digstr_type& new_list,
                             typename IntType::digit_type base,
                             const ISIType& isi
                 ){
@@ -153,7 +153,7 @@ namespace Precision{
 
                 template <typename IntType, typename ISIType, typename SearchPolicy = ImgSearchPolicy::Binary>
                 void parse_w_sign( const typename ISIType::str_type& src,
-                                   typename IntType::diglist_type& dest,
+                                   typename IntType::digstr_type& dest,
                                    typename IntType::sign_type& sign_dest,
                                    typename IntType::digit_type base,
                                    const ISIType& isi
@@ -173,7 +173,7 @@ namespace Precision{
 
                 template <typename IntType, typename ISIType, typename SearchPolicy>
                 void parse( const typename ISIType::str_type& src,
-                                  typename IntType::diglist_type& dest,
+                                  typename IntType::digstr_type& dest,
                                   typename IntType::sign_type& sign_dest,
                                   typename IntType::digit_type base,
                                   const ISIType& isi

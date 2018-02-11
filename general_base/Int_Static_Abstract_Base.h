@@ -90,7 +90,7 @@ namespace Precision{
                         /* Inherited from Digit_Container
 
                         using digit_type;
-                        using diglist_type;
+                        using digstr_type;
                         using size_type;
                         using signed_size_type;
 
@@ -112,7 +112,7 @@ namespace Precision{
                         bool is_mag_one()const;
                         bool is_even()const;
                         bool is_odd()const;
-                        const diglist_type& digit_list()const;
+                        const digstr_type& digit_string()const;
                         size_type count_digits()const;
                         digit_type digit(size_type index)const;
 
@@ -457,7 +457,7 @@ namespace Precision{
                           * \param new_diglist A string of digits to start with.
                           * \param new_sign A numerical sign to start with.
                           */
-                        Int( const typename dig_container::diglist_type& new_diglist,
+                        Int( const typename dig_container::digstr_type& new_diglist,
                              typename signed_interface::sign_type new_sign
                              );
 
@@ -491,7 +491,7 @@ namespace Precision{
                     protected:
                         /* Inherited from Digit_Container
 
-                        diglist_type m_number;
+                        digstr_type m_number;
 
                         */
 

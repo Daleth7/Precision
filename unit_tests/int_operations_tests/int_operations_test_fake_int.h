@@ -12,7 +12,7 @@ struct Core_Int {
     using size_type     = std::size_t;
     using sign_type     = Precision::SignClass;
     using digit_type    = std::uint_fast8_t;
-    using diglist_type  = std::vector<digit_type>;
+    using digstr_type  = std::vector<digit_type>;
     using catalyst_type = long double;
 
     bool is_zero()const
@@ -36,7 +36,7 @@ struct Core_Int {
         return (m_number.front() % 2) == 1;
     }
 
-    const diglist_type& digit_list()const
+    const digstr_type& digit_string()const
         {return m_number;}
 
     Core_Int magnitude()const{
@@ -71,16 +71,16 @@ struct Core_Int {
         {/* Do nothing */}
 
     void make_zero()
-        {m_number = diglist_type(1, 0); this->make_positive();}
+        {m_number = digstr_type(1, 0); this->make_positive();}
 
     void make_one()
-        {m_number = diglist_type(1, 1); this->make_positive();}
+        {m_number = digstr_type(1, 1); this->make_positive();}
 
     void make_neg_one()
-        {m_number = diglist_type(1, 1); this->make_negative();}
+        {m_number = digstr_type(1, 1); this->make_negative();}
 
     void make_two()
-        {m_number = diglist_type(1, 2); this->make_positive();}
+        {m_number = digstr_type(1, 2); this->make_positive();}
 
     void halve(){
         Core_Int two, quo_res, mod_res;
@@ -98,7 +98,7 @@ struct Core_Int {
 
     void shift_right(size_type e){
         if(m_number.size() <= e)
-            m_number = diglist_type(1, 0);
+            m_number = digstr_type(1, 0);
         else
             m_number.erase(m_number.begin(), m_number.begin() + e);
     }
@@ -138,7 +138,7 @@ struct Core_Int {
         {m_sign.assign(new_sign);}
 
 
-    diglist_type m_number;
+    digstr_type m_number;
     sign_type    m_sign;
 };
 //*/

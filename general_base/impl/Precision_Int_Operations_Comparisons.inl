@@ -7,9 +7,9 @@ namespace Precision{
                 if(&lhs == &rhs)                            return 0;
                 else if(lhs.sign() < rhs.sign())            return -1;
                 else if(lhs.sign() > rhs.sign())            return 1;
-                using list_type = typename IntType::diglist_type;
-                const list_type& diglist1(lhs.digit_list()),
-                                 diglist2(rhs.digit_list())
+                using list_type = typename IntType::digstr_type;
+                const list_type& diglist1(lhs.digit_string()),
+                                 diglist2(rhs.digit_string())
                                  ;
                 if( lhs.is_negative() &&
                     diglist1.size() > diglist2.size()

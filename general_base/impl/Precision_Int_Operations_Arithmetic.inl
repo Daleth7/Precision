@@ -26,7 +26,7 @@ namespace Precision{
                 typename IntType::sign_type rhs_sign(rhs.sign() * add_sign);
 
                 // Determine which number is larger
-                short comp = compare_lists(lhs.digit_list(), rhs.digit_list());
+                short comp = compare_lists(lhs.digit_string(), rhs.digit_string());
                 bool sign_neq = lhs.sign() != rhs.sign();
 
                 using ld = typename IntType::catalyst_type;
@@ -371,8 +371,8 @@ namespace Precision{
                     IntType rhs_lead_copy = rhs_lead;
 
                     Size toreturn = 0;
-                    while( !(compare_lists( mod_lead.digit_list(),
-                                            rhs_lead.digit_list()
+                    while( !(compare_lists( mod_lead.digit_string(),
+                                            rhs_lead.digit_string()
                                             ) < 0)
                     ){
                         ++toreturn;
@@ -482,13 +482,13 @@ namespace Precision{
                     quotient = lhs;
                     Helper::make_zero(modulus, lhs);
                     return;
-                }else if(compare_lists(lhs.digit_list(), rhs.digit_list()) == 0){
+                }else if(compare_lists(lhs.digit_string(), rhs.digit_string()) == 0){
                     Helper::make_one(quotient, lhs);
                     Helper::make_zero(modulus, lhs);
 
                     quotient.sign(lhs.sign() * rhs.sign());
                     return;
-                }else if(compare_lists(lhs.digit_list(), rhs.digit_list()) < 0){
+                }else if(compare_lists(lhs.digit_string(), rhs.digit_string()) < 0){
                     modulus = lhs;
                     Helper::make_zero(quotient, lhs);
                     return;

@@ -22,7 +22,7 @@ struct Fake_Int{
     using str_type     = std::string;
     using size_type    = std::size_t;
     using digit_type   = std::uint_fast8_t;
-    using diglist_type = std::vector<digit_type>;
+    using digstr_type  = std::vector<digit_type>;
     using sign_type    = Fake_Sign;
 
     bool is_zero()const
@@ -39,7 +39,7 @@ struct Fake_Int{
     static size_type base()
         {return 10;}
 
-    diglist_type number;
+    digstr_type number;
     bool positivity;
 };
 

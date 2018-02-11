@@ -60,10 +60,10 @@ namespace Precision{
               *              (const std::initializer_list<digit_type>&)
               *     * Method Container<digit_type>::Container(iterator, iterator)
               */
-            using diglist_type = Container<digit_type>;
+            using digstr_type = Container<digit_type>;
 
-            /** The primitive representing size in diglist_type. */
-            using size_type    = typename diglist_type::size_type;
+            /** The primitive representing size in digstr_type. */
+            using size_type    = typename digstr_type::size_type;
 
             /** A primitive type used for dealing with size related
               * operations that still need the negative range.
@@ -109,7 +109,7 @@ namespace Precision{
               *
               * \return a read-only reference to the underlying container.
               */
-            const diglist_type& digit_list()const
+            const digstr_type& digit_string()const
                 {return m_number;}
 
             /** Count the number of digits in the string. The value returned
@@ -164,7 +164,7 @@ namespace Precision{
               */
             void shift_right(size_type e){
                 if(m_number.size() <= e)
-                    m_number = diglist_type(1, 0);
+                    m_number = digstr_type(1, 0);
                 else{
                     auto erase_end(m_number.begin());
                     std::advance(erase_end, e);
@@ -202,7 +202,7 @@ namespace Precision{
               *
               * \param new_num The digit string to copy
               */
-            Digit_Container(const diglist_type& new_num)
+            Digit_Container(const digstr_type& new_num)
                 : m_number(new_num)
             {}
 
@@ -279,7 +279,7 @@ namespace Precision{
                 m_number.erase(m_number.begin()+1, m_number.end());
             }
 
-            diglist_type m_number;
+            digstr_type m_number;
     };
 }
 

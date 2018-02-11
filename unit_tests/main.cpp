@@ -34,6 +34,11 @@ int main(){
     signclass_test();
     #endif
 
+    #ifdef TEST_DIG_CONTAINER_VIEW
+    extern void digit_container_view_test();
+    digit_container_view_test();
+    #endif
+
     #ifdef TEST_IMG_SET_INTERFACE
     extern void image_set_interface_test();
     image_set_interface_test();

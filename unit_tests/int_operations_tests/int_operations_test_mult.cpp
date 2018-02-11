@@ -46,8 +46,8 @@ void setup_multiplication_variables(){
     neg_one_int.m_number.push_back(1);
     neg_one_int.make_negative();
 
-    speed_mult_var1.m_number = Core_Int::diglist_type(5, 0);
-    speed_mult_var2.m_number = Core_Int::diglist_type(5, 0);
+    speed_mult_var1.m_number = Core_Int::digstr_type(5, 0);
+    speed_mult_var2.m_number = Core_Int::digstr_type(5, 0);
     for(unsigned i = 0; i < 95; ++i){
         speed_mult_var1.m_number.push_back((i*4) % 10);
         speed_mult_var2.m_number.push_back((i*4) % 10);
