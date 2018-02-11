@@ -241,13 +241,13 @@ void setup_adgbi_variables(){
     two_int.base(3);
     eight_int = ADGB_Int(8);
 
-    speed_100digs = ADGB_Int(ADGB_Int::diglist_type(100, 7), 1, 15);
-    rev_100digs = ADGB_Int(ADGB_Int::diglist_type(100, 9), -1, 10);
-    diff_100digs = ADGB_Int(ADGB_Int::diglist_type(100, 0xC), 1, 21);
+    speed_100digs = ADGB_Int(ADGB_Int::digstr_type(100, 7), 1, 15);
+    rev_100digs = ADGB_Int(ADGB_Int::digstr_type(100, 9), -1, 10);
+    diff_100digs = ADGB_Int(ADGB_Int::digstr_type(100, 0xC), 1, 21);
     hun_int = ADGB_Int(100, 7);
     quart_hun_int = ADGB_Int(25);
-    speed_list_100digs = list_Int(list_Int::diglist_type(100, 7), 1);
-    rev_list_100digs = list_Int(list_Int::diglist_type(100, 9), -1);
+    speed_list_100digs = list_Int(list_Int::digstr_type(100, 7), 1);
+    rev_list_100digs = list_Int(list_Int::digstr_type(100, 9), -1);
 }
 
 void cleanup_adgbi(){
@@ -293,7 +293,7 @@ test_and_log_util::result_type test_adgbi_signed_size(test_and_log_util::out_typ
 }
 
 test_and_log_util::result_type test_adgbi_diglist(test_and_log_util::out_type&){
-    ADGB_Int::diglist_type diglist({1, 3, 2, 0, 8, 9, 77, 4, 0, 0});
+    ADGB_Int::digstr_type diglist({1, 3, 2, 0, 8, 9, 77, 4, 0, 0});
 
     ADGB_Int testee(diglist, 1);
 
@@ -371,14 +371,14 @@ test_and_log_util::result_type test_adgbi_digit_list(test_and_log_util::out_type
     test_and_log_util::result_type res;
     res.expected = "978456321";
 
-    for(auto it = testee.digit_list().begin(); it != testee.digit_list().end(); ++it)
+    for(auto it = testee.digit_string().begin(); it != testee.digit_string().end(); ++it)
         res.actual.push_back(*it + '0');
 
     return res;
 }
 
 test_and_log_util::result_type test_adgbi_count_digits(test_and_log_util::out_type&){
-    ADGB_Int testee(ADGB_Int::diglist_type(1000, 7), 1);
+    ADGB_Int testee(ADGB_Int::digstr_type(1000, 7), 1);
 
     test_and_log_util::result_type res;
     res.expected = "Testee is 1000 digits.";
@@ -1009,7 +1009,7 @@ test_and_log_util::result_type test_adgbi_cust_dig(test_and_log_util::out_type&)
 
 
 test_and_log_util::result_type test_adgbi_cust_contain(test_and_log_util::out_type&){
-    list_Int::diglist_type all_list(10, 0);
+    list_Int::digstr_type all_list(10, 0);
     list_Int::digit_type count = 0;
     for(auto& dig : all_list) dig = count++;
 
@@ -1040,7 +1040,7 @@ test_and_log_util::str_type to_str(const ABS_Int_Type& num){
 
 template <class ABS_Int_Type, typename Base_Type>
 ABS_Int_Type to_adgbi(const test_and_log_util::str_type& src, Base_Type base){
-    typename ABS_Int_Type::diglist_type toreturn;
+    typename ABS_Int_Type::digstr_type toreturn;
     typename ABS_Int_Type::sign_type sign;
 
     Precision::Volatile::Int_Operations::Img::parse

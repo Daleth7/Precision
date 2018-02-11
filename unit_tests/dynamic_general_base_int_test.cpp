@@ -238,7 +238,7 @@ test_and_log_util::result_type test_dgbi_signed_size(test_and_log_util::out_type
 }
 
 test_and_log_util::result_type test_dgbi_diglist(test_and_log_util::out_type&){
-    DGB_Int::diglist_type diglist({1, 3, 2, 0, 8, 9, 77, 4, 0, 0});
+    DGB_Int::digstr_type diglist({1, 3, 2, 0, 8, 9, 77, 4, 0, 0});
 
     DGB_Int testee(diglist, 1);
 
@@ -347,14 +347,14 @@ test_and_log_util::result_type test_dgbi_digit_list(test_and_log_util::out_type&
     res.expected = "FF07C165";
 
     DGB_Int::image_set_type isi = testee.image_set();
-    for(auto it = testee.digit_list().begin(); it != testee.digit_list().end(); ++it)
+    for(auto it = testee.digit_string().begin(); it != testee.digit_string().end(); ++it)
         res.actual.push_back(isi.digit(*it));
 
     return res;
 }
 
 test_and_log_util::result_type test_dgbi_count_digits(test_and_log_util::out_type&){
-    DGB_Int testee(DGB_Int::diglist_type(1000, 7), 1);
+    DGB_Int testee(DGB_Int::digstr_type(1000, 7), 1);
 
     test_and_log_util::result_type res;
     res.expected = "Testee is 1000 digits.";
@@ -724,7 +724,7 @@ test_and_log_util::result_type test_dgbi_halve(test_and_log_util::out_type&){
 }
 
 test_and_log_util::result_type test_dgbi_halve_spec(test_and_log_util::out_type&){
-    DGB_Int testee(DGB_Int::diglist_type({0, 1, 2, 3, 4, 0, 6, 7, 8, 9}), -1);
+    DGB_Int testee(DGB_Int::digstr_type({0, 1, 2, 3, 4, 0, 6, 7, 8, 9}), -1);
 
     testee.halve();
 

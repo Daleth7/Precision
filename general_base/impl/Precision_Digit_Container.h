@@ -321,7 +321,7 @@ namespace Precision{
                 Helper::remove_excess_zeros(*this);
             }
 
-            diglist_type m_number;
+            digstr_type m_number;
     };
 }
 

@@ -16,7 +16,7 @@ namespace Precision{
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::magnitude()const
-                    {return Int(this->digit_list(), 1, this->base());}
+                    {return Int(this->digit_string(), 1, this->base());}
 
                 INT_TEMP_
                 short INT_INST_::compare(const INT_INST_& rhs)const{
@@ -26,7 +26,7 @@ namespace Precision{
 
                 INT_TEMP_
                 INT_INST_ INT_INST_::operator-()const
-                    {return Int(this->digit_list(), -this->sign(), this->base());}
+                    {return Int(this->digit_string(), -this->sign(), this->base());}
 
                 INT_TEMP_
                 bool INT_INST_::is_one()const
@@ -371,7 +371,7 @@ namespace Precision{
                 }
 
                 INT_TEMP_
-                INT_INST_::Int( const typename dig_container::diglist_type& new_str,
+                INT_INST_::Int( const typename dig_container::digstr_type& new_str,
                                 typename signed_interface::sign_type new_sign,
                                 typename dig_container::digit_type new_base
                 )

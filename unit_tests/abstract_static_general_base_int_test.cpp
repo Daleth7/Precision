@@ -241,8 +241,8 @@ void setup_asgbi_variables(){
     rev_100digs = ASGB_Int(ASGB_Int::digstr_type(100, 9), -1);
     hun_int = ASGB_Int(100);
     quart_hun_int = ASGB_Int(25);
-    speed_list_100digs = list_Int(list_Int::diglist_type(100, 7), 1);
-    rev_list_100digs = list_Int(list_Int::diglist_type(100, 9), -1);
+    speed_list_100digs = list_Int(list_Int::digstr_type(100, 7), 1);
+    rev_list_100digs = list_Int(list_Int::digstr_type(100, 9), -1);
 }
 
 void cleanup_asgbi(){
@@ -990,7 +990,7 @@ test_and_log_util::result_type test_asgbi_cust_base(test_and_log_util::out_type&
 }
 
 test_and_log_util::result_type test_asgbi_cust_contain(test_and_log_util::out_type&){
-    list_Int::diglist_type all_list(10, 0);
+    list_Int::digstr_type all_list(10, 0);
     list_Int::digit_type count = 0;
     for(auto& dig : all_list) dig = count++;
 
@@ -1024,7 +1024,7 @@ test_and_log_util::str_type to_str(const ABS_Int_Type& num){
 
 template <class ABS_Int_Type>
 ABS_Int_Type to_asgbi(const test_and_log_util::str_type& src){
-    typename ABS_Int_Type::diglist_type toreturn;
+    typename ABS_Int_Type::digstr_type toreturn;
     typename ABS_Int_Type::sign_type sign;
 
     Precision::Volatile::Int_Operations::Img::parse
