@@ -140,15 +140,9 @@ namespace Precision{
                     /** The underlying container storing the string of digits.
                       * See Precision::Digit_Container for more details.
                       */
-<<<<<<< HEAD
                     using digstr_type      = typename abstract_type::digstr_type;
 
                     /** The primitive representing size in digstr_type. */
-=======
-                    using diglist_type      = typename abstract_type::diglist_type;
-
-                    /** The primitive representing size in diglist_type. */
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                     using size_type         = typename abstract_type::size_type;
 
                     /** A primitive type used for dealing with size related
@@ -200,13 +194,8 @@ namespace Precision{
                       *
                       * \return a read-only reference to the underlying container.
                       */
-<<<<<<< HEAD
                     const digstr_type& digit_string()const
                         {return m_abs.digit_string();}
-=======
-                    const diglist_type& digit_list()const
-                        {return m_abs.digit_list();}
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
                     /** Count the number of digits in the string. The value returned
                       * should always be at least one.
@@ -347,11 +336,7 @@ namespace Precision{
                       *  \return Return the abstract version of this integer. 
                       */
                     abstract_type abstract()const{
-<<<<<<< HEAD
                         return abstract_type( m_abs.digit_string(), m_abs.sign(),
-=======
-                        return abstract_type( m_abs.digit_list(), m_abs.sign(),
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                                               this->base()
                                               );
                     }
@@ -736,11 +721,7 @@ namespace Precision{
                         : m_abs(0, new_base)
                         , m_img_set(new_dig_img_set, new_sym_img_set)
                     {
-<<<<<<< HEAD
                         digstr_type new_num(1, 0);
-=======
-                        diglist_type new_num(1, 0);
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                         sign_type new_sign;
                         Volatile::Int_Operations::Img::parse
                               <Int, image_set_type, SearchPolicy>
@@ -762,11 +743,7 @@ namespace Precision{
                       * \param new_sym_img_set Iterator to the start
                       *                        of the symbol image set.
                       */
-<<<<<<< HEAD
                     Int( const typename abstract_type::digstr_type& new_diglist,
-=======
-                    Int( const typename abstract_type::diglist_type& new_diglist,
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                          typename abstract_type::sign_type new_sign,
                          typename abstract_type::digit_type new_base=10,
                          image_iter_type new_dig_img_set = Default::digs,

@@ -283,45 +283,6 @@ namespace Precision{
                 auto beg = m_number.begin();
                 std::advance(beg, 1);
                 m_number.erase(beg, m_number.end());
-<<<<<<< HEAD
-=======
-            }
-
-            /** Help split a number into its digits and store in digit list.
-              *
-              * \param val The number to split into digits.
-              * \param base The base the interpret the number as.
-              */
-            void split_number_store(signed_size_type val, digit_type base){
-                m_number.front() = val % base;
-                val /= base;
-
-                while(val > 0){
-                    m_number.push_back(val % base);
-                    val /= base;
-                }
-
-                if(this->count_digits() == 0)
-                    m_number.push_back(0);
-            }
-
-            /** Check each digit if it falls within the number range
-              * dictated by the number base, i.e. does dig belong to
-              * the range [0, base)?
-              * Also make sure the list isn't empty and that the list
-              * contains no leading 0's.
-              *
-              * \param base The base the interpret the digits as.
-              */
-            void verify_diglist(digit_type base){
-                if(m_number.size() == 0)
-                    m_number.push_back(0);
-                for( auto it = m_number.begin();
-                     it != m_number.end();
-                     ++it
-                ) if(*it >= base || *it < 0) *it = 0;
-                Helper::remove_excess_zeros(*this);
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
             }
 
             /** Help split a number into its digits and store in digit list.

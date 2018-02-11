@@ -97,11 +97,7 @@ namespace Precision{
                         /* Inherited from Digit_Container
 
                         using digit_type;
-<<<<<<< HEAD
                         using digstr_type;
-=======
-                        using diglist_type;
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                         using size_type;
                         using signed_size_type;
 
@@ -123,11 +119,7 @@ namespace Precision{
                         bool is_mag_one()const;
                         bool is_even()const;
                         bool is_odd()const;
-<<<<<<< HEAD
                         const digstr_type& digit_string()const;
-=======
-                        const diglist_type& digit_list()const;
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                         size_type count_digits()const;
                         digit_type digit(size_type index)const;
 
@@ -494,11 +486,7 @@ namespace Precision{
                           * \param new_base The number base this number is
                           *                 represented as.
                           */
-<<<<<<< HEAD
                         Int( const typename dig_container::digstr_type& new_diglist,
-=======
-                        Int( const typename dig_container::diglist_type& new_diglist,
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
                              typename signed_interface::sign_type new_sign,
                              typename dig_container::digit_type new_base = 10
                              );
@@ -536,11 +524,7 @@ namespace Precision{
                     protected:
                         /* Inherited from Digit_Container
 
-<<<<<<< HEAD
                         digstr_type m_number;
-=======
-                        diglist_type m_number;
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
                         */
 

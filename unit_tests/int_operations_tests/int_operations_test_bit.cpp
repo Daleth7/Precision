@@ -167,11 +167,7 @@ test_and_log_util::result_type test_bit_and_eq(test_and_log_util::out_type&){
 
 test_and_log_util::result_type test_bit_and_eq_zero(test_and_log_util::out_type&){
     Core_Int bit_copy = all_digs_int, zero_core;
-<<<<<<< HEAD
     zero_core.m_number = Core_Int::digstr_type({0});
-=======
-    zero_core.m_number = Core_Int::diglist_type({0});
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
     zero_core.make_positive();
 
     Precision::Volatile::Int_Operations::bitwise_and_eq(zero_core, bit_copy);

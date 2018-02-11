@@ -67,32 +67,20 @@ void setup_convert_copy_variables(){
     all_digs_int = SGB_Int("9876543210");
     rev_digs_int = SGB_Int("123456789");
 
-<<<<<<< HEAD
     ASGB_Int::digstr_type abs_diglist(10, 0);
-=======
-    ASGB_Int::diglist_type abs_diglist(10, 0);
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
     ASGB_Int::digit_type counter = 0;
     for(auto it = abs_diglist.begin(); it != abs_diglist.end(); ++it, ++counter)
         *it = counter;
     all_digs_abs_int = ASGB_Int(abs_diglist, -1);
 
-<<<<<<< HEAD
     speed_100digs = SGB_Int(SGB_Int::digstr_type(100, 7), 1);
-=======
-    speed_100digs = SGB_Int(SGB_Int::diglist_type(100, 7), 1);
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
     SGB_Int::str_type img(100, '1');
     for(SGB_Int::size_type i = 1; i < img.size(); ++i)
         img[i] = ( (((img[i-1] * 31) >> 3) * 47) % 10 ) + '0';
     
     speed_100digs_mixed = SGB_Int(img);
 
-<<<<<<< HEAD
     SGB_Int::digstr_type tens_diglist(100, 0);
-=======
-    SGB_Int::diglist_type tens_diglist(100, 0);
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
     *tens_diglist.rbegin() = 1;
     speed_100digs_tens = SGB_Int(tens_diglist, 1);
 }

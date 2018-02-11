@@ -330,11 +330,7 @@ namespace Precision{
                       *  \return Return the abstract version of this integer. 
                       */
                     abstract_type abstract()const
-<<<<<<< HEAD
                         {return abstract_type(m_abs.digit_string(), m_abs.sign());}
-=======
-                        {return abstract_type(m_abs.digit_list(), m_abs.sign());}
->>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
 
 
