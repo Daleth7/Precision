@@ -26,10 +26,17 @@ Precision::Digit_Container_View [digit_container_view_test.cpp]:
 
 Precision::Image_Set_Interface [image_set_interface_test.cpp]:
 	test_is_valid                      	: Passed
+<<<<<<< HEAD
 	test_get_index                     	: Passed ; Average execution time: 1.5e-007 s
 	test_get_index_wrong               	: Passed ; Average execution time: 1.502e-007 s
 	test_get_index_wrong_norm          	: Passed ; Average execution time: 8.009e-007 s
 	test_digit                         	: Passed ; Average execution time: 5e-008 s
+=======
+	test_get_index                     	: Passed ; Average execution time: 1.5625e-006 s
+	test_get_index_wrong               	: Passed ; Average execution time: 0 s
+	test_get_index_wrong_norm          	: Passed ; Average execution time: 1.5625e-006 s
+	test_digit                         	: Passed ; Average execution time: 0 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_symbol                        	: Passed
 	test_plus                          	: Passed
 	test_minus                         	: Passed
@@ -43,6 +50,7 @@ Precision::Image_Set_Interface [image_set_interface_test.cpp]:
 
 Precision::Volatile::Int_Operations::Img [int_operations_img_test.cpp]:
 	test_str_zero                      	: Passed
+<<<<<<< HEAD
 	test_str                           	: Passed ; Average execution time: 1.6015e-006 s
 	test_sci_note_e0                   	: Passed
 	test_sci_note_all                  	: Passed ; Average execution time: 1.8518e-006 s
@@ -50,6 +58,15 @@ Precision::Volatile::Int_Operations::Img [int_operations_img_test.cpp]:
 	test_sci_note_w_spaces             	: Passed ; Average execution time: 1.952e-006 s
 	test_parse_typos                   	: Passed
 	test_parse                         	: Passed ; Average execution time: 7.3071e-006 s
+=======
+	test_str                           	: Passed ; Average execution time: 1.5624e-006 s
+	test_sci_note_e0                   	: Passed
+	test_sci_note_all                  	: Passed ; Average execution time: 1.5625e-006 s
+	test_sci_note_lim                  	: Passed ; Average execution time: 1.5625e-006 s
+	test_sci_note_w_spaces             	: Passed ; Average execution time: 1.5625e-006 s
+	test_parse_typos                   	: Passed
+	test_parse                         	: Passed ; Average execution time: 6.5149e-006 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
 Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_complists_eq                  	: Passed
@@ -64,11 +81,16 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_compare_gr                    	: Passed
 	test_compare_le                    	: Passed
 	test_compare_eq2                   	: Passed
+<<<<<<< HEAD
 	test_compare_eq2                   	: Passed ; Average execution time: 3.5535e-006 s
+=======
+	test_compare_eq2                   	: Passed ; Average execution time: 4.6876e-006 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_add_list2_eq0                 	: Passed
 	test_add_list1_eq0                 	: Passed
 	test_add_le                        	: Passed
 	test_add_le2                       	: Passed
+<<<<<<< HEAD
 	test_add                           	: Passed ; Average execution time: 5.2049e-006 s
 	test_sub_gr                        	: Passed
 	test_sub_neg                       	: Passed
@@ -77,6 +99,16 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_mult_list_1                   	: Passed
 	test_mult_list_3                   	: Passed
 	test_mult_list_7                   	: Passed ; Average execution time: 5.3551e-006 s
+=======
+	test_add                           	: Passed ; Average execution time: 7.8123e-006 s
+	test_sub_gr                        	: Passed
+	test_sub_neg                       	: Passed
+	test_sub_neg2                      	: Passed
+	test_sub                           	: Passed ; Average execution time: 4.6874e-006 s
+	test_mult_list_1                   	: Passed
+	test_mult_list_3                   	: Passed
+	test_mult_list_7                   	: Passed ; Average execution time: 4.6876e-006 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_mult_list2_eq0                	: Passed
 	test_mult_list1_eq0                	: Passed
 	test_mult_list2_eq1                	: Passed
@@ -84,7 +116,11 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_mult_list2_eqN1               	: Passed
 	test_mult_list1_eqN1               	: Passed
 	test_mult_zeros                    	: Passed
+<<<<<<< HEAD
 	test_mult                          	: Passed ; Average execution time: 0.000715187 s
+=======
+	test_mult                          	: Passed ; Average execution time: 0.000718751 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_div0                          	: Passed
 	test_div_list2_eq1                 	: Passed
 	test_div_eq                        	: Passed
@@ -95,19 +131,30 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_div_dig_gr                    	: Passed
 	test_div_2_by_100                  	: Passed
 	test_div_half                      	: Passed
+<<<<<<< HEAD
 	test_div                           	: Passed ; Average execution time: 0.000707679 s
+=======
+	test_div                           	: Passed ; Average execution time: 0.000703121 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_exp_ind                       	: Passed
 	test_exp_e0                        	: Passed
 	test_exp_e1                        	: Passed
 	test_exp_eN1                       	: Passed
 	test_exp_odd_power                 	: Passed
+<<<<<<< HEAD
 	test_exp                           	: Passed ; Average execution time: 0.0383368 s
 	test_bit_comp_inf                  	: Passed
 	test_bit_comp                      	: Passed ; Average execution time: 0.18818 s
+=======
+	test_exp                           	: Passed ; Average execution time: 0.0373514 s
+	test_bit_comp_inf                  	: Passed
+	test_bit_comp                      	: Passed ; Average execution time: 0.187501 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_bit_and_spec_eq               	: Passed
 	test_bit_and_eq                    	: Passed
 	test_bit_and_eq_zero               	: Passed
 	test_bit_or_eq                     	: Passed
+<<<<<<< HEAD
 	test_bit_xor_eq                    	: Passed ; Average execution time: 0.182175 s
 	test_bit_lshift                    	: Passed ; Average execution time: 1.03149 s
 	test_bit_rshift                    	: Passed ; Average execution time: 0.866832 s
@@ -116,6 +163,16 @@ Precision::Volatile::Int_Operations [int_operations_test.cpp]:
 	test_log_or_eq                     	: Passed
 	test_log_xor_eq                    	: Passed ; Average execution time: 6.0057e-006 s
 	test_log_xor_rev_eq                	: Passed ; Average execution time: 3.26313e-005 s
+=======
+	test_bit_xor_eq                    	: Passed ; Average execution time: 0.183071 s
+	test_bit_lshift                    	: Passed ; Average execution time: 0.96981 s
+	test_bit_rshift                    	: Passed ; Average execution time: 0.76362 s
+	test_log_comp                      	: Passed ; Average execution time: 3.6134e-006 s
+	test_log_and_eq                    	: Passed
+	test_log_or_eq                     	: Passed
+	test_log_xor_eq                    	: Passed ; Average execution time: 5.8846e-006 s
+	test_log_xor_rev_eq                	: Passed ; Average execution time: 3.07034e-005 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
 Precision::General_Base::Static::Abstract::Int [abstract_static_general_base_int_test.cpp]:
 	test_asgbi_default                 	: Passed
@@ -153,15 +210,24 @@ Precision::General_Base::Static::Abstract::Int [abstract_static_general_base_int
 	test_asgbi_halve_spec              	: Passed
 	test_asgbi_assign                  	: Passed
 	test_asgbi_force_assign            	: Passed
+<<<<<<< HEAD
 	test_asgbi_add                     	: Passed ; Average execution time: 6.356e-006 s
 	test_asgbi_sub                     	: Passed ; Average execution time: 6.4061e-006 s
 	test_asgbi_mult                    	: Passed ; Average execution time: 0.00094491 s
 	test_asgbi_div                     	: Passed ; Average execution time: 0.000846812 s
 	test_asgbi_mod                     	: Passed ; Average execution time: 0.000870836 s
+=======
+	test_asgbi_add                     	: Passed ; Average execution time: 7.8124e-006 s
+	test_asgbi_sub                     	: Passed ; Average execution time: 7.8125e-006 s
+	test_asgbi_mult                    	: Passed ; Average execution time: 0.000888066 s
+	test_asgbi_div                     	: Passed ; Average execution time: 0.000875 s
+	test_asgbi_mod                     	: Passed ; Average execution time: 0.000843746 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_asgbi_pre_dec                 	: Passed
 	test_asgbi_post_dec                	: Passed
 	test_asgbi_pre_inc                 	: Passed
 	test_asgbi_post_inc                	: Passed
+<<<<<<< HEAD
 	test_asgbi_and                     	: Passed ; Average execution time: 0.202193 s
 	test_asgbi_or                      	: Passed ; Average execution time: 0.196688 s
 	test_asgbi_xor                     	: Passed ; Average execution time: 0.203697 s
@@ -172,12 +238,28 @@ Precision::General_Base::Static::Abstract::Int [abstract_static_general_base_int
 	test_asgbi_log_or                  	: Passed ; Average execution time: 1.09605e-005 s
 	test_asgbi_log_xor                 	: Passed ; Average execution time: 6.4063e-006 s
 	test_asgbi_log_compl               	: Passed ; Average execution time: 3.7036e-006 s
+=======
+	test_asgbi_and                     	: Passed ; Average execution time: 0.203125 s
+	test_asgbi_or                      	: Passed ; Average execution time: 0.191828 s
+	test_asgbi_xor                     	: Passed ; Average execution time: 0.203125 s
+	test_asgbi_compl                   	: Passed ; Average execution time: 0.1875 s
+	test_asgbi_lshift                  	: Passed ; Average execution time: 0 s
+	test_asgbi_rshift                  	: Passed ; Average execution time: 0.0015625 s
+	test_asgbi_log_and                 	: Passed ; Average execution time: 6.25e-006 s
+	test_asgbi_log_or                  	: Passed ; Average execution time: 1.09375e-005 s
+	test_asgbi_log_xor                 	: Passed ; Average execution time: 6.25e-006 s
+	test_asgbi_log_compl               	: Passed ; Average execution time: 4.6875e-006 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_asgbi_log_lshift              	: Passed
 	test_asgbi_log_rshift              	: Passed
 	test_asgbi_log_shift               	: Passed
 	test_asgbi_cust_dig                	: Passed
 	test_asgbi_cust_base               	: Passed
+<<<<<<< HEAD
 	test_asgbi_cust_contain            	: Passed ; Average execution time: 0.000103199 s
+=======
+	test_asgbi_cust_contain            	: Passed ; Average execution time: 0.000101562 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
 Precision::General_Base::Static::Int [static_general_base_int_test.cpp]:
 	test_sgbi_default                  	: Passed
@@ -250,9 +332,15 @@ Precision::General_Base::Static::Int [static_general_base_int_test.cpp]:
 	test_sgbi_custom_iter              	: Passed
 
 Precision::convert_base_copy [interbase_operations_test.cpp]:
+<<<<<<< HEAD
 	test_convert_copy_abstract         	: Passed ; Average execution time: 0.000557536 s
 	test_convert_copy_static           	: Passed ; Average execution time: 0.000968929 s
 	test_convert_copy_static_abs       	: Passed ; Average execution time: 0.000814782 s
+=======
+	test_convert_copy_abstract         	: Passed ; Average execution time: 0.000546407 s
+	test_convert_copy_static           	: Passed ; Average execution time: 0.000963595 s
+	test_convert_copy_static_abs       	: Passed ; Average execution time: 0.000800003 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_convert_copy_one_dig          	: Passed
 	test_convert_copy_static_img_set   	: Passed
 	test_convert_copy_static_abs_img   	: Passed
@@ -297,15 +385,24 @@ Precision::General_Base::Dynamic::Abstract::Int [abstract_dynamic_general_base_i
 	test_adgbi_assign                  	: Passed
 	test_adgbi_force_assign            	: Passed
 	test_adgbi_set_base                	: Passed
+<<<<<<< HEAD
 	test_adgbi_add                     	: Passed ; Average execution time: 0.001041 s
 	test_adgbi_sub                     	: Passed ; Average execution time: 0.000565542 s
 	test_adgbi_mult                    	: Passed ; Average execution time: 0.00180178 s
 	test_adgbi_div                     	: Passed ; Average execution time: 0.000860828 s
 	test_adgbi_mod                     	: Passed ; Average execution time: 0.000875842 s
+=======
+	test_adgbi_add                     	: Passed ; Average execution time: 0.0009375 s
+	test_adgbi_sub                     	: Passed ; Average execution time: 0.000562498 s
+	test_adgbi_mult                    	: Passed ; Average execution time: 0.001875 s
+	test_adgbi_div                     	: Passed ; Average execution time: 0.000843752 s
+	test_adgbi_mod                     	: Passed ; Average execution time: 0.000874996 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_adgbi_pre_dec                 	: Passed
 	test_adgbi_post_dec                	: Passed
 	test_adgbi_pre_inc                 	: Passed
 	test_adgbi_post_inc                	: Passed
+<<<<<<< HEAD
 	test_adgbi_and                     	: Passed ; Average execution time: 0.203697 s
 	test_adgbi_or                      	: Passed ; Average execution time: 0.207198 s
 	test_adgbi_xor                     	: Passed ; Average execution time: 0.209701 s
@@ -316,11 +413,27 @@ Precision::General_Base::Dynamic::Abstract::Int [abstract_dynamic_general_base_i
 	test_adgbi_log_or                  	: Passed ; Average execution time: 0.00085082 s
 	test_adgbi_log_xor                 	: Passed ; Average execution time: 0.00056554 s
 	test_adgbi_log_compl               	: Passed ; Average execution time: 4.004e-006 s
+=======
+	test_adgbi_and                     	: Passed ; Average execution time: 0.201188 s
+	test_adgbi_or                      	: Passed ; Average execution time: 0.197231 s
+	test_adgbi_xor                     	: Passed ; Average execution time: 0.216994 s
+	test_adgbi_compl                   	: Passed ; Average execution time: 0.242867 s
+	test_adgbi_lshift                  	: Passed ; Average execution time: 0 s
+	test_adgbi_rshift                  	: Passed ; Average execution time: 0 s
+	test_adgbi_log_and                 	: Passed ; Average execution time: 0.00109376 s
+	test_adgbi_log_or                  	: Passed ; Average execution time: 0.000812496 s
+	test_adgbi_log_xor                 	: Passed ; Average execution time: 0.00046875 s
+	test_adgbi_log_compl               	: Passed ; Average execution time: 3.125e-005 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 	test_adgbi_log_lshift              	: Passed
 	test_adgbi_log_rshift              	: Passed
 	test_adgbi_log_shift               	: Passed
 	test_adgbi_cust_dig                	: Passed
+<<<<<<< HEAD
 	test_adgbi_cust_contain            	: Passed ; Average execution time: 0.000116962 s
+=======
+	test_adgbi_cust_contain            	: Passed ; Average execution time: 0.000112903 s
+>>>>>>> 8aa772d478473c9a5631f16901893c2d6e710d1b
 
 Precision::General_Base::Dynamic::Int [dynamic_general_base_int_test.cpp]:
 	test_dgbi_default                  	: Passed
