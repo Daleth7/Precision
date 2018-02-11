@@ -63,7 +63,54 @@ $(function() {
 <div class="title">Precision </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Revamped Precision number library </p>
+<div class="textblock"><p>Revamped Precision number library</p>
+<h2>Modules to implement: </h2>
+<h2>| Module Name | Dependencies | Description | Status | </h2>
+<p>| exception | | Common exception type | Done | </p><h2>| | | number types throw | | </h2>
+<p>| Digit container | | Basic interface to manage | Done | </p><h2>| | | a string of digits | | </h2>
+<p>| Signed Class | | Basic POD representing | Done | </p><h2>| | | a number sign | | </h2>
+<p>| Signed Interface | Signed Class | Basic interface to manage | Done | </p><h2>| | | number signs | | </h2>
+<p>| Integer | exception | A set of functions and/or | Done | | Operations | | operations for dealing | | </p><h2>| | | with integer-based data | | </h2>
+<p>| Abstract Static | Integer | A class representing an | Done | | General Base | Operations | "abstract", or without | | | Integer | | visual representation, | | | | Signed Interface | integer with a number | | | | | radix fixed at | | </p><h2>| | Digit Container | compile-time | | </h2>
+<p>| Image Set | | Basic interface to manage | Done | </p><h2>| Interface | | digit and symbol glyphs | | </h2>
+<p>| Integer Image | Image Set | A set of functions and/or | Done | | Operations | Interface | operations for dealing | | </p><h2>| | | with image-based data | | </h2>
+<p>| Static | Abstract Static | A class representing an | Done | | General Base | General Base | integer with visual | | | Integer | Integer | representation and a | | | | | number radix fixed at | | | | Image Set | compile-time | | </p><h2>| | Operations | | | </h2>
+<p>| Base Converter | | A utility for converting | Done | </p><h2>| | | among number bases | | </h2>
+<p>| Abstract Dynamic | Integer | A class representing an | Done | | General Base | Operations | "abstract", or without | | | Integer | | visual representation, | | | | Signed Interface | integer with a number | | | | | radix mutable at | | </p><table class="doxtable">
+<tr>
+<th></th><th>Digit Container </th><th>compile-time </th><th></th></tr>
+<tr>
+<td></td><td>Base converter </td><td></td><td></td></tr>
+</table>
+<hr/>
+<p> | Dynamic | Abstract Dynamic | A class representing an | Done | | General Base | General Base | integer with visual | | | Integer | Integer | representation and a | | | | | number radix mutable at | | | | Image Set | compile-time | | </p><h2>| | Operations | | | </h2>
+<p>| Floating | exception | A set of functions and/or | Not | | Operations | | operations for dealing | Started | </p><h2>| | | with floating-based data | | </h2>
+<p>| Floating | Integer | Classes representing | Not | | - Abstract Static | - Abstract Static | arbitrary precision | Started | | - Static | - Static | numbers that have decimal | | | - Abstract Dynamic| - Abstract Dynamic| portions. | | </p><table class="doxtable">
+<tr>
+<th>- Dynamic </th><th>- Dynamic </th><th></th><th></th></tr>
+<tr>
+<td></td><td>Floating </td><td></td><td></td></tr>
+<tr>
+<td></td><td>Operations </td><td></td><td></td></tr>
+</table>
+<hr/>
+<p> | Fraction | exception | A set of functions and/or | Not | | Operations | | operations for dealing | Started | </p><h2>| | | with fraction-based data | | </h2>
+<p>| Fraction | Floating | Classes representing | Not | | - Abstract Static | - Abstract Static | numerator/denominator | Started | | - Static | - Static | fractions | | | - Abstract Dynamic| - Abstract Dynamic| | | </p><table class="doxtable">
+<tr>
+<th>- Dynamic </th><th>- Dynamic </th><th></th><th></th></tr>
+<tr>
+<td></td><td>Fraction </td><td></td><td></td></tr>
+<tr>
+<td></td><td>Operations </td><td></td><td></td></tr>
+</table>
+<hr/>
+<p> | Complex | exception | A set of functions and/or | Not | | Operations | | operations for dealing | Started | </p><h2>| | | with complex-based data | | </h2>
+<p>| Complex | Complex | Classes representing | Not | | Polar | Operations | complex numbers. The | Started | | | | scalar numbers may be | | | | | represented by any other | | </p><h2>| | | number type. | | </h2>
+<p>| PRNG | | Basic proof-of-concept | Not | | | | PRNG that supports | Started | </p><h2>| | | any of the number types | | </h2>
+<p>| Mathematical | Integer | Basic mathematics system | Not | | System | Operations | with support for common | Started | | - Trigonometry | | operations | | | - Logarithmic/Exp | Floating | | | | - Factorials | Operations | | | | - Fraction-based | | | | | | Fraction | | | </p><h2>| | Operations | | | </h2>
+<p>| Iterator | | An interface in all | In | | Interface | | types to make them STL- | Consider- | </p><h2>| | | container-like | ation | </h2>
+<p>| Conservative | | A digit string manager | In | | Digit Container | | that stuffs data into | Consider- | | | | the most compact form | ation | </p><h2>| | | possible | | </h2>
+<p>| Documentation | | Web-based documentation | In | </p><h2>| | | of library using doxygen | Progress | </h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

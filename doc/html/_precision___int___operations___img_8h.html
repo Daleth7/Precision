@@ -69,48 +69,55 @@ $(function() {
 <div class="title">Precision_Int_Operations_Img.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;functional&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_precision___image___set___interface_8h_source.html">Precision_Image_Set_Interface.h</a>&quot;</code><br />
+<code>#include &lt;functional&gt;</code><br />
 <code>#include &quot;Precision_Int_Operations_Img.inl&quot;</code><br />
 </div>
 <p><a href="_precision___int___operations___img_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3978719db374f869c5331bdef244e46a"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename CharTIterator &gt; </td></tr>
-<tr class="memitem:a3978719db374f869c5331bdef244e46a"><td class="memTemplItemLeft" align="right" valign="top">IntType::str_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a">Precision::Volatile::Int_Operations::Img::str</a> (const IntType &amp;ref, CharTIterator dig_glyphs, CharTIterator sym_glyphs)</td></tr>
-<tr class="separator:a3978719db374f869c5331bdef244e46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b7a33e1360cd7410b7c97370eb1479e"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename CharTIterator &gt; </td></tr>
-<tr class="memitem:a5b7a33e1360cd7410b7c97370eb1479e"><td class="memTemplItemLeft" align="right" valign="top">IntType::str_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a5b7a33e1360cd7410b7c97370eb1479e">Precision::Volatile::Int_Operations::Img::sci_note</a> (const IntType &amp;ref, typename IntType::size_type prec, CharTIterator dig_glyphs, CharTIterator sym_glyphs)</td></tr>
-<tr class="separator:a5b7a33e1360cd7410b7c97370eb1479e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b6539557bc222d6d13ddbeff8bdcde0"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename CharTIterator &gt; </td></tr>
-<tr class="memitem:a8b6539557bc222d6d13ddbeff8bdcde0"><td class="memTemplItemLeft" align="right" valign="top">IntType::str_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a8b6539557bc222d6d13ddbeff8bdcde0">Precision::Volatile::Int_Operations::Img::sci_note_w_spaces</a> (const IntType &amp;ref, typename IntType::size_type prec, CharTIterator dig_glyphs, CharTIterator sym_glyphs)</td></tr>
-<tr class="separator:a8b6539557bc222d6d13ddbeff8bdcde0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f6fb6026b385b9e391daff7e7b20430"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename CharTIterator &gt; </td></tr>
-<tr class="memitem:a9f6fb6026b385b9e391daff7e7b20430"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a9f6fb6026b385b9e391daff7e7b20430">Precision::Volatile::Int_Operations::Img::parse</a> (const typename IntType::str_type &amp;src, typename IntType::diglist_type &amp;dest, typename IntType::digit_type base, const CharTIterator dig_glyphs)</td></tr>
-<tr class="separator:a9f6fb6026b385b9e391daff7e7b20430"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a649b47211a120787b32508d7263c0c76"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename ISIType &gt; </td></tr>
+<tr class="memitem:a649b47211a120787b32508d7263c0c76"><td class="memTemplItemLeft" align="right" valign="top">ISIType::str_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a649b47211a120787b32508d7263c0c76">Precision::Volatile::Int_Operations::Img::str</a> (const IntType &amp;ref, const ISIType &amp;img_set)</td></tr>
+<tr class="separator:a649b47211a120787b32508d7263c0c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cebbdf6942b5b657de8715e74997fd2"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename ISIType &gt; </td></tr>
+<tr class="memitem:a4cebbdf6942b5b657de8715e74997fd2"><td class="memTemplItemLeft" align="right" valign="top">ISIType::str_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a4cebbdf6942b5b657de8715e74997fd2">Precision::Volatile::Int_Operations::Img::sci_note</a> (const IntType &amp;ref, typename IntType::size_type prec, const ISIType &amp;img_set)</td></tr>
+<tr class="separator:a4cebbdf6942b5b657de8715e74997fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa3bd9132022eff11692791fa87903b"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename ISIType &gt; </td></tr>
+<tr class="memitem:a9fa3bd9132022eff11692791fa87903b"><td class="memTemplItemLeft" align="right" valign="top">ISIType::str_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a9fa3bd9132022eff11692791fa87903b">Precision::Volatile::Int_Operations::Img::sci_note_w_spaces</a> (const IntType &amp;ref, typename IntType::size_type prec, const ISIType &amp;img_set)</td></tr>
+<tr class="separator:a9fa3bd9132022eff11692791fa87903b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69593d067a9c23b67447d48be88f5586"><td class="memTemplParams" colspan="2">template&lt;typename IntType , typename ISIType , typename SearchPolicy  = ImgSearchPolicy::Binary&gt; </td></tr>
+<tr class="memitem:a69593d067a9c23b67447d48be88f5586"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_precision___int___operations___img_8h.html#a69593d067a9c23b67447d48be88f5586">Precision::Volatile::Int_Operations::Img::parse</a> (const typename ISIType::str_type &amp;src, typename IntType::digstr_type &amp;dest, typename IntType::sign_type &amp;sign_dest, typename IntType::digit_type base, const ISIType &amp;img_set)</td></tr>
+<tr class="separator:a69593d067a9c23b67447d48be88f5586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file centralizes the conversion algorithms to convert an integer to an "image" and vice versa. The algorithms are placed under the Volatile namespace since they require the number base to be passed as a parameter to correctly run the algorithm. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="file_a9f6fb6026b385b9e391daff7e7b20430"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a9f6fb6026b385b9e391daff7e7b20430">&sect;&nbsp;</a></span>parse()</h2>
+<a id="file_a69593d067a9c23b67447d48be88f5586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a69593d067a9c23b67447d48be88f5586">&sect;&nbsp;</a></span>parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IntType , typename CharTIterator &gt; </div>
+template&lt;typename IntType , typename ISIType , typename SearchPolicy  = ImgSearchPolicy::Binary&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void Precision::Volatile::Int_Operations::Img::parse </td>
           <td>(</td>
-          <td class="paramtype">const typename IntType::str_type &amp;&#160;</td>
+          <td class="paramtype">const typename ISIType::str_type &amp;&#160;</td>
           <td class="paramname"><em>src</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename IntType::diglist_type &amp;&#160;</td>
+          <td class="paramtype">typename IntType::digstr_type &amp;&#160;</td>
           <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">typename IntType::sign_type &amp;&#160;</td>
+          <td class="paramname"><em>sign_dest</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -121,8 +128,8 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const CharTIterator&#160;</td>
-          <td class="paramname"><em>dig_glyphs</em>&#160;</td>
+          <td class="paramtype">const ISIType &amp;&#160;</td>
+          <td class="paramname"><em>img_set</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -131,15 +138,18 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Convert a string of glyphs to an integer. Notice that this function does not take an iterator for the symbols because this function does not deal with numbers in scientific notation or signed numbers.</p>
+<p>Convert a string of glyphs to an integer.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">IntType</td><td>Type of the number to convert. Refer to <a class="el" href="_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a">str()</a> for more details. In addition to the requirements for <a class="el" href="_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a">str()</a>, IntType must also have the following public members:<ul>
-<li>Type IntType::diglist_type</li>
-<li>Type IntType::digit_type </li>
+    <tr><td class="paramname">IntType</td><td>Type of the number to convert. Refer to <a class="el" href="_precision___int___operations___img_8h.html#a649b47211a120787b32508d7263c0c76">str()</a> for more details. In addition to the requirements for <a class="el" href="_precision___int___operations___img_8h.html#a649b47211a120787b32508d7263c0c76">str()</a>, IntType must also have the following public members:<ul>
+<li>Type IntType::digstr_type</li>
+<li>Type IntType::digstr_type::insert</li>
+<li>Type IntType::digit_type</li>
+<li>Type IntType::sign_type::assign </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">CharTIterator</td><td>Random Access Iterator pointing to glyphs representing digits or symbols.</td></tr>
+    <tr><td class="paramname">ISIType</td><td>Image Set Interface Type containing the set of images to use during conversion. </td></tr>
+    <tr><td class="paramname">SearchPolicy</td><td>Determines which algorithm to use when searching for matching glyphs. See <a class="el" href="class_precision_1_1_image___set___interface.html">Precision::Image_Set_Interface</a> for more information.</td></tr>
   </table>
   </dd>
 </dl>
@@ -147,24 +157,25 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
   <table class="params">
     <tr><td class="paramname">src</td><td>The original image to convert </td></tr>
     <tr><td class="paramname">dest</td><td>The container in which to store the converted integer. </td></tr>
+    <tr><td class="paramname">sign_dest</td><td>The sign type object to store the new sign. </td></tr>
     <tr><td class="paramname">base</td><td>The number base to interpret the image. </td></tr>
-    <tr><td class="paramname">dig_glyphs</td><td>Iterator to a set of digit glyphs. </td></tr>
+    <tr><td class="paramname">img_set</td><td>Interface with digit to glyph information. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="file_a5b7a33e1360cd7410b7c97370eb1479e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a5b7a33e1360cd7410b7c97370eb1479e">&sect;&nbsp;</a></span>sci_note()</h2>
+<a id="file_a4cebbdf6942b5b657de8715e74997fd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a4cebbdf6942b5b657de8715e74997fd2">&sect;&nbsp;</a></span>sci_note()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IntType , typename CharTIterator &gt; </div>
+template&lt;typename IntType , typename ISIType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">IntType::str_type Precision::Volatile::Int_Operations::Img::sci_note </td>
+          <td class="memname">ISIType::str_type Precision::Volatile::Int_Operations::Img::sci_note </td>
           <td>(</td>
           <td class="paramtype">const IntType &amp;&#160;</td>
           <td class="paramname"><em>ref</em>, </td>
@@ -178,14 +189,8 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CharTIterator&#160;</td>
-          <td class="paramname"><em>dig_glyphs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">CharTIterator&#160;</td>
-          <td class="paramname"><em>sym_glyphs</em>&#160;</td>
+          <td class="paramtype">const ISIType &amp;&#160;</td>
+          <td class="paramname"><em>img_set</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -197,11 +202,11 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
 <p>Convert an integer to a string of glyphs/symbols in scientific notation, e.g. "+1.23e16."</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">IntType</td><td>Type of the number to convert. Refer to <a class="el" href="_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a">str()</a> for more details. In addition to the requirements for <a class="el" href="_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a">str()</a>, IntType must also have the following public members:<ul>
-<li>Method digit_type IntType::base() </li>
+    <tr><td class="paramname">IntType</td><td>Type of the number to convert. Refer to <a class="el" href="_precision___int___operations___img_8h.html#a649b47211a120787b32508d7263c0c76">str()</a> for more details. In addition to the requirements for <a class="el" href="_precision___int___operations___img_8h.html#a649b47211a120787b32508d7263c0c76">str()</a>, IntType must also have the following public members:<ul>
+<li>Method digit_type <a class="el" href="_precision___shared___helpers_8h.html#a8ebf0107e8607f017b84f6f497f791be">IntType::base()</a> </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">CharTIterator</td><td>Random Access Iterator pointing to glyphs representing digits or symbols.</td></tr>
+    <tr><td class="paramname">ISIType</td><td>Image Set Interface Type containing the set of images to use during conversion.</td></tr>
   </table>
   </dd>
 </dl>
@@ -209,8 +214,7 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
   <table class="params">
     <tr><td class="paramname">ref</td><td>The integer to convert. </td></tr>
     <tr><td class="paramname">prec</td><td>The number of digits to show after the point symbol. </td></tr>
-    <tr><td class="paramname">dig_glyphs</td><td>Iterator to a set of digit glyphs. </td></tr>
-    <tr><td class="paramname">sym_glyphs</td><td>Iterator to a set of symbol (e.g. "+") glyphs. </td></tr>
+    <tr><td class="paramname">img_set</td><td>Interface with digit to glyph information.</td></tr>
   </table>
   </dd>
 </dl>
@@ -218,16 +222,16 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
 
 </div>
 </div>
-<a id="file_a8b6539557bc222d6d13ddbeff8bdcde0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a8b6539557bc222d6d13ddbeff8bdcde0">&sect;&nbsp;</a></span>sci_note_w_spaces()</h2>
+<a id="file_a9fa3bd9132022eff11692791fa87903b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a9fa3bd9132022eff11692791fa87903b">&sect;&nbsp;</a></span>sci_note_w_spaces()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IntType , typename CharTIterator &gt; </div>
+template&lt;typename IntType , typename ISIType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">IntType::str_type Precision::Volatile::Int_Operations::Img::sci_note_w_spaces </td>
+          <td class="memname">ISIType::str_type Precision::Volatile::Int_Operations::Img::sci_note_w_spaces </td>
           <td>(</td>
           <td class="paramtype">const IntType &amp;&#160;</td>
           <td class="paramname"><em>ref</em>, </td>
@@ -241,14 +245,8 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CharTIterator&#160;</td>
-          <td class="paramname"><em>dig_glyphs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">CharTIterator&#160;</td>
-          <td class="paramname"><em>sym_glyphs</em>&#160;</td>
+          <td class="paramtype">const ISIType &amp;&#160;</td>
+          <td class="paramname"><em>img_set</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -260,8 +258,8 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
 <p>Convert an integer to a string of glyphs/symbols in scientific notation, e.g. "+ 1.23 e 16."</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">IntType</td><td>Type of the number to convert. Refer to <a class="el" href="_precision___int___operations___img_8h.html#a3978719db374f869c5331bdef244e46a">str()</a> for more details. </td></tr>
-    <tr><td class="paramname">CharTIterator</td><td>Random Access Iterator pointing to glyphs representing digits or symbols.</td></tr>
+    <tr><td class="paramname">IntType</td><td>Type of the number to convert. Refer to <a class="el" href="_precision___int___operations___img_8h.html#a649b47211a120787b32508d7263c0c76">str()</a> for more details. </td></tr>
+    <tr><td class="paramname">ISIType</td><td>Image Set Interface Type containing the set of images to use during conversion.</td></tr>
   </table>
   </dd>
 </dl>
@@ -269,8 +267,7 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
   <table class="params">
     <tr><td class="paramname">ref</td><td>The integer to convert. </td></tr>
     <tr><td class="paramname">prec</td><td>The number of digits to show after the point symbol. </td></tr>
-    <tr><td class="paramname">dig_glyphs</td><td>Iterator to a set of digit glyphs. </td></tr>
-    <tr><td class="paramname">sym_glyphs</td><td>Iterator to a set of symbol (e.g. "+") glyphs. </td></tr>
+    <tr><td class="paramname">img_set</td><td>Interface with digit to glyph information.</td></tr>
   </table>
   </dd>
 </dl>
@@ -278,16 +275,16 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
 
 </div>
 </div>
-<a id="file_a3978719db374f869c5331bdef244e46a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a3978719db374f869c5331bdef244e46a">&sect;&nbsp;</a></span>str()</h2>
+<a id="file_a649b47211a120787b32508d7263c0c76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a649b47211a120787b32508d7263c0c76">&sect;&nbsp;</a></span>str()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IntType , typename CharTIterator &gt; </div>
+template&lt;typename IntType , typename ISIType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">IntType::str_type Precision::Volatile::Int_Operations::Img::str </td>
+          <td class="memname">ISIType::str_type Precision::Volatile::Int_Operations::Img::str </td>
           <td>(</td>
           <td class="paramtype">const IntType &amp;&#160;</td>
           <td class="paramname"><em>ref</em>, </td>
@@ -295,14 +292,8 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CharTIterator&#160;</td>
-          <td class="paramname"><em>dig_glyphs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">CharTIterator&#160;</td>
-          <td class="paramname"><em>sym_glyphs</em>&#160;</td>
+          <td class="paramtype">const ISIType &amp;&#160;</td>
+          <td class="paramname"><em>img_set</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -317,21 +308,20 @@ template&lt;typename IntType , typename CharTIterator &gt; </div>
     <tr><td class="paramname">IntType</td><td>Type of the number to convert. It must have these public members:<ul>
 <li>Type IntType::str_type</li>
 <li>Type IntType::size_type</li>
-<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#ade132cdfd51bb038d8b3f885b7482476">IntType::is_zero()</a></li>
+<li>Method bool <a class="el" href="_precision___shared___helpers_8h.html#a75526990ec55eeb7384a7481e66a440d">IntType::is_zero()</a></li>
 <li>Method bool IntType::is_positive()</li>
 <li>Method size_type IntType::count_digits()</li>
 <li>Method digit_type IntType::digit(size_type) </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">CharTIterator</td><td>Random Access Iterator pointing to glyphs representing digits or symbols.</td></tr>
+    <tr><td class="paramname">ISIType</td><td>Image Set Interface Type containing the set of images to use during conversion.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ref</td><td>The integer to convert. </td></tr>
-    <tr><td class="paramname">dig_glyphs</td><td>Iterator to a set of digit glyphs. </td></tr>
-    <tr><td class="paramname">sym_glyphs</td><td>Iterator to a set of symbol (e.g. "+") glyphs. </td></tr>
+    <tr><td class="paramname">img_set</td><td>Interface with digit to glyph information.</td></tr>
   </table>
   </dd>
 </dl>

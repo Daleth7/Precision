@@ -81,7 +81,8 @@ Inheritance diagram for Precision::Digit_Container&lt; ByteType, Container &gt;:
  <div class="center">
   <img src="class_precision_1_1_digit___container.png" usemap="#Precision::Digit_5FContainer_3C_20ByteType_2C_20Container_20_3E_map" alt=""/>
   <map id="Precision::Digit_5FContainer_3C_20ByteType_2C_20Container_20_3E_map" name="Precision::Digit_Container&lt; ByteType, Container &gt;_map">
-<area href="class_precision_1_1_general___base_1_1_static_1_1_abstract_1_1_int.html" alt="Precision::General_Base::Static::Abstract::Int&lt; ByteType, Base, Container, SignType &gt;" shape="rect" coords="0,56,500,80"/>
+<area href="class_precision_1_1_general___base_1_1_dynamic_1_1_abstract_1_1_int.html" alt="Precision::General_Base::Dynamic::Abstract::Int&lt; ByteType, Container, SignType &gt;" shape="rect" coords="0,56,500,80"/>
+<area href="class_precision_1_1_general___base_1_1_static_1_1_abstract_1_1_int.html" alt="Precision::General_Base::Static::Abstract::Int&lt; ByteType, Base, Container, SignType &gt;" shape="rect" coords="510,56,1010,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -89,10 +90,10 @@ Inheritance diagram for Precision::Digit_Container&lt; ByteType, Container &gt;:
 Public Types</h2></td></tr>
 <tr class="memitem:a05a400da8169cd09949389b4d7dc54fb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> = ByteType</td></tr>
 <tr class="separator:a05a400da8169cd09949389b4d7dc54fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad5e3e865d53bf3a41fa253e5d81ee3d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a> = Container&lt; <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> &gt;</td></tr>
-<tr class="separator:aad5e3e865d53bf3a41fa253e5d81ee3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69234d9bb5f617f219c354e5ac36c2f5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a> = typename diglist_type::size_type</td></tr>
-<tr class="separator:a69234d9bb5f617f219c354e5ac36c2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f289498b74b75b545d158a6b205f18e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a> = Container&lt; <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> &gt;</td></tr>
+<tr class="separator:a5f289498b74b75b545d158a6b205f18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77e94fd84c15353620bfb33197014c29"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> = typename digstr_type::size_type</td></tr>
+<tr class="separator:a77e94fd84c15353620bfb33197014c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1049e705778023047379f0bf3f44591"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#ab1049e705778023047379f0bf3f44591">signed_size_type</a> = std::int_least32_t</td></tr>
 <tr class="separator:ab1049e705778023047379f0bf3f44591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -106,28 +107,29 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a49c00b16d9ef93f2a5b1eb6b926a93f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4effc00e66bc8d89adc249d043905b97"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a4effc00e66bc8d89adc249d043905b97">is_odd</a> () const</td></tr>
 <tr class="separator:a4effc00e66bc8d89adc249d043905b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3a4ac45cce8e5408d1e2bcda2403005"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#aa3a4ac45cce8e5408d1e2bcda2403005">digit_list</a> () const</td></tr>
-<tr class="separator:aa3a4ac45cce8e5408d1e2bcda2403005"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ceb27fc683f02f5702c3b33713a20e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a9ceb27fc683f02f5702c3b33713a20e5">count_digits</a> () const</td></tr>
+<tr class="memitem:a1b2ed72bac7b6cca13b633993f03195f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a1b2ed72bac7b6cca13b633993f03195f">digit_string</a> () const</td></tr>
+<tr class="separator:a1b2ed72bac7b6cca13b633993f03195f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ceb27fc683f02f5702c3b33713a20e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a9ceb27fc683f02f5702c3b33713a20e5">count_digits</a> () const</td></tr>
 <tr class="separator:a9ceb27fc683f02f5702c3b33713a20e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50e18852a64a67534b609daa5c8c343c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a50e18852a64a67534b609daa5c8c343c">digit</a> (<a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a> index) const</td></tr>
+<tr class="memitem:a50e18852a64a67534b609daa5c8c343c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a50e18852a64a67534b609daa5c8c343c">digit</a> (<a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> index) const</td></tr>
 <tr class="separator:a50e18852a64a67534b609daa5c8c343c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac62acc0f17c43f79447909fa8c81dccb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#ac62acc0f17c43f79447909fa8c81dccb">shift_left</a> (<a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a> e)</td></tr>
+<tr class="memitem:ac62acc0f17c43f79447909fa8c81dccb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#ac62acc0f17c43f79447909fa8c81dccb">shift_left</a> (<a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> e)</td></tr>
 <tr class="separator:ac62acc0f17c43f79447909fa8c81dccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b085e59c93e7295f6e404be6a02991e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a1b085e59c93e7295f6e404be6a02991e">shift</a> (<a class="el" href="class_precision_1_1_digit___container.html#ab1049e705778023047379f0bf3f44591">signed_size_type</a> sz)</td></tr>
 <tr class="separator:a1b085e59c93e7295f6e404be6a02991e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ee5d0dd89b8cb7dfb9741e20ca4cde2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a7ee5d0dd89b8cb7dfb9741e20ca4cde2">shift_right</a> (<a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a> e)</td></tr>
+<tr class="memitem:a7ee5d0dd89b8cb7dfb9741e20ca4cde2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a7ee5d0dd89b8cb7dfb9741e20ca4cde2">shift_right</a> (<a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> e)</td></tr>
 <tr class="separator:a7ee5d0dd89b8cb7dfb9741e20ca4cde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307b7140c6e6913b8c8d29931a1c3de0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a307b7140c6e6913b8c8d29931a1c3de0">append</a> (<a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> new_dig)</td></tr>
+<tr class="separator:a307b7140c6e6913b8c8d29931a1c3de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae3302b67b74bc749d80d6dba3a5a933"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#aae3302b67b74bc749d80d6dba3a5a933">detach</a> ()</td></tr>
 <tr class="separator:aae3302b67b74bc749d80d6dba3a5a933"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a8ee00a05e3808b7d490f8ed8e92c83"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a9a8ee00a05e3808b7d490f8ed8e92c83">Digit_Container</a> (const std::initializer_list&lt; <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> &gt; &amp;str)</td></tr>
 <tr class="separator:a9a8ee00a05e3808b7d490f8ed8e92c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72ea6ba6300ab4d637141668b28d88a3"><td class="memTemplParams" colspan="2">template&lt;typename Iterator &gt; </td></tr>
-<tr class="memitem:a72ea6ba6300ab4d637141668b28d88a3"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a72ea6ba6300ab4d637141668b28d88a3">Digit_Container</a> (const <a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a> &amp;new_num)</td></tr>
-<tr class="separator:a72ea6ba6300ab4d637141668b28d88a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1ec7f911c931d7e9e6ce7c9a5d13008"><td class="memTemplParams" colspan="2">template&lt;typename Iterator &gt; </td></tr>
-<tr class="memitem:aa1ec7f911c931d7e9e6ce7c9a5d13008"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#aa1ec7f911c931d7e9e6ce7c9a5d13008">Digit_Container</a> (const Iterator &amp;pbeg, const Iteratr &amp;pend)</td></tr>
-<tr class="separator:aa1ec7f911c931d7e9e6ce7c9a5d13008"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b58f2eccdeab6f2187a8389227c24a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a25b58f2eccdeab6f2187a8389227c24a">Digit_Container</a> (const <a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a> &amp;new_num)</td></tr>
+<tr class="separator:a25b58f2eccdeab6f2187a8389227c24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87fb11bcf7c38687caff726d7ba1f879"><td class="memTemplParams" colspan="2">template&lt;typename Iterator &gt; </td></tr>
+<tr class="memitem:a87fb11bcf7c38687caff726d7ba1f879"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a87fb11bcf7c38687caff726d7ba1f879">Digit_Container</a> (const Iterator &amp;pbeg, const Iterator &amp;pend)</td></tr>
+<tr class="separator:a87fb11bcf7c38687caff726d7ba1f879"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e6a40c7c494caf99a7b8c48cc2909f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a2e6a40c7c494caf99a7b8c48cc2909f3">Digit_Container</a> (<a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> num=0)</td></tr>
 <tr class="separator:a2e6a40c7c494caf99a7b8c48cc2909f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca7536fa751d37f9235225601a8ea47a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#aca7536fa751d37f9235225601a8ea47a">Digit_Container</a> (const <a class="el" href="class_precision_1_1_digit___container.html">Digit_Container</a> &amp;)=default</td></tr>
@@ -143,14 +145,22 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac97966e024f6f7e6a955420d696be888"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#ac97966e024f6f7e6a955420d696be888">verify_diglist</a> ()</td></tr>
-<tr class="separator:ac97966e024f6f7e6a955420d696be888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a1dafd51ae7b6c03474e3449be9e47e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a6a1dafd51ae7b6c03474e3449be9e47e">assign_digit</a> (<a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> idx, <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> new_dig, <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> base)</td></tr>
+<tr class="separator:a6a1dafd51ae7b6c03474e3449be9e47e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a7353f75cd72c28a9d9c63d2dd684ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a7a7353f75cd72c28a9d9c63d2dd684ae">force_assign_digit</a> (<a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> idx, <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> new_dig, <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> base)</td></tr>
+<tr class="separator:a7a7353f75cd72c28a9d9c63d2dd684ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a242a7b5f99dcefac6b8f83a617656371"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a242a7b5f99dcefac6b8f83a617656371">force_single_digit</a> (<a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> new_dig)</td></tr>
+<tr class="separator:a242a7b5f99dcefac6b8f83a617656371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d104002ecae5bc837ad9612c6faa9d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#a4d104002ecae5bc837ad9612c6faa9d1">split_number_store</a> (<a class="el" href="class_precision_1_1_digit___container.html#ab1049e705778023047379f0bf3f44591">signed_size_type</a> val, <a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> base)</td></tr>
+<tr class="separator:a4d104002ecae5bc837ad9612c6faa9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95f05c65bd71ad27dce58da1366ea1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_precision_1_1_digit___container.html#ad95f05c65bd71ad27dce58da1366ea1c">verify_diglist</a> (<a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> base)</td></tr>
+<tr class="separator:ad95f05c65bd71ad27dce58da1366ea1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:aae3fa5b7db3f435e97949010fd264514"><td class="memItemLeft" align="right" valign="top"><a id="aae3fa5b7db3f435e97949010fd264514"></a>
-<a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_number</b></td></tr>
-<tr class="separator:aae3fa5b7db3f435e97949010fd264514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92a42aa75aad5152a6d5b1934cfc1a7d"><td class="memItemLeft" align="right" valign="top"><a id="a92a42aa75aad5152a6d5b1934cfc1a7d"></a>
+<a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_number</b></td></tr>
+<tr class="separator:a92a42aa75aad5152a6d5b1934cfc1a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename ByteType = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt;<br />
@@ -183,8 +193,8 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 
 </div>
 </div>
-<a id="aad5e3e865d53bf3a41fa253e5d81ee3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad5e3e865d53bf3a41fa253e5d81ee3d">&sect;&nbsp;</a></span>diglist_type</h2>
+<a id="a5f289498b74b75b545d158a6b205f18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f289498b74b75b545d158a6b205f18e">&sect;&nbsp;</a></span>digstr_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -192,7 +202,7 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::<a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a> =  Container&lt;<a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&gt;</td>
+          <td class="memname">using <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::<a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a> =  Container&lt;<a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -230,8 +240,8 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 
 </div>
 </div>
-<a id="a69234d9bb5f617f219c354e5ac36c2f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69234d9bb5f617f219c354e5ac36c2f5">&sect;&nbsp;</a></span>size_type</h2>
+<a id="a77e94fd84c15353620bfb33197014c29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77e94fd84c15353620bfb33197014c29">&sect;&nbsp;</a></span>size_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,11 +249,11 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::<a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a> =  typename diglist_type::size_type</td>
+          <td class="memname">using <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::<a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> =  typename digstr_type::size_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The primitive representing size in diglist_type. </p>
+<p>The primitive representing size in digstr_type. </p>
 
 </div>
 </div>
@@ -283,15 +293,13 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 
 </div>
 </div>
-<a id="a72ea6ba6300ab4d637141668b28d88a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72ea6ba6300ab4d637141668b28d88a3">&sect;&nbsp;</a></span>Digit_Container() <span class="overload">[2/6]</span></h2>
+<a id="a25b58f2eccdeab6f2187a8389227c24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25b58f2eccdeab6f2187a8389227c24a">&sect;&nbsp;</a></span>Digit_Container() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
-<div class="memtemplate">
-template&lt;typename Iterator &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -299,7 +307,7 @@ template&lt;typename Iterator &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::<a class="el" href="class_precision_1_1_digit___container.html">Digit_Container</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a> &amp;&#160;</td>
           <td class="paramname"><em>new_num</em></td><td>)</td>
           <td></td>
         </tr>
@@ -320,8 +328,8 @@ template&lt;typename Iterator &gt; </div>
 
 </div>
 </div>
-<a id="aa1ec7f911c931d7e9e6ce7c9a5d13008"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1ec7f911c931d7e9e6ce7c9a5d13008">&sect;&nbsp;</a></span>Digit_Container() <span class="overload">[3/6]</span></h2>
+<a id="a87fb11bcf7c38687caff726d7ba1f879"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87fb11bcf7c38687caff726d7ba1f879">&sect;&nbsp;</a></span>Digit_Container() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,7 +350,7 @@ template&lt;typename Iterator &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Iteratr &amp;&#160;</td>
+          <td class="paramtype">const Iterator &amp;&#160;</td>
           <td class="paramname"><em>pend</em>&#160;</td>
         </tr>
         <tr>
@@ -490,6 +498,88 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a307b7140c6e6913b8c8d29931a1c3de0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a307b7140c6e6913b8c8d29931a1c3de0">&sect;&nbsp;</a></span>append()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::append </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>new_dig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Insert a new digit at the end of the string. </p>
+
+</div>
+</div>
+<a id="a6a1dafd51ae7b6c03474e3449be9e47e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a1dafd51ae7b6c03474e3449be9e47e">&sect;&nbsp;</a></span>assign_digit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::assign_digit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a>&#160;</td>
+          <td class="paramname"><em>idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>new_dig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>base</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Assign a specific digit in the string to be a new value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>The position of a digit to change. </td></tr>
+    <tr><td class="paramname">new_dig</td><td>The new digit value. </td></tr>
+    <tr><td class="paramname">base</td><td>The number base to restrict the digit to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a9ceb27fc683f02f5702c3b33713a20e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ceb27fc683f02f5702c3b33713a20e5">&sect;&nbsp;</a></span>count_digits()</h2>
 
@@ -502,7 +592,7 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a> <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::count_digits </td>
+          <td class="memname"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a> <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::count_digits </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -561,7 +651,7 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
         <tr>
           <td class="memname"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a> <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::digit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a>&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -583,8 +673,8 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 
 </div>
 </div>
-<a id="aa3a4ac45cce8e5408d1e2bcda2403005"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3a4ac45cce8e5408d1e2bcda2403005">&sect;&nbsp;</a></span>digit_list()</h2>
+<a id="a1b2ed72bac7b6cca13b633993f03195f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b2ed72bac7b6cca13b633993f03195f">&sect;&nbsp;</a></span>digit_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -595,7 +685,7 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="class_precision_1_1_digit___container.html#aad5e3e865d53bf3a41fa253e5d81ee3d">diglist_type</a>&amp; <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::digit_list </td>
+          <td class="memname">const <a class="el" href="class_precision_1_1_digit___container.html#a5f289498b74b75b545d158a6b205f18e">digstr_type</a>&amp; <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::digit_string </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -609,6 +699,94 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 </div><div class="memdoc">
 <p>Return a reference to the underlying container.</p>
 <dl class="section return"><dt>Returns</dt><dd>a read-only reference to the underlying container. </dd></dl>
+
+</div>
+</div>
+<a id="a7a7353f75cd72c28a9d9c63d2dd684ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a7353f75cd72c28a9d9c63d2dd684ae">&sect;&nbsp;</a></span>force_assign_digit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::force_assign_digit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a>&#160;</td>
+          <td class="paramname"><em>idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>new_dig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>base</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Force a specific digit to be a new value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>The position of a digit to change. </td></tr>
+    <tr><td class="paramname">new_dig</td><td>The new digit value. </td></tr>
+    <tr><td class="paramname">base</td><td>The number base to restrict the digit to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a242a7b5f99dcefac6b8f83a617656371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a242a7b5f99dcefac6b8f83a617656371">&sect;&nbsp;</a></span>force_single_digit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::force_single_digit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>new_dig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Force the string to have one digit at the specified value</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">digit_type</td><td>The single digit value. The child class is expected to verify the digit is valid. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -835,7 +1013,7 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
         <tr>
           <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::shift_left </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a>&#160;</td>
           <td class="paramname"><em>e</em></td><td>)</td>
           <td></td>
         </tr>
@@ -870,7 +1048,7 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
         <tr>
           <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::shift_right </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a69234d9bb5f617f219c354e5ac36c2f5">size_type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a77e94fd84c15353620bfb33197014c29">size_type</a>&#160;</td>
           <td class="paramname"><em>e</em></td><td>)</td>
           <td></td>
         </tr>
@@ -891,8 +1069,54 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
 
 </div>
 </div>
-<a id="ac97966e024f6f7e6a955420d696be888"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac97966e024f6f7e6a955420d696be888">&sect;&nbsp;</a></span>verify_diglist()</h2>
+<a id="a4d104002ecae5bc837ad9612c6faa9d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d104002ecae5bc837ad9612c6faa9d1">&sect;&nbsp;</a></span>split_number_store()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &gt; class Container = Default::container_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::split_number_store </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#ab1049e705778023047379f0bf3f44591">signed_size_type</a>&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>base</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Help split a number into its digits and store in digit list.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">val</td><td>The number to split into digits. </td></tr>
+    <tr><td class="paramname">base</td><td>The base the interpret the number as. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad95f05c65bd71ad27dce58da1366ea1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad95f05c65bd71ad27dce58da1366ea1c">&sect;&nbsp;</a></span>verify_diglist()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -905,7 +1129,8 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
         <tr>
           <td class="memname">void <a class="el" href="class_precision_1_1_digit___container.html">Precision::Digit_Container</a>&lt; ByteType, Container &gt;::verify_diglist </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_precision_1_1_digit___container.html#a05a400da8169cd09949389b4d7dc54fb">digit_type</a>&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -915,7 +1140,13 @@ template&lt;typename ByteType  = Default::byte_type, template&lt; typename... &g
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Make sure all the digits in m_number are valid and that the size is at least one. </p>
+<p>Check each digit if it falls within the number range dictated by the number base, i.e. does dig belong to the range [0, base)? Also make sure the list isn't empty and that the list contains no leading 0's.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The base the interpret the digits as. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

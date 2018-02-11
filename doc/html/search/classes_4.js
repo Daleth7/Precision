@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['floating_5fpoint',['Floating_Point',['../struct_precision_1_1_tag_1_1_floating___point.html',1,'Precision::Tag']]],
-  ['fraction',['Fraction',['../struct_precision_1_1_tag_1_1_fraction.html',1,'Precision::Tag']]]
+  ['digit_5fcontainer',['Digit_Container',['../class_precision_1_1_digit___container.html',1,'Precision']]],
+  ['digit_5fcontainer_5fview',['Digit_Container_View',['../class_precision_1_1_digit___container___view.html',1,'Precision']]],
+  ['dynamic',['Dynamic',['../struct_precision_1_1_tag_1_1_dynamic.html',1,'Precision::Tag']]]
 ];

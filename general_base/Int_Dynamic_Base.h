@@ -105,7 +105,7 @@ namespace Precision{
                        typename SignType = Default::sign_type,
                        typename SearchPolicy = ImgSearchPolicy::Binary
                        >
-            class Int : public Abstract::Int<ByteType, Container, SignType> {
+            class Int {
                 public:
                     //Type aliases
 

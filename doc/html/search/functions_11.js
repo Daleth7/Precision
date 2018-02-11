@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['what',['what',['../class_precision_1_1exception.html#a821e4d9d8cb78670968a5459b0cb2c4e',1,'Precision::exception']]]
+  ['value',['value',['../class_precision_1_1_sign_class.html#a5efcb85047055fb2e43ac976e90f73f6',1,'Precision::SignClass']]],
+  ['verify_5fdiglist',['verify_diglist',['../class_precision_1_1_digit___container.html#ad95f05c65bd71ad27dce58da1366ea1c',1,'Precision::Digit_Container']]]
 ];

@@ -1,11 +1,12 @@
 var searchData=
 [
-  ['base',['base',['../class_precision_1_1_general___base_1_1_static_1_1_abstract_1_1_int.html#a346a974b443ddf7c629e7bf5392f3dd9',1,'Precision::General_Base::Static::Abstract::Int']]],
-  ['bitwise_5fand_5feq',['bitwise_and_eq',['../_precision___int___operations_8h.html#a37c712840c2d1ab04a8eaddcaca8d487',1,'Precision::Volatile::Int_Operations']]],
-  ['bitwise_5fcomplement',['bitwise_complement',['../_precision___int___operations_8h.html#a3fb9d54665f8effdee8f6558c8b9418e',1,'Precision::Volatile::Int_Operations']]],
-  ['bitwise_5flshift_5feq',['bitwise_lshift_eq',['../_precision___int___operations_8h.html#a3c42bf237e13b783eb25964ab8864753',1,'Precision::Volatile::Int_Operations']]],
-  ['bitwise_5foperation',['bitwise_operation',['../_precision___int___operations_8h.html#afa2b1c74202f63d6154a720ef55ddf87',1,'Precision::Volatile::Int_Operations']]],
-  ['bitwise_5for_5feq',['bitwise_or_eq',['../_precision___int___operations_8h.html#af09cf6405fe577b9fbe5216b9402acfd',1,'Precision::Volatile::Int_Operations']]],
-  ['bitwise_5frshift_5feq',['bitwise_rshift_eq',['../_precision___int___operations_8h.html#aeae1f908334d24c17d35ccdcdf85004e',1,'Precision::Volatile::Int_Operations']]],
-  ['bitwise_5fxor_5feq',['bitwise_xor_eq',['../_precision___int___operations_8h.html#a47c73aad4c2c9c6af253aa9e6561e2c8',1,'Precision::Volatile::Int_Operations']]]
+  ['abstract',['Abstract',['../struct_precision_1_1_tag_1_1_abstract.html',1,'Precision::Tag']]],
+  ['abstract',['abstract',['../class_precision_1_1_general___base_1_1_dynamic_1_1_int.html#a8e934fd57dbf7f3993c563049fb64741',1,'Precision::General_Base::Dynamic::Int::abstract()'],['../class_precision_1_1_general___base_1_1_static_1_1_int.html#aad4380f47c4c643618f2f45bafa4895a',1,'Precision::General_Base::Static::Int::abstract()']]],
+  ['abstract_5ftype',['abstract_type',['../class_precision_1_1_general___base_1_1_dynamic_1_1_int.html#ad77eebc37984f04de7b246222ddb3fec',1,'Precision::General_Base::Dynamic::Int::abstract_type()'],['../class_precision_1_1_general___base_1_1_static_1_1_int.html#a557bc57e5b21aa2f980a6333791596f9',1,'Precision::General_Base::Static::Int::abstract_type()']]],
+  ['add',['add',['../_precision___int___operations_8h.html#a96134d0ff039e6a1cf7d596db9bc17a2',1,'Precision::Volatile::Int_Operations']]],
+  ['add_5fdiglist',['add_diglist',['../_precision___int___operations_8h.html#a9058717d59ad3d921fb4f357f637f84a',1,'Precision::Volatile::Int_Operations']]],
+  ['append',['append',['../class_precision_1_1_general___base_1_1_dynamic_1_1_int.html#ac12455c78d1b1ed2c9f7b10ca6dfa5e6',1,'Precision::General_Base::Dynamic::Int::append()'],['../class_precision_1_1_general___base_1_1_static_1_1_int.html#abca1d5d89b89a88f0e1e32f2b67f990a',1,'Precision::General_Base::Static::Int::append()'],['../class_precision_1_1_digit___container.html#a307b7140c6e6913b8c8d29931a1c3de0',1,'Precision::Digit_Container::append()']]],
+  ['are_5fequal',['are_equal',['../_precision___shared___helpers_8h.html#a53c613d66262e7e6f84366cd7612a9ad',1,'Precision::Helper']]],
+  ['assign',['assign',['../class_precision_1_1_general___base_1_1_dynamic_1_1_abstract_1_1_int.html#a78a5aa9825a7dc22ee307ee326453304',1,'Precision::General_Base::Dynamic::Abstract::Int::assign()'],['../class_precision_1_1_general___base_1_1_dynamic_1_1_int.html#a6314c9acb6df1eb7ef3f83c90f110f94',1,'Precision::General_Base::Dynamic::Int::assign()'],['../class_precision_1_1_general___base_1_1_static_1_1_abstract_1_1_int.html#adb0eb0c507f7a7e8c91467ae24e10866',1,'Precision::General_Base::Static::Abstract::Int::assign()'],['../class_precision_1_1_general___base_1_1_static_1_1_int.html#a7faa695e4735a1d2d2066dff0ee3792e',1,'Precision::General_Base::Static::Int::assign()'],['../class_precision_1_1_sign_class.html#a35fb042b862e1ce2d769868e76587a90',1,'Precision::SignClass::assign()']]],
+  ['assign_5fdigit',['assign_digit',['../class_precision_1_1_digit___container.html#a6a1dafd51ae7b6c03474e3449be9e47e',1,'Precision::Digit_Container']]]
 ];

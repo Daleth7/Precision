@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unsigned',['Unsigned',['../struct_precision_1_1_tag_1_1_unsigned.html',1,'Precision::Tag']]]
+  ['normal',['Normal',['../class_precision_1_1_img_search_policy_1_1_normal.html',1,'Precision::ImgSearchPolicy']]]
 ];
