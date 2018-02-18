@@ -43,7 +43,7 @@ Modules to implement:
 |                   | Operations        |                           |           |
 ---------------------------------------------------------------------------------
 | Base Converter    |                   | A utility for converting  | Done      |
-|                   |                   | among number bases        |           |
+| Integer           |                   | among number bases        |           |
 ---------------------------------------------------------------------------------
 | Abstract Dynamic  | Integer           | A class representing an   | Done      |
 | General Base      | Operations        | "abstract", or without    |           |
@@ -61,18 +61,22 @@ Modules to implement:
 |                   | Image Set         | compile-time              |           |
 |                   | Operations        |                           |           |
 ---------------------------------------------------------------------------------
-| Floating          | exception         | A set of functions and/or | Not       |
-| Operations        |                   | operations for dealing    | Started   |
+| Floating          | exception         | A set of functions and/or | In        |
+| Operations        |                   | operations for dealing    | Progress  |
 |                   |                   | with floating-based data  |           |
 ---------------------------------------------------------------------------------
-| Floating          | Integer           | Classes representing      | Not       |
-| - Abstract Static | - Abstract Static | arbitrary precision       | Started   |
+| Floating          | Integer           | Classes representing      | In        |
+| - Abstract Static | - Abstract Static | arbitrary precision       | Progress  |
 | - Static          | - Static          | numbers that have decimal |           |
 | - Abstract Dynamic| - Abstract Dynamic| portions.                 |           |
 | - Dynamic         | - Dynamic         |                           |           |
 |                   |                   |                           |           |
 |                   | Floating          |                           |           |
 |                   | Operations        |                           |           |
+---------------------------------------------------------------------------------
+| Base Converter    |                   | A utility for converting  | Not       |
+| Floating          |                   | among number bases for    | Started   |
+|                   |                   | floating point numbers    |           |
 ---------------------------------------------------------------------------------
 | Fraction          | exception         | A set of functions and/or | Not       |
 | Operations        |                   | operations for dealing    | Started   |

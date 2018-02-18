@@ -102,14 +102,14 @@ namespace Precision{
             bool is_odd()const
                 {return !(this->is_even());}
 
-            /** Return the underlying raw_iterator.
+            /** Return the underlying iterator.
               *
               * \return a copy of the underlying raw_iterator.
               */
             const raw_iterator& raw_begin()const
                 {return m_beg;}
 
-            /** Return an raw_iterator to the end of the string.
+            /** Return an iterator to the end of the string.
               *
               * \return a the end raw_iterator.
               */
@@ -119,14 +119,16 @@ namespace Precision{
                 return cpy;
             }
 
-            /** Return a reverse
+            /** Return an iterator to the beginning of the digit
+              * string as if the number was reversed.
               *
               * \return a copy of the underlying raw_iterator.
               */
             reverse_raw_iterator raw_rbegin()const
                 {return reverse_raw_iterator(this->raw_end());}
 
-            /** Return an raw_iterator to the end of the string.
+            /** Return an iterator to the end of the digit
+              * string as if the number was reversed.
               *
               * \return a the end raw_iterator.
               */

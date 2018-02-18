@@ -136,7 +136,7 @@ void test_and_log_util::execute_tests(){
                 try{
                     cit->speed_test(log);
                 }catch(const std::exception& err){
-                    console << " ; Error!  " << err.what(); 
+                    console << " ; Error during speed test!  Error message: " << err.what(); 
                     err_encountered = true;
                     break;
                 }

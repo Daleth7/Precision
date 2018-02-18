@@ -25,38 +25,6 @@ namespace Precision{
     namespace Volatile {
         namespace Int_Operations {
             // Arithmetic operators
-            /** A simple add function taking two digit strings
-             *  and calculating the sum. This function is kept here
-             *  if another function needs to pass the digit lists and
-             *  signs directly. Otherwise, add() is preferred.
-             * 
-             *  \tparam IntType Number type from which type and base
-             *                  information is extracted. This function
-             *                  assumes IntType has the public members:
-             *                  * Type IntType::diglist_type
-             *                  * Type IntType::sign_type
-             *                  * Type IntType::digit_type
-             *                  * Type IntType::catalyst_type
-             *                  * Method iterator diglist_type::begin()
-             *                  * Method iterator diglist_type::end()
-             *                  * Method size_type diglist_type::size()
-             *                  * Method void diglist_type::push_back()
-             *                  * Method void diglist_type::pop_back()
-             *                  * Method digit_type diglist_type::back()
-             *
-             *  \param diglist1 The digit string of the first number
-             *  \param diglist2 The digit string of the second number
-             *  \param sign1 The numeric sign of the first number
-             *  \param sign2 The numeric sign of the second number
-             *  \param base The number base of both numbers
-             */
-            template <typename IntType>
-            void add_diglist( typename IntType::diglist_type& diglist1,
-                      const typename IntType::diglist_type& diglist2,
-                      typename IntType::sign_type& sign1,
-                      typename IntType::sign_type sign2,
-                      typename IntType::digit_type base
-                      );
 
             /** A simple add function taking two integers
              *  and calculating the sum.
@@ -87,26 +55,6 @@ namespace Precision{
              */
             template <typename IntType>
             void add(IntType& lhs, const IntType& rhs, short add_sign = 1);
-
-            /** A helper multiply function that acts as an accumulation
-             *  function.
-             * 
-             *  \tparam IntType Number type from which type and base
-             *                  information is extracted. IntType is
-             *                  is assumed to support the following:
-             *                  * Type IntType::digit_type
-             *                  * Type IntType::catalyst_type
-             *                  * Method digit_type IntType::base()
-             *                  * Method size_type IntType::count_digits()
-             *                  * Method digit_type& IntType::digit(size_type)
-             *                  * Method void IntType::append(digit_type)
-             * 
-             *  \param num The integer to multiply
-             *  \param fac The single digit multiplication factor that
-             *             belongs in the range [0, base-1]
-             */
-            template <typename IntType>
-            void multiply_diglist(IntType& num, typename IntType::digit_type fac);
 
             /** A simple multiply function taking two digit strings
              *  and calculating the product. Algorithm does not need
@@ -370,8 +318,8 @@ namespace Precision{
              *  \param base The number to exponentiate
              *  \param exp The exponent integer
              */
-            template <typename IntType>
-            void exponentiate(IntType& base, const IntType& exp);
+            template <typename BaseType, typename IntType>
+            void exponentiate(BaseType& base, const IntType& exp);
 
 
 

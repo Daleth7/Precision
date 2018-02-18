@@ -1,7 +1,7 @@
 #include "Test_Shared_Utilities.h"
 
 #include "general_base/Int_Static_Base.h"
-#include "general_base/impl/Precision_Interbase_Operations.h"
+#include "general_base/Precision_Interbase_Operations.h"
 
 test_and_log_util::result_type test_convert_copy_abstract(test_and_log_util::out_type&);
 void test_convert_copy_speed_tens(test_and_log_util::out_type&);

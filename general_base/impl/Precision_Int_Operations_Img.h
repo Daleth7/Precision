@@ -11,8 +11,6 @@
 
 #include "Precision_Image_Set_Interface.h"
 
-#include <functional>
-
 namespace Precision{
     namespace Volatile{
         namespace Int_Operations {

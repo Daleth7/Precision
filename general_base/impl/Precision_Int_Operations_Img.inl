@@ -17,11 +17,7 @@ namespace Precision{
                     }
                     str_type toreturn(num.count_digits() + 1, isi.digit(0));
                     toreturn[0] = (num.is_positive() ? isi.plus() : isi.minus());
-                    for(
-                        size_type i(1);
-                        i <= num.count_digits();
-                        ++i
-                    ){
+                    for(size_type i(1); i <= num.count_digits(); ++i){
                         toreturn[toreturn.size()-i] = isi.digit(num.digit(i-1));
                     }
                     return toreturn;

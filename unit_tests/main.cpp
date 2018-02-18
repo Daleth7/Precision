@@ -79,6 +79,11 @@ int main(){
     dynamic_general_base_int_test();
     #endif
 
+    #ifdef TEST_FLOAT_IMG_OPERATIONS
+    extern void float_image_operations_test();
+    float_image_operations_test();
+    #endif
+
 
 
     clock::time_point fin = clock::now();

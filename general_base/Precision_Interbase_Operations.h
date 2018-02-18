@@ -38,6 +38,6 @@ namespace Precision{
     IntType2 convert_base_copy(const IntType1& orig, const IntType2& ref);
 }
 
-#include "Precision_Interbase_Operations.inl"
+#include "impl/Precision_Interbase_Operations.inl"
 
 #endif  //Include guard
