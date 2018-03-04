@@ -5,10 +5,17 @@ Precision::Volatile::Float_Operations::Img [float_operations_img_test.cpp]:
 	test_sci_note_eneg                 	: Passed
 	test_sci_note_diffprec             	: Passed
 	test_sci_note_all                  	: Passed ; Average execution time: 2.6025e-006 s
-	test_sci_note_lim                  	: Passed ; Average execution time: 1.5015e-006 s
+	test_sci_note_lim                  	: Passed ; Average execution time: 1.5014e-006 s
 	test_sci_note_w_spaces             	: Passed ; Average execution time: 2.7026e-006 s
 	test_str_zero                      	: Passed
 	test_str_diffprec                  	: Passed
 	test_str_diffpow                   	: Passed
-	test_str                           	: Passed ; Average execution time: 2.5023e-006 s
+	test_str                           	: Passed ; Average execution time: 2.5524e-006 s
+	test_parse_0                       	: Passed
+	test_parse_int                     	: Passed
+	test_parse_diff_point              	: Passed
+	test_parse_diffprec                	: Passed
+	test_parse_diffpow                 	: Passed
+	test_parse_typos                   	: Passed
+	test_parse                         	: Passed ; Average execution time: 9.2088e-006 s
 

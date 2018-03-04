@@ -1,6 +1,7 @@
 #include "Test_Shared_Utilities.h"
 
 #include "general_base/impl/Precision_Float_Operations_Img.h"
+#include "general_base/Int_Static_Base.h"
 
 #include <string>
 #include <vector>
@@ -76,9 +77,15 @@ static test_and_log_util::result_type test_str(test_and_log_util::out_type&);
 static test_and_log_util::result_type test_str_diffprec(test_and_log_util::out_type&);
 static test_and_log_util::result_type test_str_diffpow(test_and_log_util::out_type&);
 static void test_str_speed(test_and_log_util::out_type&);
-//static test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&);
-//static test_and_log_util::result_type test_parse(test_and_log_util::out_type&);
-//static void test_parse_speed(test_and_log_util::out_type&);
+
+static test_and_log_util::result_type test_parse_0(test_and_log_util::out_type&);
+static test_and_log_util::result_type test_parse_int(test_and_log_util::out_type&);
+static test_and_log_util::result_type test_parse_diff_point(test_and_log_util::out_type&);
+static test_and_log_util::result_type test_parse_diffprec(test_and_log_util::out_type&);
+static test_and_log_util::result_type test_parse_diffpow(test_and_log_util::out_type&);
+static test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&);
+static test_and_log_util::result_type test_parse(test_and_log_util::out_type&);
+static void test_parse_speed(test_and_log_util::out_type&);
 
 void float_image_operations_test(){
     test_and_log_util test_list("Precision::Volatile::Float_Operations::Img", __FILE__);
@@ -110,11 +117,16 @@ void float_image_operations_test(){
                    test_str, test_str_speed,
                    10000
                    );
-//    ADD_TEST(test_list, test_parse_typos);
-//    ADD_TEST_BOTH( test_list,
-//                   test_parse, test_parse_speed,
-//                   10000
-//                   );
+    ADD_TEST(test_list, test_parse_0);
+    ADD_TEST(test_list, test_parse_int);
+    ADD_TEST(test_list, test_parse_diff_point);
+    ADD_TEST(test_list, test_parse_diffprec);
+    ADD_TEST(test_list, test_parse_diffpow);
+    ADD_TEST(test_list, test_parse_typos);
+    ADD_TEST_BOTH( test_list,
+                   test_parse, test_parse_speed,
+                   10000
+                   );
 
     setup_speed_variables();
 
@@ -149,11 +161,8 @@ void setup_speed_variables(){
     for(unsigned i = 0; i < 100; ++i)
         speed_string.push_back((i % 10) + '0');
 
-    speed_string_sign = speed_string;
-    speed_string_sign.insert(0, 1, '-');
-
-    speed_string_exp = speed_string_sign;
-    speed_string_exp += "e123";
+    speed_string.insert(0, 1, '-');
+    speed_string += "e-123";
 }
 
 void clean_up_speed_variables(){
@@ -161,8 +170,6 @@ void clean_up_speed_variables(){
     func_variable2.number.clear();
     speed_variable.number.clear();
     speed_string.clear();
-    speed_string_sign.clear();
-    speed_string_exp.clear();
 }
 
 test_and_log_util::result_type test_sci_note_zero(test_and_log_util::out_type&){
@@ -347,14 +354,22 @@ test_and_log_util::result_type test_str_diffprec(test_and_log_util::out_type&){
       floating2.number = Fake_Float::digstr_type({4, 5, 3, 2, 1, 0, 9, 8, 7});
       floating2.prec = 10;
       floating2.pow = 0;
+    Fake_Float floating3;
+      floating3.positivity = true;
+      floating3.number = Fake_Float::digstr_type({4});
+      floating3.prec = 0;
+      floating3.pow = -7;
 
     test_and_log_util::result_type res;
-    res.expected = "-5.400 -7";
+    res.expected = "-5.400 -7 +0.0000004";
     res.actual = Precision::Volatile::Float_Operations::Img::str
                  <Fake_Float, Img_Set_Type>(floating, 10, img_set);
     res.actual.push_back(' ');
     res.actual += Precision::Volatile::Float_Operations::Img::str
                  <Fake_Float, Img_Set_Type>(floating2, 0, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float, Img_Set_Type>(floating3, 0, img_set);
 
     return res;
 }
@@ -412,43 +427,264 @@ void test_str_speed(test_and_log_util::out_type&){
                                       <Fake_Float, Img_Set_Type>
                                       (speed_variable2, 200, img_set);
 }
-/*
-test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&){
-    Img_Set_Type::str_type image = "+123.45678";
-    Fake_Float storage;
-    storage.positivity = true;
-    Fake_Sign sign(storage.positivity);
-    Precision::Volatile::Float_Operations::Img::parse<Fake_Float, Img_Set_Type>
-        (image, storage.number, sign, Fake_Float::base(), img_set);
+
+
+
+struct Fake_Float_Comp{
+    using integer_type      = Precision::General_Base::Static::Int<>;
+    using str_type          = integer_type::str_type;
+    using size_type         = integer_type::size_type;
+    using signed_size_type  = integer_type::signed_size_type;
+    using digit_type        = integer_type::digit_type;
+    using digstr_type       = integer_type::digstr_type;
+
+    bool is_zero()const
+        {return number.is_zero();}
+    bool is_positive()const
+        {return number.is_positive();}
+
+    size_type count_digits()const
+        {return this->precision()+1;}
+
+    digit_type digit(size_type index)const{
+        if( index >= this->count_digits() ||
+            index < (this->precision()-number.count_digits()+1)
+            )
+            return 0;
+        size_type offset = this->precision()-number.count_digits()+1;
+        return number.digit(index-offset);
+    }
+
+    static size_type base()
+        {return integer_type::base();}
+
+    size_type precision()const
+        {return this->prec;}
+
+    signed_size_type power()const
+        {return this->pow;}
+
+    integer_type        number;
+    size_type           prec;
+    signed_size_type    pow;
+};
+
+
+test_and_log_util::result_type test_parse_0(test_and_log_util::out_type&){
+    Fake_Float_Comp stor, stor2, stor3, stor4, stor5, stor6;
+
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+0", stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0", stor2.number, stor2.prec, stor2.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+0e2", stor3.number, stor3.prec, stor3.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.00", stor4.number, stor4.prec, stor4.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+0.0e-3", stor5.number, stor5.prec, stor5.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("0", stor6.number, stor6.prec, stor6.pow, Fake_Float_Comp::base(), img_set);
 
     test_and_log_util::result_type res;
-    res.expected = "-1230045006070890";
+    res.expected = "+0 +0 +0 +0 +0 +0";
     res.actual = Precision::Volatile::Float_Operations::Img::str
-                 <Fake_Float, Img_Set_Type>(storage, img_set);
+                 <Fake_Float_Comp, Img_Set_Type>(stor, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor2, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor3, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor4, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor5, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor6, 10, img_set);
+
+    return res;
+}
+
+test_and_log_util::result_type test_parse_int(test_and_log_util::out_type&){
+    Fake_Float_Comp stor, stor2, stor3, stor4;
+
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+12345", stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-3", stor2.number, stor2.prec, stor2.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+0019", stor3.number, stor3.prec, stor3.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-900", stor4.number, stor4.prec, stor4.pow, Fake_Float_Comp::base(), img_set);
+
+    test_and_log_util::result_type res;
+    res.expected = "+12345 -3 +19 -900";
+    res.actual = Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor2, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor3, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor4, 10, img_set);
+
+    return res;
+}
+
+test_and_log_util::result_type test_parse_diff_point(test_and_log_util::out_type&){
+    Fake_Float_Comp stor, stor2, stor3, stor4, stor5, stor6;
+
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("1.2345", stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.345", stor2.number, stor2.prec, stor2.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+1049.507", stor3.number, stor3.prec, stor3.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.0008", stor4.number, stor4.prec, stor4.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+3.14000", stor5.number, stor5.prec, stor5.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+000.0751", stor6.number, stor6.prec, stor6.pow, Fake_Float_Comp::base(), img_set);
+
+    test_and_log_util::result_type res;
+    res.expected = "+1.2345 -0.345 +1049.507 -0.0008 +3.14000 +0.0751";
+    res.actual = Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor2, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor3, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor4, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor5, 10, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor6, 10, img_set);
+
+    return res;
+}
+
+test_and_log_util::result_type test_parse_diffprec(test_and_log_util::out_type&){
+    Fake_Float_Comp stor, stor2, stor3, stor4, stor5;
+
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+1.2345", stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.3450", stor2.number, stor2.prec, stor2.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+1049.507", stor3.number, stor3.prec, stor3.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.08", stor4.number, stor4.prec, stor4.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+3.14000", stor5.number, stor5.prec, stor5.pow, Fake_Float_Comp::base(), img_set);
+
+    test_and_log_util::result_type res;
+    res.expected = "4 3 6 0 5";
+    res.actual.push_back('0' + stor.precision());
+    res.actual.push_back(' ');
+    res.actual.push_back('0' + stor2.precision());
+    res.actual.push_back(' ');
+    res.actual.push_back('0' + stor3.precision());
+    res.actual.push_back(' ');
+    res.actual.push_back('0' + stor4.precision());
+    res.actual.push_back(' ');
+    res.actual.push_back('0' + stor5.precision());
+
+    return res;
+}
+
+test_and_log_util::result_type test_parse_diffpow(test_and_log_util::out_type&){
+    Fake_Float_Comp stor, stor2, stor3, stor4, stor5;
+
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+1.2345e5", stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.3450e-4", stor2.number, stor2.prec, stor2.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+1049.507e-05", stor3.number, stor3.prec, stor3.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.08e-748", stor4.number, stor4.prec, stor4.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+3.14000e0", stor5.number, stor5.prec, stor5.pow, Fake_Float_Comp::base(), img_set);
+
+    test_and_log_util::result_type res;
+    res.expected = "+123450 -0.00003450 +0.01049507 -8e-750 +3.14000";
+    res.actual = Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor2, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor3, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::sci_note
+                 <Fake_Float_Comp, Img_Set_Type>(stor4, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor5, 50, img_set);
+
+    return res;
+}
+
+test_and_log_util::result_type test_parse_typos(test_and_log_util::out_type&){
+    Fake_Float_Comp stor, stor2, stor3, stor4, stor5;
+
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+1.2g45e&5", stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("@^.34t0e-4", stor2.number, stor2.prec, stor2.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("+d049|50fe-05", stor3.number, stor3.prec, stor3.pow, Fake_Float_Comp::base(), img_set);
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        ("-0.t8e-7e8", stor4.number, stor4.prec, stor4.pow, Fake_Float_Comp::base(), img_set);
+
+    test_and_log_util::result_type res;
+    res.expected = "+120450 +0.00003400 +4.90500 -8e-710";
+    res.actual = Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor2, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::str
+                 <Fake_Float_Comp, Img_Set_Type>(stor3, 50, img_set);
+    res.actual.push_back(' ');
+    res.actual += Precision::Volatile::Float_Operations::Img::sci_note
+                 <Fake_Float_Comp, Img_Set_Type>(stor4, 50, img_set);
 
     return res;
 }
 
 test_and_log_util::result_type test_parse(test_and_log_util::out_type&){
     Img_Set_Type::str_type image = "123045607890";
-    Fake_Float storage;
-    storage.positivity = true;
-    Fake_Sign sign(storage.positivity);
-    Precision::Volatile::Float_Operations::Img::parse<Fake_Float, Img_Set_Type>
-        (image, storage.number, sign, Fake_Float::base(), img_set);
+    Fake_Float_Comp stor;
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        (image, stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
 
     test_and_log_util::result_type res;
-    res.expected = "+123045607890";
-    res.actual = Precision::Volatile::Float_Operations::Img::str
-                 <Fake_Float, Img_Set_Type>(storage, img_set);
+    res.expected = "+1.23045607890e11";
+    res.actual = Precision::Volatile::Float_Operations::Img::sci_note
+                 <Fake_Float_Comp, Img_Set_Type>(stor, 50, img_set);
 
     return res;
 }
 
 void test_parse_speed(test_and_log_util::out_type&){
-    Fake_Float storage;
-    Fake_Sign sign(storage.positivity);
-    Precision::Volatile::Float_Operations::Img::parse<Fake_Float, Img_Set_Type>
-        (speed_string, storage.number, sign, Fake_Float::base(), img_set);
+    Fake_Float_Comp stor;
+    Precision::Volatile::Float_Operations::Img::parse<Fake_Float_Comp, Img_Set_Type>
+        (speed_string, stor.number, stor.prec, stor.pow, Fake_Float_Comp::base(), img_set);
 }
-*/

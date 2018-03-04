@@ -1,6 +1,6 @@
 #include "Precision_Int_Operations.h"
 #include "Precision_Shared_Helpers.h"
-#include "Precision_Interbase_Operations.h"
+#include "Precision_Impl_Interbase_Operations.h"
 
 #define INT_TEMP_ template < typename ByteType,                      \
                              template <typename...> class Container, \

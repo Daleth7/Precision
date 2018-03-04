@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include <iostream>
 namespace Precision{
     namespace Volatile{
         namespace Float_Operations {
@@ -30,12 +31,20 @@ namespace Precision{
                         // Insert leading zeros when number is less than 1.
 
                         // If precision was 0, there would be no point symbol
-                        // Therefore, just return a +0 since number < 1
                         if(toreturn.size() == 2){
-                            toreturn[0] = isi.plus();
-                            toreturn[1] = isi.digit(0);
-                            return toreturn;
+                            if(ref.power() == -1){
+                                // Number would form 0.x, but 0 precision means
+                                // no digit would be shown
+                                toreturn[0] = isi.plus();
+                                toreturn[1] = isi.digit(0);
+                                return toreturn;
+                            } else {
+                                // Number would form 0.0...xyz...,
+                                // so insert point and continue normally
+                                toreturn.append(1, '.');
+                            }
                         }
+
 
                         // Swap point and most significant digit
                         std::swap(toreturn[1], toreturn[2]);
@@ -196,35 +205,47 @@ namespace Precision{
                     typedef typename FloatType::signed_size_type ss_type;
                     typedef typename FloatType::size_type size_type;
                     typedef typename ISIType::str_type str_type;
-                    typedef typename ISIType::str_type integer_type;
+                    typedef typename FloatType::integer_type integer_type;
 
                     size_type ppos = src.find(isi.point()),
                               epos = src.find(isi.exponent())
                               ;
                     // Find out if there is a number sign symbol
                     bool sign_pres = src.front() == isi.plus() || src.front() == isi.minus();
+                    dest_pow = 0;
 
                     if(ppos != str_type::npos){
+                        // String has a point symbol, so it represents a floating point
+
                         // Copy over string to use in integer construction
                         str_type int_str = src.substr(0, epos);
 
                         // Remove point symbol
-                        int_str.erase(0, ppos);
+                        int_str.erase(ppos, 1);
 
                         // Now construct integer
                         dest = integer_type( int_str,
-                                             isi.digit_list(), isi.symbol_list()
+                                             isi.digit_set(), isi.symbol_set()
                                              );
-                        // Calculate power based on number of digits that were
-                        // to the left of the point symbol.
-                        dest_pow = ppos - 1 - (sign_pres ? 1 : 0);
+
+                        // Calculate power based on number of digits
+                        if(dest.count_digits()+1 < int_str.size()){
+                            // Number was less than 1
+                            dest_pow = int_str.size() - ppos - dest.count_digits() + 1;
+                            dest_pow = -dest_pow;
+                        } else {
+                            // Number is greater than or equal to 1
+                            dest_pow = ppos - 1 - (sign_pres ? 1 : 0);
+                        }
                     } else {
-                        // Simply construct integer since there was no point symbol
+                        // There was no point symbol, so string represents an integer.
+
+                        // Simply construct integer
                         dest = integer_type( src.substr(0, epos),
-                                             isi.digit_list(), isi.symbol_list()
+                                             isi.digit_set(), isi.symbol_set()
                                              );
                         // Since this was an integer, match the power to the precision.
-                        dest_pow = 0;
+                        dest_pow = dest.count_digits()-1;
                     }
 
                     // Calculate precision. Trailing zeros should still be present.
@@ -232,7 +253,6 @@ namespace Precision{
 
                     // Extract power if any
                     if(epos != str_type::npos && src.size() > (epos+1)){
-                        dest_pow = 0;
                         str_type pow_str = src.substr(epos+1);
                         // Find out if power is negative
                         bool neg = pow_str.front() == isi.minus();
@@ -240,18 +260,19 @@ namespace Precision{
 
                         // Iterate through power string
                         size_type sz = pow_str.size();
-                        ss_type factor = 1;
+                        ss_type factor = 1, dest_culm = 0;
                         while(sz-- > stop_pos){
                             ss_type addend = ___img_oper_helper<ISIType, SearchPolicy>
                                           :: get_index(isi, pow_str[sz], base)
                                           ;
                             // Add value only if the digit is valid
                             if(addend < base)
-                                dest_pow += addend*factor;
+                                dest_culm += addend*factor;
                             factor *= base;
                         }
 
-                        if(neg) dest_pow *= -1;
+                        if(neg) dest_culm *= -1;
+                        dest_pow += dest_culm;
                     }
                 }
             }
